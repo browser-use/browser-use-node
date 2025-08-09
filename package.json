@@ -1,8 +1,8 @@
 {
-  "name": "browser-use",
+  "name": "browser-use-node",
   "version": "0.0.1",
   "description": "The official TypeScript library for the Browser Use API",
-  "author": "Browser Use <>",
+  "author": "Browser Use <support@browser-use.com>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",

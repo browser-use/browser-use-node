@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { BrowserUse } from 'browser-use';
+import { BrowserUse } from 'browser-use-node';
 
 const { stringifyQuery } = BrowserUse.prototype as any;
 

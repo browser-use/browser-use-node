@@ -55,12 +55,12 @@ $ cd browser-use-typescript
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link browser-use
+$ yarn link browser-use-node
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global browser-use
+$ pnpm link -—global browser-use-node
 ```
 
 ## Running tests

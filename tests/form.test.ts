@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'browser-use/internal/uploads';
-import { toFile } from 'browser-use/core/uploads';
+import { multipartFormRequestOptions, createForm } from 'browser-use-node/internal/uploads';
+import { toFile } from 'browser-use-node/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {
