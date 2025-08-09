@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'browser-use-node/core/api-promise';
+import { APIPromise } from 'browser-use-sdk/core/api-promise';
 
 import util from 'node:util';
-import BrowserUse from 'browser-use-node';
-import { APIUserAbortError } from 'browser-use-node';
+import BrowserUse from 'browser-use-sdk';
+import { APIUserAbortError } from 'browser-use-sdk';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {

@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "browser-use-node/*": ["dist/src/*"],
-      "browser-use-node": ["dist/src/index.ts"]
+      "browser-use-sdk/*": ["dist/src/*"],
+      "browser-use-sdk": ["dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

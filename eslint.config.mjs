@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^browser-use-node(/.*)?',
+              regex: '^browser-use-sdk(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],

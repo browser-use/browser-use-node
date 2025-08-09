@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^browser-use-node$': '<rootDir>/src/index.ts',
-    '^browser-use-node/(.*)$': '<rootDir>/src/$1',
+    '^browser-use-sdk$': '<rootDir>/src/index.ts',
+    '^browser-use-sdk/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',

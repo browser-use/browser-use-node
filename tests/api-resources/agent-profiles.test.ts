@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import BrowserUse from 'browser-use-node';
+import BrowserUse from 'browser-use-sdk';
 
 const client = new BrowserUse({
   apiKey: 'My API Key',
