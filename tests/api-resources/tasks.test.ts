@@ -8,7 +8,7 @@ const client = new BrowserUse({
 });
 
 describe('resource tasks', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.tasks.create({ task: 'x' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource tasks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.tasks.create({
       task: 'x',
@@ -37,7 +37,7 @@ describe('resource tasks', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.tasks.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -49,7 +49,7 @@ describe('resource tasks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -61,7 +61,7 @@ describe('resource tasks', () => {
     ).rejects.toThrow(BrowserUse.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.tasks.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { action: 'stop' });
     const rawResponse = await responsePromise.asResponse();
@@ -73,12 +73,12 @@ describe('resource tasks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.tasks.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { action: 'stop' });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.tasks.list();
     const rawResponse = await responsePromise.asResponse();
@@ -90,7 +90,7 @@ describe('resource tasks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -107,7 +107,7 @@ describe('resource tasks', () => {
     ).rejects.toThrow(BrowserUse.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveLogs', async () => {
     const responsePromise = client.tasks.retrieveLogs('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -119,7 +119,7 @@ describe('resource tasks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveOutputFile: only required params', async () => {
     const responsePromise = client.tasks.retrieveOutputFile('file_name', {
       task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -133,7 +133,7 @@ describe('resource tasks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveOutputFile: required and optional params', async () => {
     const response = await client.tasks.retrieveOutputFile('file_name', {
       task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
