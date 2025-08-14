@@ -25,11 +25,11 @@ describe('resource agentProfiles', () => {
     const response = await client.agentProfiles.create({
       name: 'x',
       allowedDomains: ['string'],
+      customSystemPromptExtension: 'x',
       description: 'x',
       flashMode: true,
       highlightElements: true,
       maxAgentSteps: 1,
-      systemPrompt: 'x',
       thinking: true,
       vision: true,
     });

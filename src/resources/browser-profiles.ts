@@ -2,26 +2,86 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
 export class BrowserProfiles extends APIResource {
   /**
-   * Create Browser Profile
+   * Create a new browser profile for the authenticated user.
+   *
+   * Browser profiles define how your web browsers behave during AI agent tasks. You
+   * can create multiple profiles for different use cases (e.g., mobile testing,
+   * desktop browsing, proxy-enabled scraping). Free users can create up to 10
+   * profiles; paid users can create unlimited profiles.
+   *
+   * Key features you can configure:
+   *
+   * - Viewport dimensions: Set the browser window size for consistent rendering
+   * - Mobile emulation: Enable mobile device simulation
+   * - Proxy settings: Route traffic through specific locations or proxy servers
+   * - Ad blocking: Enable/disable ad blocking for cleaner browsing
+   * - Cache persistence: Choose whether to save browser data between sessions
+   *
+   * Args:
+   *
+   * - request: The browser profile configuration including name, description, and
+   *   browser settings
+   *
+   * Returns:
+   *
+   * - The newly created browser profile with all its details
+   *
+   * Raises:
+   *
+   * - 402: If user needs a subscription to create additional profiles
    */
   create(body: BrowserProfileCreateParams, options?: RequestOptions): APIPromise<BrowserProfileView> {
     return this._client.post('/browser-profiles', { body, ...options });
   }
 
   /**
-   * Get Browser Profile
+   * Get a specific browser profile by its ID.
+   *
+   * Retrieves the complete details of a browser profile, including all its
+   * configuration settings like viewport dimensions, proxy settings, and behavior
+   * flags.
+   *
+   * Args:
+   *
+   * - profile_id: The unique identifier of the browser profile
+   *
+   * Returns:
+   *
+   * - Complete browser profile information
+   *
+   * Raises:
+   *
+   * - 404: If the user browser profile doesn't exist
    */
   retrieve(profileID: string, options?: RequestOptions): APIPromise<BrowserProfileView> {
     return this._client.get(path`/browser-profiles/${profileID}`, options);
   }
 
   /**
-   * Update Browser Profile
+   * Update an existing browser profile.
+   *
+   * Modify any aspect of a browser profile, such as its name, description, viewport
+   * settings, or proxy configuration. Only the fields you provide will be updated;
+   * other fields remain unchanged.
+   *
+   * Args:
+   *
+   * - profile_id: The unique identifier of the browser profile to update
+   * - request: The fields to update (only provided fields will be changed)
+   *
+   * Returns:
+   *
+   * - The updated browser profile with all its current details
+   *
+   * Raises:
+   *
+   * - 404: If the user browser profile doesn't exist
    */
   update(
     profileID: string,
@@ -32,7 +92,17 @@ export class BrowserProfiles extends APIResource {
   }
 
   /**
-   * List Browser Profiles
+   * Get a paginated list of all browser profiles for the authenticated user.
+   *
+   * Browser profiles define how your web browsers behave during AI agent tasks,
+   * including settings like viewport size, mobile emulation, proxy configuration,
+   * and ad blocking. Use this endpoint to see all your configured browser profiles.
+   *
+   * Returns:
+   *
+   * - A paginated list of browser profiles
+   * - Total count of profiles
+   * - Page information for navigation
    */
   list(
     query: BrowserProfileListParams | null | undefined = {},
@@ -42,10 +112,26 @@ export class BrowserProfiles extends APIResource {
   }
 
   /**
-   * Delete Browser Profile
+   * Delete a browser profile.
+   *
+   * Permanently removes a browser profile and all its configuration. This action
+   * cannot be undone. The profile will also be removed from the browser service. Any
+   * active sessions using this profile will continue to work, but you won't be able
+   * to create new sessions with the deleted profile.
+   *
+   * Args:
+   *
+   * - profile_id: The unique identifier of the browser profile to delete
+   *
+   * Returns:
+   *
+   * - 204 No Content on successful deletion (idempotent)
    */
-  delete(profileID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/browser-profiles/${profileID}`, options);
+  delete(profileID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/browser-profiles/${profileID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -59,8 +145,8 @@ export class BrowserProfiles extends APIResource {
  * proxy location store_cache: Whether to store browser cache
  * browser_viewport_width: Browser viewport width in pixels
  * browser_viewport_height: Browser viewport height in pixels is_mobile: Whether
- * the browser is mobile view created_at: Timestamp when the profile was created
- * updated_at: Timestamp when the profile was last updated
+ * the browser should be in mobile view created_at: Timestamp when the profile was
+ * created updated_at: Timestamp when the profile was last updated
  */
 export interface BrowserProfileView {
   id: string;
@@ -106,8 +192,6 @@ export interface BrowserProfileListResponse {
 
   totalItems: number;
 }
-
-export type BrowserProfileDeleteResponse = unknown;
 
 export interface BrowserProfileCreateParams {
   name: string;
@@ -164,7 +248,6 @@ export declare namespace BrowserProfiles {
     type BrowserProfileView as BrowserProfileView,
     type ProxyCountryCode as ProxyCountryCode,
     type BrowserProfileListResponse as BrowserProfileListResponse,
-    type BrowserProfileDeleteResponse as BrowserProfileDeleteResponse,
     type BrowserProfileCreateParams as BrowserProfileCreateParams,
     type BrowserProfileUpdateParams as BrowserProfileUpdateParams,
     type BrowserProfileListParams as BrowserProfileListParams,

@@ -18,7 +18,6 @@ import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
   AgentProfileCreateParams,
-  AgentProfileDeleteResponse,
   AgentProfileListParams,
   AgentProfileListResponse,
   AgentProfileUpdateParams,
@@ -27,7 +26,6 @@ import {
 } from './resources/agent-profiles';
 import {
   BrowserProfileCreateParams,
-  BrowserProfileDeleteResponse,
   BrowserProfileListParams,
   BrowserProfileListResponse,
   BrowserProfileUpdateParams,
@@ -41,10 +39,6 @@ import {
   TaskListParams,
   TaskListResponse,
   TaskRetrieveLogsResponse,
-  TaskRetrieveOutputFileParams,
-  TaskRetrieveOutputFileResponse,
-  TaskRetrieveParams,
-  TaskRetrieveResponse,
   TaskStatus,
   TaskUpdateParams,
   TaskView,
@@ -246,10 +240,6 @@ export class BrowserUse {
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
     return;
-  }
-
-  protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    return buildHeaders([{ 'X-Browser-Use-API-Key': this.apiKey }]);
   }
 
   /**
@@ -689,7 +679,6 @@ export class BrowserUse {
         ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
         ...getPlatformHeaders(),
       },
-      await this.authHeaders(options),
       this._options.defaultHeaders,
       bodyHeaders,
       options.headers,
@@ -773,15 +762,11 @@ export declare namespace BrowserUse {
     type LlmModel as LlmModel,
     type TaskStatus as TaskStatus,
     type TaskView as TaskView,
-    type TaskRetrieveResponse as TaskRetrieveResponse,
     type TaskListResponse as TaskListResponse,
     type TaskRetrieveLogsResponse as TaskRetrieveLogsResponse,
-    type TaskRetrieveOutputFileResponse as TaskRetrieveOutputFileResponse,
     type TaskCreateParams as TaskCreateParams,
-    type TaskRetrieveParams as TaskRetrieveParams,
     type TaskUpdateParams as TaskUpdateParams,
     type TaskListParams as TaskListParams,
-    type TaskRetrieveOutputFileParams as TaskRetrieveOutputFileParams,
   };
 
   export {
@@ -799,7 +784,6 @@ export declare namespace BrowserUse {
     type BrowserProfileView as BrowserProfileView,
     type ProxyCountryCode as ProxyCountryCode,
     type BrowserProfileListResponse as BrowserProfileListResponse,
-    type BrowserProfileDeleteResponse as BrowserProfileDeleteResponse,
     type BrowserProfileCreateParams as BrowserProfileCreateParams,
     type BrowserProfileUpdateParams as BrowserProfileUpdateParams,
     type BrowserProfileListParams as BrowserProfileListParams,
@@ -809,7 +793,6 @@ export declare namespace BrowserUse {
     AgentProfiles as AgentProfiles,
     type AgentProfileView as AgentProfileView,
     type AgentProfileListResponse as AgentProfileListResponse,
-    type AgentProfileDeleteResponse as AgentProfileDeleteResponse,
     type AgentProfileCreateParams as AgentProfileCreateParams,
     type AgentProfileUpdateParams as AgentProfileUpdateParams,
     type AgentProfileListParams as AgentProfileListParams,
