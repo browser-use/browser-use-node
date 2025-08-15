@@ -98,8 +98,8 @@ describe('resource tasks', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveLogs', async () => {
-    const responsePromise = client.tasks.retrieveLogs('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+  test.skip('getLogs', async () => {
+    const responsePromise = client.tasks.getLogs('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -107,5 +107,47 @@ describe('resource tasks', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getOutputFile: only required params', async () => {
+    const responsePromise = client.tasks.getOutputFile('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getOutputFile: required and optional params', async () => {
+    const response = await client.tasks.getOutputFile('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('getUserUploadedFile: only required params', async () => {
+    const responsePromise = client.tasks.getUserUploadedFile('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getUserUploadedFile: required and optional params', async () => {
+    const response = await client.tasks.getUserUploadedFile('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
   });
 });

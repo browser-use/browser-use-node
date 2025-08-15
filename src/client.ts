@@ -34,12 +34,19 @@ import {
   ProxyCountryCode,
 } from './resources/browser-profiles';
 import {
+  FileView,
   LlmModel,
   TaskCreateParams,
+  TaskGetLogsResponse,
+  TaskGetOutputFileParams,
+  TaskGetOutputFileResponse,
+  TaskGetUserUploadedFileParams,
+  TaskGetUserUploadedFileResponse,
+  TaskItemView,
   TaskListParams,
   TaskListResponse,
-  TaskRetrieveLogsResponse,
   TaskStatus,
+  TaskStepView,
   TaskUpdateParams,
   TaskView,
   Tasks,
@@ -53,6 +60,7 @@ import {
   SessionView,
   Sessions,
 } from './resources/sessions/sessions';
+import { Users } from './resources/users/users';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -240,6 +248,10 @@ export class BrowserUse {
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
     return;
+  }
+
+  protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    return buildHeaders([{ 'X-Browser-Use-API-Key': this.apiKey }]);
   }
 
   /**
@@ -679,6 +691,7 @@ export class BrowserUse {
         ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
         ...getPlatformHeaders(),
       },
+      await this.authHeaders(options),
       this._options.defaultHeaders,
       bodyHeaders,
       options.headers,
@@ -745,11 +758,13 @@ export class BrowserUse {
 
   static toFile = Uploads.toFile;
 
+  users: API.Users = new API.Users(this);
   tasks: API.Tasks = new API.Tasks(this);
   sessions: API.Sessions = new API.Sessions(this);
   browserProfiles: API.BrowserProfiles = new API.BrowserProfiles(this);
   agentProfiles: API.AgentProfiles = new API.AgentProfiles(this);
 }
+BrowserUse.Users = Users;
 BrowserUse.Tasks = Tasks;
 BrowserUse.Sessions = Sessions;
 BrowserUse.BrowserProfiles = BrowserProfiles;
@@ -757,16 +772,25 @@ BrowserUse.AgentProfiles = AgentProfiles;
 export declare namespace BrowserUse {
   export type RequestOptions = Opts.RequestOptions;
 
+  export { Users as Users };
+
   export {
     Tasks as Tasks,
+    type FileView as FileView,
     type LlmModel as LlmModel,
+    type TaskItemView as TaskItemView,
     type TaskStatus as TaskStatus,
+    type TaskStepView as TaskStepView,
     type TaskView as TaskView,
     type TaskListResponse as TaskListResponse,
-    type TaskRetrieveLogsResponse as TaskRetrieveLogsResponse,
+    type TaskGetLogsResponse as TaskGetLogsResponse,
+    type TaskGetOutputFileResponse as TaskGetOutputFileResponse,
+    type TaskGetUserUploadedFileResponse as TaskGetUserUploadedFileResponse,
     type TaskCreateParams as TaskCreateParams,
     type TaskUpdateParams as TaskUpdateParams,
     type TaskListParams as TaskListParams,
+    type TaskGetOutputFileParams as TaskGetOutputFileParams,
+    type TaskGetUserUploadedFileParams as TaskGetUserUploadedFileParams,
   };
 
   export {

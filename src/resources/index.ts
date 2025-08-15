@@ -28,12 +28,20 @@ export {
 } from './sessions/sessions';
 export {
   Tasks,
+  type FileView,
   type LlmModel,
+  type TaskItemView,
   type TaskStatus,
+  type TaskStepView,
   type TaskView,
   type TaskListResponse,
-  type TaskRetrieveLogsResponse,
+  type TaskGetLogsResponse,
+  type TaskGetOutputFileResponse,
+  type TaskGetUserUploadedFileResponse,
   type TaskCreateParams,
   type TaskUpdateParams,
   type TaskListParams,
+  type TaskGetOutputFileParams,
+  type TaskGetUserUploadedFileParams,
 } from './tasks';
+export { Users } from './users/users';
