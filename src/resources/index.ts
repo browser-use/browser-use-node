@@ -34,6 +34,7 @@ export {
   type TaskStatus,
   type TaskStepView,
   type TaskView,
+  type TaskCreateResponse,
   type TaskListResponse,
   type TaskGetLogsResponse,
   type TaskGetOutputFileResponse,

@@ -45,7 +45,7 @@ export class Tasks extends APIResource {
    *
    * Returns:
    *
-   * - The created task with its initial details
+   * - The created task ID together with the task's session ID
    *
    * Raises:
    *
@@ -53,7 +53,7 @@ export class Tasks extends APIResource {
    * - 404: If referenced agent/browser profiles don't exist
    * - 400: If session is stopped or already has a running task
    */
-  create(body: TaskCreateParams, options?: RequestOptions): APIPromise<TaskView> {
+  create(body: TaskCreateParams, options?: RequestOptions): APIPromise<TaskCreateResponse> {
     return this._client.post('/tasks', { body, ...options });
   }
 
@@ -434,6 +434,18 @@ export interface TaskView {
 }
 
 /**
+ * Response model for creating a task
+ *
+ * Attributes: task_id: An unique identifier for the created task session_id: The
+ * ID of the session this task belongs to
+ */
+export interface TaskCreateResponse {
+  id: string;
+
+  sessionId: string;
+}
+
+/**
  * Response model for paginated task list requests
  *
  * Attributes: items: List of task views for the current page
@@ -583,6 +595,7 @@ export declare namespace Tasks {
     type TaskStatus as TaskStatus,
     type TaskStepView as TaskStepView,
     type TaskView as TaskView,
+    type TaskCreateResponse as TaskCreateResponse,
     type TaskListResponse as TaskListResponse,
     type TaskGetLogsResponse as TaskGetLogsResponse,
     type TaskGetOutputFileResponse as TaskGetOutputFileResponse,

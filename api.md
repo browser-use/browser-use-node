@@ -30,6 +30,7 @@ Types:
 - <code><a href="./src/resources/tasks.ts">TaskStatus</a></code>
 - <code><a href="./src/resources/tasks.ts">TaskStepView</a></code>
 - <code><a href="./src/resources/tasks.ts">TaskView</a></code>
+- <code><a href="./src/resources/tasks.ts">TaskCreateResponse</a></code>
 - <code><a href="./src/resources/tasks.ts">TaskListResponse</a></code>
 - <code><a href="./src/resources/tasks.ts">TaskGetLogsResponse</a></code>
 - <code><a href="./src/resources/tasks.ts">TaskGetOutputFileResponse</a></code>
@@ -37,7 +38,7 @@ Types:
 
 Methods:
 
-- <code title="post /tasks">client.tasks.<a href="./src/resources/tasks.ts">create</a>({ ...params }) -> TaskView</code>
+- <code title="post /tasks">client.tasks.<a href="./src/resources/tasks.ts">create</a>({ ...params }) -> TaskCreateResponse</code>
 - <code title="get /tasks/{task_id}">client.tasks.<a href="./src/resources/tasks.ts">retrieve</a>(taskID) -> TaskView</code>
 - <code title="patch /tasks/{task_id}">client.tasks.<a href="./src/resources/tasks.ts">update</a>(taskID, { ...params }) -> TaskView</code>
 - <code title="get /tasks">client.tasks.<a href="./src/resources/tasks.ts">list</a>({ ...params }) -> TaskListResponse</code>

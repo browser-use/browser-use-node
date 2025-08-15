@@ -45,7 +45,7 @@ export class Files extends APIResource {
 }
 
 /**
- * Response model for presigned upload URL
+ * Response model for a presigned upload URL
  *
  * Attributes: url: The URL to upload the file to method: The HTTP method to use
  * for the upload fields: The form fields to include in the upload request
