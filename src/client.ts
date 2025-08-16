@@ -765,11 +765,13 @@ export class BrowserUse {
   browserProfiles: API.BrowserProfiles = new API.BrowserProfiles(this);
   agentProfiles: API.AgentProfiles = new API.AgentProfiles(this);
 }
+
 BrowserUse.Users = Users;
 BrowserUse.Tasks = Tasks;
 BrowserUse.Sessions = Sessions;
 BrowserUse.BrowserProfiles = BrowserProfiles;
 BrowserUse.AgentProfiles = AgentProfiles;
+
 export declare namespace BrowserUse {
   export type RequestOptions = Opts.RequestOptions;
 
