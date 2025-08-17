@@ -56,7 +56,7 @@ Types:
 
 Methods:
 
-- <code title="get /sessions/{session_id}">client.sessions.<a href="./src/resources/sessions/sessions.ts">retrieve</a>(sessionID, { ...params }) -> SessionView</code>
+- <code title="get /sessions/{session_id}">client.sessions.<a href="./src/resources/sessions/sessions.ts">retrieve</a>(sessionID) -> SessionView</code>
 - <code title="patch /sessions/{session_id}">client.sessions.<a href="./src/resources/sessions/sessions.ts">update</a>(sessionID, { ...params }) -> SessionView</code>
 - <code title="get /sessions">client.sessions.<a href="./src/resources/sessions/sessions.ts">list</a>({ ...params }) -> SessionListResponse</code>
 - <code title="delete /sessions/{session_id}">client.sessions.<a href="./src/resources/sessions/sessions.ts">delete</a>(sessionID) -> void</code>

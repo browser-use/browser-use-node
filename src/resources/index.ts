@@ -22,7 +22,6 @@ export {
   type SessionStatus,
   type SessionView,
   type SessionListResponse,
-  type SessionRetrieveParams,
   type SessionUpdateParams,
   type SessionListParams,
 } from './sessions/sessions';

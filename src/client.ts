@@ -55,7 +55,6 @@ import {
 import {
   SessionListParams,
   SessionListResponse,
-  SessionRetrieveParams,
   SessionStatus,
   SessionUpdateParams,
   SessionView,
@@ -802,7 +801,6 @@ export declare namespace BrowserUse {
     type SessionStatus as SessionStatus,
     type SessionView as SessionView,
     type SessionListResponse as SessionListResponse,
-    type SessionRetrieveParams as SessionRetrieveParams,
     type SessionUpdateParams as SessionUpdateParams,
     type SessionListParams as SessionListParams,
   };

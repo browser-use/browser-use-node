@@ -34,12 +34,8 @@ export class Sessions extends APIResource {
    *
    * - 404: If the user agent session doesn't exist
    */
-  retrieve(
-    sessionID: string,
-    query: SessionRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<SessionView> {
-    return this._client.get(path`/sessions/${sessionID}`, { query, ...options });
+  retrieve(sessionID: string, options?: RequestOptions): APIPromise<SessionView> {
+    return this._client.get(path`/sessions/${sessionID}`, options);
   }
 
   /**
@@ -185,7 +181,6 @@ export namespace SessionListResponse {
    * session (active/stopped). live_url: URL where the browser can be viewed live in
    * real-time. started_at: Timestamp when the session was created and started.
    * finished_at: Timestamp when the session was stopped (None if still active).
-   * tasks: Optional list of tasks associated with this session.
    */
   export interface Item {
     id: string;
@@ -203,13 +198,7 @@ export namespace SessionListResponse {
     finishedAt?: string | null;
 
     liveUrl?: string | null;
-
-    tasks?: Array<TasksAPI.TaskItemView> | null;
   }
-}
-
-export interface SessionRetrieveParams {
-  includeTasks?: boolean;
 }
 
 export interface SessionUpdateParams {
@@ -231,8 +220,6 @@ export interface SessionListParams {
    */
   filterBy?: SessionStatus | null;
 
-  includeTasks?: boolean;
-
   pageNumber?: number;
 
   pageSize?: number;
@@ -245,7 +232,6 @@ export declare namespace Sessions {
     type SessionStatus as SessionStatus,
     type SessionView as SessionView,
     type SessionListResponse as SessionListResponse,
-    type SessionRetrieveParams as SessionRetrieveParams,
     type SessionUpdateParams as SessionUpdateParams,
     type SessionListParams as SessionListParams,
   };

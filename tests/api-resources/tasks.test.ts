@@ -85,9 +85,6 @@ describe('resource tasks', () => {
       client.tasks.list(
         {
           filterBy: 'started',
-          includeOutputFiles: true,
-          includeSteps: true,
-          includeUserUploadedFiles: true,
           pageNumber: 1,
           pageSize: 1,
           sessionId: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',

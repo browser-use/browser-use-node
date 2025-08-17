@@ -21,18 +21,6 @@ describe('resource sessions', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieve: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.sessions.retrieve(
-        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        { includeTasks: true },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(BrowserUse.NotFoundError);
-  });
-
-  // Prism tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.sessions.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       action: 'stop',
@@ -68,7 +56,7 @@ describe('resource sessions', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.sessions.list(
-        { filterBy: 'active', includeTasks: true, pageNumber: 1, pageSize: 1 },
+        { filterBy: 'active', pageNumber: 1, pageSize: 1 },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(BrowserUse.NotFoundError);
