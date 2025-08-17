@@ -1,6 +1,6 @@
 {
   "name": "browser-use-sdk",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "The official TypeScript library for the Browser Use API",
   "author": "Browser Use <support@browser-use.com>",
   "types": "dist/index.d.ts",
