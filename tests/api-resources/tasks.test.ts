@@ -87,6 +87,8 @@ describe('resource tasks', () => {
     await expect(
       client.tasks.list(
         {
+          after: '2019-12-27T18:11:19.117Z',
+          before: '2019-12-27T18:11:19.117Z',
           filterBy: 'started',
           pageNumber: 1,
           pageSize: 1,
