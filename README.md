@@ -26,7 +26,9 @@ const client = new BrowserUse({
   apiKey: process.env['BROWSER_USE_API_KEY'], // This is the default and can be omitted
 });
 
-const task = await client.tasks.create({ task: 'x' });
+const task = await client.tasks.create({
+  task: 'Search for the top 10 Hacker News posts and return the title and url.',
+});
 
 console.log(task.id);
 ```
@@ -43,7 +45,9 @@ const client = new BrowserUse({
   apiKey: process.env['BROWSER_USE_API_KEY'], // This is the default and can be omitted
 });
 
-const params: BrowserUse.TaskCreateParams = { task: 'x' };
+const params: BrowserUse.TaskCreateParams = {
+  task: 'Search for the top 10 Hacker News posts and return the title and url.',
+};
 const task: BrowserUse.TaskCreateResponse = await client.tasks.create(params);
 ```
 
@@ -57,15 +61,17 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const task = await client.tasks.create({ task: 'x' }).catch(async (err) => {
-  if (err instanceof BrowserUse.APIError) {
-    console.log(err.status); // 400
-    console.log(err.name); // BadRequestError
-    console.log(err.headers); // {server: 'nginx', ...}
-  } else {
-    throw err;
-  }
-});
+const task = await client.tasks
+  .create({ task: 'Search for the top 10 Hacker News posts and return the title and url.' })
+  .catch(async (err) => {
+    if (err instanceof BrowserUse.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:
@@ -97,7 +103,7 @@ const client = new BrowserUse({
 });
 
 // Or, configure per-request:
-await client.tasks.create({ task: 'x' }, {
+await client.tasks.create({ task: 'Search for the top 10 Hacker News posts and return the title and url.' }, {
   maxRetries: 5,
 });
 ```
@@ -114,7 +120,7 @@ const client = new BrowserUse({
 });
 
 // Override per-request:
-await client.tasks.create({ task: 'x' }, {
+await client.tasks.create({ task: 'Search for the top 10 Hacker News posts and return the title and url.' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -137,11 +143,15 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new BrowserUse();
 
-const response = await client.tasks.create({ task: 'x' }).asResponse();
+const response = await client.tasks
+  .create({ task: 'Search for the top 10 Hacker News posts and return the title and url.' })
+  .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: task, response: raw } = await client.tasks.create({ task: 'x' }).withResponse();
+const { data: task, response: raw } = await client.tasks
+  .create({ task: 'Search for the top 10 Hacker News posts and return the title and url.' })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(task.id);
 ```
