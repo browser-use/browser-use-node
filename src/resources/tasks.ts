@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as TasksAPI from './tasks';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -258,33 +257,17 @@ export interface FileView {
   fileName: string;
 }
 
-export type LlmModel =
-  | 'gpt-4o'
-  | 'gpt-4o-mini'
-  | 'gpt-4.1'
-  | 'gpt-4.1-mini'
-  | 'o4-mini'
-  | 'o3'
-  | 'gemini-2.0-flash'
-  | 'gemini-2.0-flash-lite'
-  | 'gemini-2.5-flash-preview-04-17'
-  | 'gemini-2.5-flash'
-  | 'gemini-2.5-pro'
-  | 'claude-3-7-sonnet-20250219'
-  | 'claude-sonnet-4-20250514'
-  | 'llama-4-maverick-17b-128e-instruct';
-
 /**
  * View model for representing a task with its execution details
  *
  * Attributes: id: Unique identifier for the task session_id: ID of the session
- * this task belongs to llm: The LLM model used for this task task: The task
- * prompt/instruction given to the agent status: Current status of the task
- * execution started_at: Naive UTC timestamp when the task was started finished_at:
- * Naive UTC timestamp when the task completed (None if still running) metadata:
- * Optional additional metadata associated with the task set by the user
- * is_scheduled: Whether this task was created as a scheduled task steps: Optional
- * list of execution steps done_output: Final output/result of the task
+ * this task belongs to llm: The LLM model used for this task represented as a
+ * string task: The task prompt/instruction given to the agent status: Current
+ * status of the task execution started_at: Naive UTC timestamp when the task was
+ * started finished_at: Naive UTC timestamp when the task completed (None if still
+ * running) metadata: Optional additional metadata associated with the task set by
+ * the user is_scheduled: Whether this task was created as a scheduled task steps:
+ * Optional list of execution steps done_output: Final output/result of the task
  * user_uploaded_files: Optional list of files uploaded by user for this task
  * output_files: Optional list of files generated as output by this task
  * browser_use_version: Version of browser-use used for this task (older tasks may
@@ -296,7 +279,7 @@ export interface TaskItemView {
 
   isScheduled: boolean;
 
-  llm: LlmModel;
+  llm: string;
 
   sessionId: string;
 
@@ -366,24 +349,24 @@ export interface TaskStepView {
  *
  * Attributes: id: Unique identifier for the task session_id: ID of the session
  * this task belongs to session: The session this task belongs to llm: The LLM
- * model used for this task task: The task prompt/instruction given to the agent
- * status: Current status of the task execution started_at: Naive UTC timestamp
- * when the task was started finished_at: Naive UTC timestamp when the task
- * completed (None if still running) metadata: Optional additional metadata
- * associated with the task set by the user is_scheduled: Whether this task was
- * created as a scheduled task steps: List of execution steps done_output: Final
- * output/result of the task user_uploaded_files: List of files uploaded by user
- * for this task output_files: List of files generated as output by this task
- * browser_use_version: Version of browser-use used for this task (older tasks may
- * not have this set) is_success: Whether the task was successful (self-reported by
- * the agent)
+ * model used for this task represented as a string task: The task
+ * prompt/instruction given to the agent status: Current status of the task
+ * execution started_at: Naive UTC timestamp when the task was started finished_at:
+ * Naive UTC timestamp when the task completed (None if still running) metadata:
+ * Optional additional metadata associated with the task set by the user
+ * is_scheduled: Whether this task was created as a scheduled task steps: List of
+ * execution steps done_output: Final output/result of the task
+ * user_uploaded_files: List of files uploaded by user for this task output_files:
+ * List of files generated as output by this task browser_use_version: Version of
+ * browser-use used for this task (older tasks may not have this set) is_success:
+ * Whether the task was successful (self-reported by the agent)
  */
 export interface TaskView {
   id: string;
 
   isScheduled: boolean;
 
-  llm: LlmModel;
+  llm: string;
 
   outputFiles: Array<FileView>;
 
@@ -559,7 +542,18 @@ export namespace TaskCreateParams {
    * of the agent profile to use for the task
    */
   export interface AgentSettings {
-    llm?: TasksAPI.LlmModel;
+    llm?:
+      | 'gpt-4.1'
+      | 'gpt-4.1-mini'
+      | 'o4-mini'
+      | 'o3'
+      | 'gemini-2.5-flash'
+      | 'gemini-2.5-pro'
+      | 'claude-sonnet-4-20250514'
+      | 'gpt-4o'
+      | 'gpt-4o-mini'
+      | 'llama-4-maverick-17b-128e-instruct'
+      | 'claude-3-7-sonnet-20250219';
 
     profileId?: string | null;
 
@@ -624,7 +618,6 @@ export interface TaskGetUserUploadedFileParams {
 export declare namespace Tasks {
   export {
     type FileView as FileView,
-    type LlmModel as LlmModel,
     type TaskItemView as TaskItemView,
     type TaskStatus as TaskStatus,
     type TaskStepView as TaskStepView,

@@ -25,7 +25,7 @@ describe('resource tasks', () => {
     const response = await client.tasks.create({
       task: 'x',
       agentSettings: {
-        llm: 'gpt-4o',
+        llm: 'gpt-4.1',
         profileId: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         startUrl: 'startUrl',
       },

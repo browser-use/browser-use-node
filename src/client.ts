@@ -35,7 +35,6 @@ import {
 } from './resources/browser-profiles';
 import {
   FileView,
-  LlmModel,
   TaskCreateParams,
   TaskCreateResponse,
   TaskGetLogsResponse,
@@ -779,7 +778,6 @@ export declare namespace BrowserUse {
   export {
     Tasks as Tasks,
     type FileView as FileView,
-    type LlmModel as LlmModel,
     type TaskItemView as TaskItemView,
     type TaskStatus as TaskStatus,
     type TaskStepView as TaskStepView,

@@ -25,7 +25,6 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/tasks.ts">FileView</a></code>
-- <code><a href="./src/resources/tasks.ts">LlmModel</a></code>
 - <code><a href="./src/resources/tasks.ts">TaskItemView</a></code>
 - <code><a href="./src/resources/tasks.ts">TaskStatus</a></code>
 - <code><a href="./src/resources/tasks.ts">TaskStepView</a></code>
