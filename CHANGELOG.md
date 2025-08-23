@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.1 (2025-08-23)
+
+Full Changelog: [v1.2.0...v1.2.1](https://github.com/browser-use/browser-use-node/compare/v1.2.0...v1.2.1)
+
+### Chores
+
+* update CI script ([e329f39](https://github.com/browser-use/browser-use-node/commit/e329f394391879c94aec2f928cf62180ba354542))
+
 ## 1.2.0 (2025-08-22)
 
 Full Changelog: [v1.1.3...v1.2.0](https://github.com/browser-use/browser-use-node/compare/v1.1.3...v1.2.0)
