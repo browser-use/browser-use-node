@@ -1,8 +1,9 @@
-<img src="./assets/cloud-banner-js.png" alt="Browser Use JS" width="full"/>
+# BrowserUse TypeScript Library
 
-```sh
-pnpm add browser-use-sdk
-```
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fbrowser-use%2Fbrowser-use-node)
+[![npm shield](https://img.shields.io/npm/v/)](https://www.npmjs.com/package/)
+
+The BrowserUse TypeScript library provides convenient access to the BrowserUse APIs from TypeScript.
 
 ## Two-Step QuickStart
 
@@ -11,14 +12,14 @@ pnpm add browser-use-sdk
 1. ✌️ Automate the web!
 
 ```ts
-import BrowserUse from 'browser-use-sdk';
+import BrowserUse from "browser-use-sdk";
 
 const client = new BrowserUse({
-  apiKey: 'bu_...',
+    apiKey: "bu_...",
 });
 
 const result = await client.tasks.run({
-  task: 'Search for the top 10 Hacker News posts and return the title and url.',
+    task: "Search for the top 10 Hacker News posts and return the title and url.",
 });
 
 console.log(result.doneOutput);
@@ -29,23 +30,23 @@ console.log(result.doneOutput);
 ### Structured Output with Zod
 
 ```ts
-import z from 'zod';
+import z from "zod";
 
 const TaskOutput = z.object({
-  posts: z.array(
-    z.object({
-      title: z.string(),
-      url: z.string(),
-    }),
-  ),
+    posts: z.array(
+        z.object({
+            title: z.string(),
+            url: z.string(),
+        }),
+    ),
 });
 
 const result = await client.tasks.run({
-  task: 'Search for the top 10 Hacker News posts and return the title and url.',
+    task: "Search for the top 10 Hacker News posts and return the title and url.",
 });
 
 for (const post of result.parsedOutput.posts) {
-  console.log(`${post.title} - ${post.url}`);
+    console.log(`${post.title} - ${post.url}`);
 }
 ```
 
@@ -53,31 +54,31 @@ for (const post of result.parsedOutput.posts) {
 
 ```ts
 const task = await browseruse.tasks.create({
-  task: 'Search for the top 10 Hacker News posts and return the title and url.',
-  schema: TaskOutput,
+    task: "Search for the top 10 Hacker News posts and return the title and url.",
+    schema: TaskOutput,
 });
 
 const stream = browseruse.tasks.stream({
-  taskId: task.id,
-  schema: TaskOutput,
+    taskId: task.id,
+    schema: TaskOutput,
 });
 
 for await (const msg of stream) {
-  switch (msg.status) {
-    case 'started':
-    case 'paused':
-    case 'stopped':
-      console.log(`running: ${msg}`);
-      break;
+    switch (msg.status) {
+        case "started":
+        case "paused":
+        case "stopped":
+            console.log(`running: ${msg}`);
+            break;
 
-    case 'finished':
-      console.log(`done:`);
+        case "finished":
+            console.log(`done:`);
 
-      for (const post of msg.parsedOutput.posts) {
-        console.log(`${post.title} - ${post.url}`);
-      }
-      break;
-  }
+            for (const post of msg.parsedOutput.posts) {
+                console.log(`${post.title} - ${post.url}`);
+            }
+            break;
+    }
 }
 ```
 
@@ -86,38 +87,35 @@ for await (const msg of stream) {
 > We encourage you to use the SDK functions that verify and parse webhook events.
 
 ```ts
-import {
-  verifyWebhookEventSignature,
-  type WebhookAgentTaskStatusUpdatePayload,
-} from 'browser-use-sdk/lib/webhooks';
+import { verifyWebhookEventSignature, type WebhookAgentTaskStatusUpdatePayload } from "browser-use-sdk/lib/webhooks";
 
 export async function POST(req: Request) {
-  const signature = req.headers['x-browser-use-signature'] as string;
-  const timestamp = req.headers['x-browser-use-timestamp'] as string;
+    const signature = req.headers["x-browser-use-signature"] as string;
+    const timestamp = req.headers["x-browser-use-timestamp"] as string;
 
-  const event = await verifyWebhookEventSignature(
-    {
-      body,
-      signature,
-      timestamp,
-    },
-    {
-      secret: SECRET_KEY,
-    },
-  );
+    const event = await verifyWebhookEventSignature(
+        {
+            body,
+            signature,
+            timestamp,
+        },
+        {
+            secret: SECRET_KEY,
+        },
+    );
 
-  if (!event.ok) {
-    return;
-  }
+    if (!event.ok) {
+        return;
+    }
 
-  switch (event.event.type) {
-    case 'agent.task.status_update':
-      break;
-    case 'test':
-      break;
-    default:
-      break;
-  }
+    switch (event.event.type) {
+        case "agent.task.status_update":
+            break;
+        case "test":
+            break;
+        default:
+            break;
+    }
 }
 ```
 
@@ -238,10 +236,10 @@ The log level can be configured in two ways:
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import BrowserUse from 'browser-use-sdk';
+import BrowserUse from "browser-use-sdk";
 
 const client = new BrowserUse({
-  logLevel: 'debug', // Show all log messages
+    logLevel: "debug", // Show all log messages
 });
 ```
 
@@ -266,14 +264,14 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import BrowserUse from 'browser-use-sdk';
-import pino from 'pino';
+import BrowserUse from "browser-use-sdk";
+import pino from "pino";
 
 const logger = pino();
 
 const client = new BrowserUse({
-  logger: logger.child({ name: 'BrowserUse' }),
-  logLevel: 'debug', // Send all messages to pino, allowing it to filter
+    logger: logger.child({ name: "BrowserUse" }),
+    logLevel: "debug", // Send all messages to pino, allowing it to filter
 });
 ```
 
@@ -284,7 +282,7 @@ By default, this library expects a global `fetch` function is defined.
 If you want to use a different `fetch` function, you can either polyfill the global:
 
 ```ts
-import fetch from 'my-fetch';
+import fetch from "my-fetch";
 
 globalThis.fetch = fetch;
 ```
@@ -292,8 +290,8 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import BrowserUse from 'browser-use-sdk';
-import fetch from 'my-fetch';
+import BrowserUse from "browser-use-sdk";
+import fetch from "my-fetch";
 
 const client = new BrowserUse({ fetch });
 ```
@@ -303,12 +301,12 @@ const client = new BrowserUse({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import BrowserUse from 'browser-use-sdk';
+import BrowserUse from "browser-use-sdk";
 
 const client = new BrowserUse({
-  fetchOptions: {
-    // `RequestInit` options
-  },
+    fetchOptions: {
+        // `RequestInit` options
+    },
 });
 ```
 
@@ -320,39 +318,39 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import BrowserUse from 'browser-use-sdk';
-import * as undici from 'undici';
+import BrowserUse from "browser-use-sdk";
+import * as undici from "undici";
 
-const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
+const proxyAgent = new undici.ProxyAgent("http://localhost:8888");
 const client = new BrowserUse({
-  fetchOptions: {
-    dispatcher: proxyAgent,
-  },
+    fetchOptions: {
+        dispatcher: proxyAgent,
+    },
 });
 ```
 
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import BrowserUse from 'browser-use-sdk';
+import BrowserUse from "browser-use-sdk";
 
 const client = new BrowserUse({
-  fetchOptions: {
-    proxy: 'http://localhost:8888',
-  },
+    fetchOptions: {
+        proxy: "http://localhost:8888",
+    },
 });
 ```
 
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import BrowserUse from 'npm:browser-use-sdk';
+import BrowserUse from "npm:browser-use-sdk";
 
-const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
+const httpClient = Deno.createHttpClient({ proxy: { url: "http://localhost:8888" } });
 const client = new BrowserUse({
-  fetchOptions: {
-    client: httpClient,
-  },
+    fetchOptions: {
+        client: httpClient,
+    },
 });
 ```
 
@@ -379,4 +377,171 @@ If you are interested in other runtime environments, please open or upvote an is
 
 ## Contributing
 
-See [the contributing documentation](./CONTRIBUTING.md).
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!
+
+## Installation
+
+```sh
+npm i -s
+```
+
+## Reference
+
+A full reference for this library is available [here](https://github.com/browser-use/browser-use-node/blob/HEAD/./reference.md).
+
+## Usage
+
+Instantiate and use the client with the following:
+
+```typescript
+import { BrowserUseClient } from "";
+
+const client = new BrowserUseClient({ environment: "YOUR_BASE_URL", apiKey: "YOUR_API_KEY" });
+await client.tasks.createTask({
+    task: "task",
+});
+```
+
+## Request And Response Types
+
+The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+following namespace:
+
+```typescript
+import { BrowserUse } from "BrowserUse";
+
+const request: BrowserUse.ListTasksTasksGetRequest = {
+    ...
+};
+```
+
+## Exception Handling
+
+When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
+will be thrown.
+
+```typescript
+import { BrowserUseError } from "BrowserUse";
+
+try {
+    await client.tasks.createTask(...);
+} catch (err) {
+    if (err instanceof BrowserUseError) {
+        console.log(err.statusCode);
+        console.log(err.message);
+        console.log(err.body);
+        console.log(err.rawResponse);
+    }
+}
+```
+
+## Advanced
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `headers` request option.
+
+```typescript
+const response = await client.tasks.createTask(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
+
+```typescript
+const response = await client.tasks.createTask(..., {
+    queryParams: {
+        'customQueryParamKey': 'custom query param value'
+    }
+});
+```
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retryable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `maxRetries` request option to configure this behavior.
+
+```typescript
+const response = await client.tasks.createTask(..., {
+    maxRetries: 0 // override maxRetries at the request level
+});
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
+
+```typescript
+const response = await client.tasks.createTask(..., {
+    timeoutInSeconds: 30 // override timeout to 30s
+});
+```
+
+### Aborting Requests
+
+The SDK allows users to abort requests at any point by passing in an abort signal.
+
+```typescript
+const controller = new AbortController();
+const response = await client.tasks.createTask(..., {
+    abortSignal: controller.signal
+});
+controller.abort(); // aborts the request
+```
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.withRawResponse()` method.
+The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
+
+```typescript
+const { data, rawResponse } = await client.tasks.createTask(...).withRawResponse();
+
+console.log(data);
+console.log(rawResponse.headers['X-My-Header']);
+```
+
+### Runtime Compatibility
+
+The SDK works in the following runtimes:
+
+- Node.js 18+
+- Vercel
+- Cloudflare Workers
+- Deno v1.25+
+- Bun 1.0+
+- React Native
+
+### Customizing Fetch Client
+
+The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
+unsupported environment, this provides a way for you to break glass and ensure the SDK works.
+
+```typescript
+import { BrowserUseClient } from "BrowserUse";
+
+const client = new BrowserUseClient({
+    ...
+    fetcher: // provide your implementation here
+});
+```
