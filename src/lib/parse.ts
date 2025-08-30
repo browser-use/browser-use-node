@@ -1,4 +1,5 @@
 import z, { type ZodType } from 'zod';
+import { toJSONSchema } from 'zod/v4';
 import type { TaskCreateParams, TaskView } from '../resources/tasks';
 
 // RUN
@@ -8,7 +9,7 @@ export type TaskCreateParamsWithSchema<T extends ZodType> = Omit<TaskCreateParam
 };
 
 export function stringifyStructuredOutput<T extends ZodType>(schema: T): string {
-  return JSON.stringify(z.toJSONSchema(schema));
+  return JSON.stringify(toJSONSchema(schema));
 }
 
 // RETRIEVE
