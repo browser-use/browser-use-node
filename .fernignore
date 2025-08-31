@@ -1,5 +1,4 @@
 # Specify files that shouldn't be modified by Fern
-src/wrapper/*
-src/examples/*
-examples/*
-.vscode/*
+src/wrapper/
+examples/
+.vscode/
