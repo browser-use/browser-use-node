@@ -1,15 +1,17 @@
+import type { ZodType } from "zod";
+
 import * as BrowserUse from "../../api/index.js";
 import * as core from "../../core/index.js";
 import { Tasks } from "../../api/resources/tasks/client/Client.js";
 import {
     type CreateTaskRequestWithSchema,
-    type WrappedTaskResponse,
+    type WrappedTaskFnsWithSchema,
+    type WrappedTaskFnsWithoutSchema,
     type TaskViewWithSchema,
     stringifyStructuredOutput,
     wrapCreateTaskResponse,
     parseStructuredTaskOutput,
-} from "wrapper/lib/parse.js";
-import { ZodType } from "zod";
+} from "../lib/parse.js";
 
 export class BrowserUseTasks extends Tasks {
     constructor(options: Tasks.Options) {
@@ -19,22 +21,24 @@ export class BrowserUseTasks extends Tasks {
     public createTask<T extends ZodType>(
         request: CreateTaskRequestWithSchema<T>,
         requestOptions?: Tasks.RequestOptions,
-    ): core.HttpResponsePromise<WrappedTaskResponse<T>>;
+    ): core.HttpResponsePromise<WrappedTaskFnsWithSchema<T>>;
     public createTask(
         request: BrowserUse.CreateTaskRequest,
         requestOptions?: Tasks.RequestOptions,
-    ): core.HttpResponsePromise<WrappedTaskResponse<null>>;
+    ): core.HttpResponsePromise<WrappedTaskFnsWithoutSchema>;
     public createTask(
         request: BrowserUse.CreateTaskRequest | CreateTaskRequestWithSchema<ZodType>,
         requestOptions?: Tasks.RequestOptions,
-    ): core.HttpResponsePromise<WrappedTaskResponse<ZodType>> | core.HttpResponsePromise<WrappedTaskResponse<null>> {
+    ):
+        | core.HttpResponsePromise<WrappedTaskFnsWithSchema<ZodType>>
+        | core.HttpResponsePromise<WrappedTaskFnsWithoutSchema> {
         if ("schema" in request) {
             const req: BrowserUse.CreateTaskRequest = {
                 ...request,
                 structuredOutput: stringifyStructuredOutput(request.schema),
             };
 
-            const promise: Promise<core.WithRawResponse<WrappedTaskResponse<ZodType>>> = super
+            const promise: Promise<core.WithRawResponse<WrappedTaskFnsWithSchema<ZodType>>> = super
                 .createTask(req, requestOptions)
                 .withRawResponse()
                 .then((res) => {
@@ -49,7 +53,7 @@ export class BrowserUseTasks extends Tasks {
             return core.HttpResponsePromise.fromPromise(promise);
         }
 
-        const promise: Promise<core.WithRawResponse<WrappedTaskResponse<null>>> = super
+        const promise: Promise<core.WithRawResponse<WrappedTaskFnsWithoutSchema>> = super
             .createTask(request, requestOptions)
             .withRawResponse()
             .then((res) => {

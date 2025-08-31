@@ -13,6 +13,8 @@ const browseruse = new BrowserUseClient({
     environment: "production",
 });
 
+// Basic ---------------------------------------------------------------------
+
 async function basic() {
     console.log(`Basic: Running Task...`);
 
@@ -27,6 +29,8 @@ async function basic() {
 
     console.log(`Basic: DONE`);
 }
+
+// Structured ----------------------------------------------------------------
 
 const HackerNewsResponse = z.object({
     title: z.string(),
@@ -44,7 +48,7 @@ async function structured() {
     const rsp = await browseruse.tasks.createTask({
         task: "Search for the top 10 Hacker News posts and return the title and url!",
         schema: TaskOutput,
-        agentSettings: { llm: "gpt-4.1" },
+        agent: { llm: "gpt-4.1" },
     });
 
     const result = await rsp.complete();

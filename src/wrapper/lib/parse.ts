@@ -4,7 +4,7 @@ import type { RequestOptions } from "node:http";
 import z, { type ZodType } from "zod";
 
 import type { BrowserUse } from "index.js";
-import type { BrowserUseTasks } from "wrapper/api/BrowserUseTasks.js";
+import type { BrowserUseTasks } from "../api/BrowserUseTasks.js";
 import type { CreateTaskRequest, TaskView } from "../../api/index.js";
 import { ExhaustiveSwitchCheck } from "./types.js";
 
@@ -70,40 +70,15 @@ export function getTaskViewHash(view: TaskView): string {
 
 // Utils
 
-// Playground
+export type WrappedTaskFnsWithSchema<T extends ZodType> = BrowserUse.TaskCreatedResponse & {
+    stream: (options?: RequestOptions) => AsyncGenerator<{ event: "status"; data: TaskViewWithSchema<T> }>;
+    complete: (options?: RequestOptions) => Promise<TaskViewWithSchema<T>>;
+};
 
-function test1<T extends string>(val: { type: "string"; value: T }): T;
-function test1(val: { type: "null" }): null;
-function test1<T extends string>(val: { type: "string"; value: T } | { type: "null" }): T | null {
-    return val.type === "string" ? val.value : null;
-}
-
-function test2<T extends string>(val: { type: "string"; value: T }): T;
-function test2(val: { type: "null" }): null;
-function test2(val: { type: "string"; value: string } | { type: "null" }): string | null {
-    function util(val: { type: "string"; value: string } | { type: "null" }): string | null {
-        return val.type === "string" ? val.value : null;
-    }
-
-    return util(val);
-}
-
-const foo = test2({ type: "string", value: "bar" });
-const bar = test2({ type: "null" });
-
-//
-
-type WrappedTaskFns<T extends ZodType | null> = T extends ZodType
-    ? {
-          stream: (options?: RequestOptions) => AsyncGenerator<{ event: "status"; data: TaskViewWithSchema<T> }>;
-          complete: (options?: RequestOptions) => Promise<TaskViewWithSchema<T>>;
-      }
-    : {
-          stream: (options?: RequestOptions) => AsyncGenerator<{ event: "status"; data: TaskView }>;
-          complete: (options?: RequestOptions) => Promise<TaskView>;
-      };
-
-export type WrappedTaskResponse<T extends ZodType | null> = BrowserUse.TaskCreatedResponse & WrappedTaskFns<T>;
+export type WrappedTaskFnsWithoutSchema = BrowserUse.TaskCreatedResponse & {
+    stream: (options?: RequestOptions) => AsyncGenerator<{ event: "status"; data: TaskView }>;
+    complete: (options?: RequestOptions) => Promise<TaskView>;
+};
 
 /**
  * Wraps the task created response with the stream and complete functions.
@@ -112,17 +87,17 @@ export function wrapCreateTaskResponse<T extends ZodType>(
     client: BrowserUseTasks,
     response: BrowserUse.TaskCreatedResponse,
     schema: T,
-): WrappedTaskResponse<T>;
+): WrappedTaskFnsWithSchema<T>;
 export function wrapCreateTaskResponse(
     client: BrowserUseTasks,
     response: BrowserUse.TaskCreatedResponse,
     schema: null,
-): WrappedTaskResponse<null>;
+): WrappedTaskFnsWithoutSchema;
 export function wrapCreateTaskResponse(
     client: BrowserUseTasks,
     response: BrowserUse.TaskCreatedResponse,
     schema: ZodType | null,
-): WrappedTaskResponse<ZodType | null> {
+): WrappedTaskFnsWithSchema<ZodType> | WrappedTaskFnsWithoutSchema {
     // NOTE: We create utility functions for streaming and watching internally in the function
     //       to expose them as utility methods to the base object.
 
@@ -216,7 +191,7 @@ export function wrapCreateTaskResponse(
     // NOTE: Finally, we return the wrapped task response.
 
     if (schema == null) {
-        const wrapped: WrappedTaskResponse<null> = {
+        const wrapped: WrappedTaskFnsWithoutSchema = {
             ...response,
             stream: (options?: RequestOptions) => stream(null, options),
             complete: (options?: RequestOptions) => complete(null, options),
@@ -225,7 +200,7 @@ export function wrapCreateTaskResponse(
         return wrapped;
     }
 
-    const wrapped: WrappedTaskResponse<ZodType> = {
+    const wrapped: WrappedTaskFnsWithSchema<ZodType> = {
         ...response,
         stream: (options?: RequestOptions) => stream<ZodType>(schema, options),
         complete: (options?: RequestOptions) => complete<ZodType>(schema, options),
@@ -233,3 +208,24 @@ export function wrapCreateTaskResponse(
 
     return wrapped;
 }
+
+// Playground
+
+// function test1<T extends string>(val: { type: "string"; value: T }): T;
+// function test1(val: { type: "null" }): null;
+// function test1<T extends string>(val: { type: "string"; value: T } | { type: "null" }): T | null {
+//     return val.type === "string" ? val.value : null;
+// }
+
+// function test2<T extends string>(val: { type: "string"; value: T }): T;
+// function test2(val: { type: "null" }): null;
+// function test2(val: { type: "string"; value: string } | { type: "null" }): string | null {
+//     function util(val: { type: "string"; value: string } | { type: "null" }): string | null {
+//         return val.type === "string" ? val.value : null;
+//     }
+
+//     return util(val);
+// }
+
+// const foo = test2({ type: "string", value: "bar" });
+// const bar = test2({ type: "null" });
