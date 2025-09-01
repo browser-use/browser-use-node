@@ -13,7 +13,6 @@ export * from "./ProfileListResponse.js";
 export * from "./ProfileNotFoundError.js";
 export * from "./ProfileView.js";
 export * from "./ProxyCountryCode.js";
-export * from "./ProxySettings.js";
 export * from "./SessionHasRunningTaskError.js";
 export * from "./SessionItemView.js";
 export * from "./SessionListResponse.js";
