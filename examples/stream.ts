@@ -18,7 +18,6 @@ const browseruse = new BrowserUseClient({
 async function basic() {
     console.log("Basic: Creating task and starting stream...");
 
-    // Create a task and get the stream
     const task = await browseruse.tasks.createTask({
         task: "What's the weather in SF and what's the temperature?",
         agent: { llm: "gemini-2.5-flash" },
@@ -29,9 +28,9 @@ async function basic() {
     }
 
     const result = await task.complete();
-    console.log(result);
 
-    console.log("\nBasic: Stream completed");
+    console.log("Basic: Stream completed");
+    console.log(result.output);
 }
 
 // Structured ----------------------------------------------------------------
@@ -48,9 +47,8 @@ const TaskOutput = z.object({
 });
 
 async function structured() {
-    console.log("Structured: Creating task and starting stream...\n");
+    console.log("Structured: Creating task and starting stream...");
 
-    // Create a task and get the stream
     const task = await browseruse.tasks.createTask({
         task: "Extract top 10 Hacker News posts and return the title, url, and score",
         schema: TaskOutput,
@@ -62,9 +60,12 @@ async function structured() {
     }
 
     const result = await task.complete();
-    console.log(result);
 
-    console.log("\nStructured: Stream completed");
+    console.log("Structured: Stream completed");
+
+    for (const post of result.parsed!.posts) {
+        console.log(` - ${post.title} (${post.score}) ${post.url}`);
+    }
 }
 
 basic()

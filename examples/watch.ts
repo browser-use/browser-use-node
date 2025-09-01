@@ -16,25 +16,22 @@ const browseruse = new BrowserUseClient({
 // Basic ---------------------------------------------------------------------
 
 async function basic() {
-    console.log("Basic: Creating task and starting stream...");
+    console.log("Basic: Creating task and starting watch...");
 
-    // Create a task and get the stream
     const task = await browseruse.tasks.createTask({
         task: "What's the weather in SF and what's the temperature?",
         agent: { llm: "gemini-2.5-flash" },
     });
 
     for await (const msg of task.watch()) {
-        console.log(
-            `Basic: ${msg.data.status} ${msg.data.sessionId} ${msg.data.steps[msg.data.steps.length - 1]?.nextGoal}`,
-        );
+        console.log(msg);
 
         if (msg.data.status === "finished") {
-            console.log(`Basic: ${msg.data.output}`);
+            console.log(`OUTPUT: ${msg.data.output}`);
         }
     }
 
-    console.log("\nBasic: Stream completed");
+    console.log("Watch completed");
 }
 
 // Structured ----------------------------------------------------------------
@@ -51,9 +48,8 @@ const TaskOutput = z.object({
 });
 
 async function structured() {
-    console.log("Structured: Creating task and starting stream...\n");
+    console.log("Structured: Creating task and starting watch...\n");
 
-    // Create a task and get the stream
     const task = await browseruse.tasks.createTask({
         task: "Extract top 10 Hacker News posts and return the title, url, and score",
         schema: TaskOutput,
@@ -61,30 +57,19 @@ async function structured() {
     });
 
     for await (const msg of task.watch()) {
-        // Regular
-        process.stdout.write(`Structured: ${msg.data.status}`);
-        if (msg.data.sessionId) {
-            process.stdout.write(` | Live URL: ${msg.data.sessionId}`);
-        }
-
-        if (msg.data.steps.length > 0) {
-            const latestStep = msg.data.steps[msg.data.steps.length - 1];
-            process.stdout.write(` | ${latestStep!.nextGoal}`);
-        }
-
-        process.stdout.write("\n");
+        console.log(msg);
 
         // Output
         if (msg.data.status === "finished") {
-            process.stdout.write(`\n\nOUTPUT:`);
+            console.log(`OUTPUT:`);
 
             for (const post of msg.data.parsed!.posts) {
-                process.stdout.write(`\n - ${post.title} (${post.score}) ${post.url}`);
+                console.log(` - ${post.title} (${post.score}) ${post.url}`);
             }
         }
     }
 
-    console.log("\nStructured: Stream completed");
+    console.log("\nStructured: Watch completed");
 }
 
 basic()
