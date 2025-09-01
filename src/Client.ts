@@ -13,7 +13,7 @@ import { Profiles } from "./api/resources/profiles/client/Client.js";
 
 export declare namespace BrowserUseClient {
     export interface Options {
-        environment: core.Supplier<environments.BrowserUseEnvironment | string>;
+        environment?: core.Supplier<environments.BrowserUseEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         apiKey: core.Supplier<string>;
@@ -50,7 +50,7 @@ export class BrowserUseClient {
                 {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "",
-                    "X-Fern-SDK-Version": "0.0.35",
+                    "X-Fern-SDK-Version": "0.0.37",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },

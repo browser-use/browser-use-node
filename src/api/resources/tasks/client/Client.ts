@@ -10,7 +10,7 @@ import * as errors from "../../../../errors/index.js";
 
 export declare namespace Tasks {
     export interface Options {
-        environment: core.Supplier<environments.BrowserUseEnvironment | string>;
+        environment?: core.Supplier<environments.BrowserUseEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         apiKey: core.Supplier<string>;
@@ -95,7 +95,8 @@ export class Tasks {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
                 "tasks",
             ),
             method: "GET",
@@ -180,7 +181,8 @@ export class Tasks {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
                 "tasks",
             ),
             method: "POST",
@@ -272,7 +274,8 @@ export class Tasks {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
                 `tasks/${encodeURIComponent(taskId)}`,
             ),
             method: "GET",
@@ -357,7 +360,8 @@ export class Tasks {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
                 `tasks/${encodeURIComponent(taskId)}`,
             ),
             method: "PATCH",
@@ -441,7 +445,8 @@ export class Tasks {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
                 `tasks/${encodeURIComponent(taskId)}/logs`,
             ),
             method: "GET",
