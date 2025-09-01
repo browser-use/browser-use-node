@@ -10,7 +10,6 @@ env();
 // gets API Key from environment variable BROWSER_USE_API_KEY
 const browseruse = new BrowserUseClient({
     apiKey: process.env.BROWSER_USE_API_KEY!,
-    environment: "https://api.browser-use.com/api/v2",
 });
 
 // Basic ---------------------------------------------------------------------
@@ -48,7 +47,7 @@ async function structured() {
     const rsp = await browseruse.tasks.createTask({
         task: "Search for the top 10 Hacker News posts and return the title and url!",
         schema: TaskOutput,
-        agent: { llm: "gpt-4.1" },
+        llm: "gpt-4.1",
     });
 
     const result = await rsp.complete();

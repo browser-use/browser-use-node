@@ -169,6 +169,25 @@ export function wrapCreateTaskResponse(
         } while (true);
     }
 
+    /**
+     * Streams the steps of the task and closes when the task is finished.
+     *
+     * @description Logs each step of the task exactly once. If you start the stream again, it will log the steps again.
+     */
+    async function* stream(
+        config?: { interval?: number },
+        options?: RequestOptions,
+    ): AsyncGenerator<BrowserUse.TaskStepView> {
+        const steps: { total: number } = { total: 0 };
+
+        for await (const msg of _watch(response.id, config, options)) {
+            for (let i = steps.total; i < msg.data.steps.length; i++) {
+                yield msg.data.steps[i] satisfies BrowserUse.TaskStepView;
+            }
+            steps.total = msg.data.steps.length;
+        }
+    }
+
     function watch<T extends ZodType>(
         schema: T,
         config?: PollConfig,
@@ -250,24 +269,6 @@ export function wrapCreateTaskResponse(
         } while (true);
 
         throw new Error("Task did not finish");
-    }
-
-    async function* stream(
-        config?: { interval?: number },
-        options?: RequestOptions,
-    ): AsyncGenerator<BrowserUse.TaskStepView> {
-        const step: { current: number } = { current: 0 };
-
-        const interval = config?.interval ?? 2000;
-
-        for await (const msg of _watch(response.id, { interval }, options)) {
-            if (msg.data.steps.length > step.current) {
-                step.current = msg.data.steps.length;
-
-                const lastStepIdx = msg.data.steps.length - 1;
-                yield msg.data.steps[lastStepIdx] satisfies BrowserUse.TaskStepView;
-            }
-        }
     }
 
     // NOTE: Finally, we return the wrapped task response.
