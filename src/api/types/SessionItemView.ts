@@ -5,7 +5,7 @@
 import * as BrowserUse from "../index.js";
 
 /**
- * View model for representing a (browser) session with its associated tasks.
+ * View model for representing a (browser) session.
  *
  * Attributes:
  *     id: Unique identifier for the session.

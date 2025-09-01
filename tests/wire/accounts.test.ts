@@ -5,7 +5,7 @@
 import { mockServerPool } from "../mock-server/MockServerPool";
 import { BrowserUseClient } from "../../src/Client";
 
-describe("Account", () => {
+describe("Accounts", () => {
     test("getAccountMe", async () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
@@ -17,9 +17,9 @@ describe("Account", () => {
             name: "name",
             signedUpAt: "2024-01-15T09:30:00Z",
         };
-        server.mockEndpoint().get("/account/me").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server.mockEndpoint().get("/accounts/me").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.account.getAccountMe();
+        const response = await client.accounts.getAccountMe();
         expect(response).toEqual({
             monthlyCreditsBalanceUsd: 1.1,
             additionalCreditsBalanceUsd: 1.1,

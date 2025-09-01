@@ -4,10 +4,8 @@
 
 /**
  * Response model for log file requests
- *
- * Attributes:
- *     download_url: URL to download the log file
  */
 export interface TaskLogFileResponse {
+    /** URL to download the log file */
     downloadUrl: string;
 }
