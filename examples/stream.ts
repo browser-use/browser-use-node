@@ -55,8 +55,6 @@ async function basic() {
     console.log(result.output);
 }
 
-basic().catch(console.error);
-
 // Structured ----------------------------------------------------------------
 
 // Define Structured Output Schema
@@ -92,6 +90,6 @@ async function structured() {
     }
 }
 
-// basic()
-//     .then(() => structured())
-//     .catch(console.error);
+basic()
+    .then(() => structured())
+    .catch(console.error);

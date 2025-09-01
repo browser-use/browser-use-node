@@ -97,6 +97,43 @@ for await (const update of task.watch()) {
 }
 ```
 
+## Webhook Verification
+
+> We encourage you to use the SDK functions that verify and parse webhook events.
+
+```ts
+import { verifyWebhookEventSignature, type WebhookAgentTaskStatusUpdatePayload } from "browser-use-sdk";
+
+export async function POST(req: Request) {
+    const signature = req.headers["x-browser-use-signature"] as string;
+    const timestamp = req.headers["x-browser-use-timestamp"] as string;
+
+    const event = await verifyWebhookEventSignature(
+        {
+            body,
+            signature,
+            timestamp,
+        },
+        {
+            secret: SECRET_KEY,
+        },
+    );
+
+    if (!event.ok) {
+        return;
+    }
+
+    switch (event.event.type) {
+        case "agent.task.status_update":
+            break;
+        case "test":
+            break;
+        default:
+            break;
+    }
+}
+```
+
 ## Advanced Usage
 
 ## Handling errors

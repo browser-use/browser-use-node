@@ -1,7 +1,9 @@
 # Specify files that shouldn't be modified by Fern
 src/wrapper/
+test/wrapper/
 src/index.ts
 examples/
 .vscode/
 
 .gitignore
+jest.config.mjs

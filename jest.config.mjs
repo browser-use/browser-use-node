@@ -11,7 +11,7 @@ export default {
                 "^(\.{1,2}/.*)\.js$": "$1",
             },
             roots: ["<rootDir>/tests"],
-            testPathIgnorePatterns: ["\.browser\.(spec|test)\.[jt]sx?$", "/tests/wire/"],
+            testPathIgnorePatterns: ["\.browser\.(spec|test)\.[jt]sx?$", "/tests/wire/", "/tests/wrapper"],
             setupFilesAfterEnv: [],
         },
         {
@@ -25,7 +25,6 @@ export default {
             testMatch: ["<rootDir>/tests/unit/**/?(*.)+(browser).(spec|test).[jt]s?(x)"],
             setupFilesAfterEnv: [],
         },
-        ,
         {
             displayName: "wire",
             preset: "ts-jest",
@@ -35,6 +34,13 @@ export default {
             },
             roots: ["<rootDir>/tests/wire"],
             setupFilesAfterEnv: ["<rootDir>/tests/mock-server/setup.ts"],
+        },
+        {
+            displayName: "wrapper",
+            preset: "ts-jest",
+            testEnvironment: "node",
+            moduleNameMapper: {},
+            roots: ["<rootDir>/tests/wrapper"],
         },
     ],
     workerThreads: false,
