@@ -57,26 +57,78 @@ for (const post of result.parsed.posts) {
 
 ### Streaming Agent Updates
 
+> You can use the `stream` method to get the latest step taken on every change.
+
 ```ts
 const task = await browseruse.tasks.createTask({
     task: "Search for the top 10 Hacker News posts and return the title and url.",
     schema: TaskOutput,
 });
 
-for await (const msg of task.stream()) {
-    switch (msg.status) {
-        case "started":
-        case "paused":
-        case "stopped":
-            console.log(`running: ${msg}`);
+for await (const step of task.stream()) {
+    console.log(step);
+}
+
+const result = await task.complete();
+
+for (const post of result.parsed.posts) {
+    console.log(`${post.title} - ${post.url}`);
+}
+```
+
+### Watching Agent Updates
+
+> You can use the `watch` method to get the latest update on every change.
+
+```ts
+const task = await browseruse.tasks.createTask({
+    task: "Search for the top 10 Hacker News posts and return the title and url.",
+    schema: TaskOutput,
+});
+
+for await (const update of task.watch()) {
+    console.log(update);
+
+    if (update.data.status === "finished") {
+        for (const post of update.data.parsed.posts) {
+            console.log(`${post.title} - ${post.url}`);
+        }
+    }
+}
+```
+
+## Webhook Verification
+
+> We encourage you to use the SDK functions that verify and parse webhook events.
+
+```ts
+import { verifyWebhookEventSignature, type WebhookAgentTaskStatusUpdatePayload } from "browser-use-sdk";
+
+export async function POST(req: Request) {
+    const signature = req.headers["x-browser-use-signature"] as string;
+    const timestamp = req.headers["x-browser-use-timestamp"] as string;
+
+    const event = await verifyWebhookEventSignature(
+        {
+            body,
+            signature,
+            timestamp,
+        },
+        {
+            secret: SECRET_KEY,
+        },
+    );
+
+    if (!event.ok) {
+        return;
+    }
+
+    switch (event.event.type) {
+        case "agent.task.status_update":
             break;
-
-        case "finished":
-            console.log(`done:`);
-
-            for (const post of msg.parsed.posts) {
-                console.log(`${post.title} - ${post.url}`);
-            }
+        case "test":
+            break;
+        default:
             break;
     }
 }
