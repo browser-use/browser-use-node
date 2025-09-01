@@ -2,3 +2,5 @@
 src/wrapper/
 examples/
 .vscode/
+
+.gitignore

@@ -11,7 +11,7 @@ env();
 // gets API Key from environment variable BROWSER_USE_API_KEY
 const browseruse = new BrowserUseClient({
     apiKey: process.env.BROWSER_USE_API_KEY!,
-    environment: "production",
+    environment: "https://api.browser-use.com/api/v2",
 });
 
 // Basic ---------------------------------------------------------------------
@@ -22,7 +22,7 @@ async function basic() {
 
     // Create Task
     const rsp = await browseruse.tasks.createTask({
-        task: "What's the weather line in SF and what's the temperature?",
+        task: "What's the weather in SF and what's the temperature?",
         agent: { llm: "gemini-2.5-flash" },
     });
 
@@ -34,13 +34,15 @@ async function basic() {
             case "started":
             case "paused":
             case "stopped":
-                log = `agent ${status.status}`;
+                log = `agent ${status.status} ${status.sessionId} ${status.steps.length} steps`;
 
                 await new Promise((resolve) => setTimeout(resolve, 2000));
                 break;
 
             case "finished":
                 stop();
+
+                console.log(status);
 
                 console.log(status.output);
                 break poll;
@@ -50,15 +52,11 @@ async function basic() {
 
 // Structured ----------------------------------------------------------------
 
-// Define Structured Output Schema
-const HackerNewsResponse = z.object({
-    title: z.string(),
-    url: z.string(),
-    score: z.number(),
-});
-
 const TaskOutput = z.object({
-    posts: z.array(HackerNewsResponse),
+    degreesFahrenheit: z.number(),
+    degreesCelsius: z.number(),
+
+    description: z.string(),
 });
 
 async function structured() {
@@ -67,7 +65,7 @@ async function structured() {
 
     // Create Task
     const rsp = await browseruse.tasks.createTask({
-        task: "Extract top 10 Hacker News posts and return the title, url, and score",
+        task: "What's the weather in SF and what's the temperature?",
         schema: TaskOutput,
         agent: { llm: "gpt-4.1" },
     });
@@ -98,11 +96,14 @@ async function structured() {
                 stop();
 
                 // Print Structured Output
-                console.log("Top Hacker News Posts:");
+                console.log("Weather in SF:");
+                console.log("--------------------------------");
+                console.log(status.parsed.description);
 
-                for (const post of status.parsed.posts) {
-                    console.log(` - ${post.title} (${post.score}) ${post.url}`);
-                }
+                console.log(` - ${status.parsed.degreesFahrenheit} degrees Fahrenheit`);
+                console.log(` - ${status.parsed.degreesCelsius} degrees Celsius`);
+
+                console.log("--------------------------------");
 
                 break poll;
         }

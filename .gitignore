@@ -3,4 +3,5 @@ node_modules
 /dist
 .cursor
 
-.env
+.env*
+!.env.example

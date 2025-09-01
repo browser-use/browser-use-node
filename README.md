@@ -12,17 +12,19 @@ The BrowserUse TypeScript library provides convenient access to the BrowserUse A
 1. ✌️ Automate the web!
 
 ```ts
-import BrowserUse from "browser-use-sdk";
+import { BrowserUseClient } from "browser-use-sdk";
 
-const client = new BrowserUse({
+const client = new BrowserUseClient({
     apiKey: "bu_...",
 });
 
-const result = await client.tasks.run({
+const task = await client.tasks.createTask({
     task: "Search for the top 10 Hacker News posts and return the title and url.",
 });
 
-console.log(result.doneOutput);
+const result = await task.complete();
+
+console.log(result.output);
 ```
 
 > The full API of this library can be found in [api.md](api.md).
@@ -41,11 +43,14 @@ const TaskOutput = z.object({
     ),
 });
 
-const result = await client.tasks.run({
+const task = await client.tasks.createTask({
     task: "Search for the top 10 Hacker News posts and return the title and url.",
+    schema: TaskOutput,
 });
 
-for (const post of result.parsedOutput.posts) {
+const result = await task.complete();
+
+for (const post of result.parsed.posts) {
     console.log(`${post.title} - ${post.url}`);
 }
 ```
@@ -53,17 +58,12 @@ for (const post of result.parsedOutput.posts) {
 ### Streaming Agent Updates
 
 ```ts
-const task = await browseruse.tasks.create({
+const task = await browseruse.tasks.createTask({
     task: "Search for the top 10 Hacker News posts and return the title and url.",
     schema: TaskOutput,
 });
 
-const stream = browseruse.tasks.stream({
-    taskId: task.id,
-    schema: TaskOutput,
-});
-
-for await (const msg of stream) {
+for await (const msg of task.stream()) {
     switch (msg.status) {
         case "started":
         case "paused":
@@ -74,46 +74,9 @@ for await (const msg of stream) {
         case "finished":
             console.log(`done:`);
 
-            for (const post of msg.parsedOutput.posts) {
+            for (const post of msg.parsed.posts) {
                 console.log(`${post.title} - ${post.url}`);
             }
-            break;
-    }
-}
-```
-
-## Webhook Verification
-
-> We encourage you to use the SDK functions that verify and parse webhook events.
-
-```ts
-import { verifyWebhookEventSignature, type WebhookAgentTaskStatusUpdatePayload } from "browser-use-sdk/lib/webhooks";
-
-export async function POST(req: Request) {
-    const signature = req.headers["x-browser-use-signature"] as string;
-    const timestamp = req.headers["x-browser-use-timestamp"] as string;
-
-    const event = await verifyWebhookEventSignature(
-        {
-            body,
-            signature,
-            timestamp,
-        },
-        {
-            secret: SECRET_KEY,
-        },
-    );
-
-    if (!event.ok) {
-        return;
-    }
-
-    switch (event.event.type) {
-        case "agent.task.status_update":
-            break;
-        case "test":
-            break;
-        default:
             break;
     }
 }

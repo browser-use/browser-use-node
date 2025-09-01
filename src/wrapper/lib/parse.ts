@@ -70,14 +70,45 @@ export function getTaskViewHash(view: TaskView): string {
 
 // Utils
 
+export type PollConfig = {
+    interval?: number;
+};
+
 export type WrappedTaskFnsWithSchema<T extends ZodType> = BrowserUse.TaskCreatedResponse & {
-    stream: (options?: RequestOptions) => AsyncGenerator<{ event: "status"; data: TaskViewWithSchema<T> }>;
-    complete: (options?: RequestOptions) => Promise<TaskViewWithSchema<T>>;
+    /**
+     * Streams the steps of the task and closes when the task is finished.
+     */
+    stream: (config?: PollConfig, options?: RequestOptions) => AsyncGenerator<BrowserUse.TaskStepView>;
+
+    /**
+     * Get the latest task update on every change.
+     */
+    watch: (
+        config?: PollConfig,
+        options?: RequestOptions,
+    ) => AsyncGenerator<{ event: "status"; data: TaskViewWithSchema<T> }>;
+
+    /**
+     * Wait for the task to finish and return the result.
+     */
+    complete: (config?: PollConfig, options?: RequestOptions) => Promise<TaskViewWithSchema<T>>;
 };
 
 export type WrappedTaskFnsWithoutSchema = BrowserUse.TaskCreatedResponse & {
-    stream: (options?: RequestOptions) => AsyncGenerator<{ event: "status"; data: TaskView }>;
-    complete: (options?: RequestOptions) => Promise<TaskView>;
+    /**
+     * Streams the steps of the task and closes when the task is finished.
+     */
+    stream: (config?: PollConfig, options?: RequestOptions) => AsyncGenerator<BrowserUse.TaskStepView>;
+
+    /**
+     * Get the latest task update on every change.
+     */
+    watch: (config?: PollConfig, options?: RequestOptions) => AsyncGenerator<{ event: "status"; data: TaskView }>;
+
+    /**
+     * Wait for the task to finish and return the result.
+     */
+    complete: (config?: PollConfig, options?: RequestOptions) => Promise<TaskView>;
 };
 
 /**
@@ -100,12 +131,13 @@ export function wrapCreateTaskResponse(
 ): WrappedTaskFnsWithSchema<ZodType> | WrappedTaskFnsWithoutSchema {
     // NOTE: We create utility functions for streaming and watching internally in the function
     //       to expose them as utility methods to the base object.
-
-    async function* watch(
+    async function* _watch(
         taskId: string,
-        config: { interval: number },
+        config?: PollConfig,
         options?: RequestOptions,
     ): AsyncGenerator<{ event: "status"; data: TaskView }> {
+        const intervalMs = config?.interval ?? 2000;
+
         const hash: { current: string | null } = { current: null };
 
         poll: do {
@@ -120,7 +152,7 @@ export function wrapCreateTaskResponse(
             if (hash.current == null || resHash !== hash.current) {
                 hash.current = resHash;
 
-                yield { event: "status", data: res };
+                yield { event: "status", data: res } satisfies { event: "status"; data: TaskView };
             }
 
             switch (res.status) {
@@ -129,7 +161,7 @@ export function wrapCreateTaskResponse(
                 case "paused":
                     break poll;
                 case "started":
-                    await new Promise((resolve) => setTimeout(resolve, config.interval));
+                    await new Promise((resolve) => setTimeout(resolve, intervalMs));
                     break;
                 default:
                     throw new ExhaustiveSwitchCheck(res.status);
@@ -137,55 +169,105 @@ export function wrapCreateTaskResponse(
         } while (true);
     }
 
-    function stream<T extends ZodType>(
+    function watch<T extends ZodType>(
         schema: T,
+        config?: PollConfig,
         options?: RequestOptions,
     ): AsyncGenerator<{
         event: "status";
         data: TaskViewWithSchema<T>;
     }>;
-    function stream(schema: null, options?: RequestOptions): AsyncGenerator<{ event: "status"; data: TaskView }>;
-    async function* stream(
+    function watch(
+        schema: null,
+        config?: PollConfig,
+        options?: RequestOptions,
+    ): AsyncGenerator<{ event: "status"; data: TaskView }>;
+    async function* watch(
         schema: ZodType | null,
+        config?: PollConfig,
         options?: RequestOptions,
     ): AsyncGenerator<{ event: "status"; data: TaskViewWithSchema<ZodType> | TaskView }> {
-        for await (const msg of watch(response.id, { interval: 500 }, options)) {
+        for await (const msg of _watch(response.id, config, options)) {
             if (options?.signal?.aborted) {
                 break;
             }
 
             if (schema != null) {
                 const parsed = parseStructuredTaskOutput<ZodType>(msg.data, schema);
-                yield { event: "status", data: parsed };
+                yield { event: "status", data: parsed } satisfies {
+                    event: "status";
+                    data: TaskViewWithSchema<ZodType>;
+                };
             } else {
-                yield { event: "status", data: msg.data };
+                yield { event: "status", data: msg.data } satisfies {
+                    event: "status";
+                    data: TaskView;
+                };
             }
         }
     }
 
-    function complete<T extends ZodType>(schema: T, options?: RequestOptions): Promise<TaskViewWithSchema<T>>;
-    function complete(schema: null, options?: RequestOptions): Promise<TaskView>;
+    function complete<T extends ZodType>(
+        schema: T,
+        config?: PollConfig,
+        options?: RequestOptions,
+    ): Promise<TaskViewWithSchema<T>>;
+    function complete(schema: null, config?: PollConfig, options?: RequestOptions): Promise<TaskView>;
     async function complete(
         schema: ZodType | null,
+        config?: PollConfig,
         options?: RequestOptions,
     ): Promise<TaskViewWithSchema<ZodType> | TaskView> {
-        if (schema != null) {
-            const s = stream<ZodType>(schema, options);
+        const interval = config?.interval ?? 2000;
 
-            for await (const msg of s) {
-                if (msg.data.status === "finished") {
-                    return msg.data;
+        poll: do {
+            if (options?.signal?.aborted) {
+                break poll;
+            }
+
+            const res = await client.getTask(response.id);
+
+            switch (res.status) {
+                case "finished":
+                case "stopped":
+                case "paused": {
+                    if (schema != null) {
+                        const parsed: TaskViewWithSchema<ZodType> = parseStructuredTaskOutput<ZodType>(res, schema);
+
+                        return parsed;
+                    } else {
+                        const result: TaskView = res;
+
+                        return result;
+                    }
                 }
+                case "started":
+                    await new Promise((resolve) => setTimeout(resolve, interval));
+                    break;
+                default:
+                    throw new ExhaustiveSwitchCheck(res.status);
             }
-            throw new Error("Task did not finish");
-        }
+        } while (true);
 
-        for await (const msg of stream(null, options)) {
-            if (msg.data.status === "finished") {
-                return msg.data;
+        throw new Error("Task did not finish");
+    }
+
+    async function* stream(
+        config?: { interval?: number },
+        options?: RequestOptions,
+    ): AsyncGenerator<BrowserUse.TaskStepView> {
+        const step: { current: number } = { current: 0 };
+
+        const interval = config?.interval ?? 2000;
+
+        for await (const msg of _watch(response.id, { interval }, options)) {
+            if (msg.data.steps.length > step.current) {
+                step.current = msg.data.steps.length;
+
+                const lastStepIdx = msg.data.steps.length - 1;
+                yield msg.data.steps[lastStepIdx] satisfies BrowserUse.TaskStepView;
             }
         }
-        throw new Error("Task did not finish");
     }
 
     // NOTE: Finally, we return the wrapped task response.
@@ -193,39 +275,20 @@ export function wrapCreateTaskResponse(
     if (schema == null) {
         const wrapped: WrappedTaskFnsWithoutSchema = {
             ...response,
-            stream: (options?: RequestOptions) => stream(null, options),
-            complete: (options?: RequestOptions) => complete(null, options),
+            stream: (config?: PollConfig, options?: RequestOptions) => stream(config, options),
+            watch: (config?: PollConfig, options?: RequestOptions) => watch(null, config, options),
+            complete: (config?: PollConfig, options?: RequestOptions) => complete(null, config, options),
+        };
+
+        return wrapped;
+    } else {
+        const wrapped: WrappedTaskFnsWithSchema<ZodType> = {
+            ...response,
+            stream: (config?: PollConfig, options?: RequestOptions) => stream(config, options),
+            watch: (config?: PollConfig, options?: RequestOptions) => watch<ZodType>(schema, config, options),
+            complete: (config?: PollConfig, options?: RequestOptions) => complete<ZodType>(schema, config, options),
         };
 
         return wrapped;
     }
-
-    const wrapped: WrappedTaskFnsWithSchema<ZodType> = {
-        ...response,
-        stream: (options?: RequestOptions) => stream<ZodType>(schema, options),
-        complete: (options?: RequestOptions) => complete<ZodType>(schema, options),
-    };
-
-    return wrapped;
 }
-
-// Playground
-
-// function test1<T extends string>(val: { type: "string"; value: T }): T;
-// function test1(val: { type: "null" }): null;
-// function test1<T extends string>(val: { type: "string"; value: T } | { type: "null" }): T | null {
-//     return val.type === "string" ? val.value : null;
-// }
-
-// function test2<T extends string>(val: { type: "string"; value: T }): T;
-// function test2(val: { type: "null" }): null;
-// function test2(val: { type: "string"; value: string } | { type: "null" }): string | null {
-//     function util(val: { type: "string"; value: string } | { type: "null" }): string | null {
-//         return val.type === "string" ? val.value : null;
-//     }
-
-//     return util(val);
-// }
-
-// const foo = test2({ type: "string", value: "bar" });
-// const bar = test2({ type: "null" });

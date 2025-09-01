@@ -3,11 +3,11 @@
 import z from "zod";
 
 import { BrowserUseClient } from "..";
-
 import { env } from "./utils";
 
 env();
 
+// gets API Key from environment variable BROWSER_USE_API_KEY
 const browseruse = new BrowserUseClient({
     apiKey: process.env.BROWSER_USE_API_KEY!,
     environment: "https://api.browser-use.com/api/v2",
@@ -24,12 +24,15 @@ async function basic() {
         agent: { llm: "gemini-2.5-flash" },
     });
 
-    for await (const msg of task.stream()) {
-        console.log(msg);
-    }
+    for await (const msg of task.watch()) {
+        console.log(
+            `Basic: ${msg.data.status} ${msg.data.sessionId} ${msg.data.steps[msg.data.steps.length - 1]?.nextGoal}`,
+        );
 
-    const result = await task.complete();
-    console.log(result);
+        if (msg.data.status === "finished") {
+            console.log(`Basic: ${msg.data.output}`);
+        }
+    }
 
     console.log("\nBasic: Stream completed");
 }
@@ -57,12 +60,29 @@ async function structured() {
         agent: { llm: "gpt-4.1" },
     });
 
-    for await (const msg of task.stream()) {
-        console.log(msg);
-    }
+    for await (const msg of task.watch()) {
+        // Regular
+        process.stdout.write(`Structured: ${msg.data.status}`);
+        if (msg.data.sessionId) {
+            process.stdout.write(` | Live URL: ${msg.data.sessionId}`);
+        }
 
-    const result = await task.complete();
-    console.log(result);
+        if (msg.data.steps.length > 0) {
+            const latestStep = msg.data.steps[msg.data.steps.length - 1];
+            process.stdout.write(` | ${latestStep!.nextGoal}`);
+        }
+
+        process.stdout.write("\n");
+
+        // Output
+        if (msg.data.status === "finished") {
+            process.stdout.write(`\n\nOUTPUT:`);
+
+            for (const post of msg.data.parsed!.posts) {
+                process.stdout.write(`\n - ${post.title} (${post.score}) ${post.url}`);
+            }
+        }
+    }
 
     console.log("\nStructured: Stream completed");
 }

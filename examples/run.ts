@@ -10,7 +10,7 @@ env();
 // gets API Key from environment variable BROWSER_USE_API_KEY
 const browseruse = new BrowserUseClient({
     apiKey: process.env.BROWSER_USE_API_KEY!,
-    environment: "production",
+    environment: "https://api.browser-use.com/api/v2",
 });
 
 // Basic ---------------------------------------------------------------------
@@ -20,7 +20,7 @@ async function basic() {
 
     // Create Task
     const rsp = await browseruse.tasks.createTask({
-        task: "What's the weather line in SF and what's the temperature?",
+        task: "What's the weather in SF and what's the temperature?",
     });
 
     const result = await rsp.complete();
