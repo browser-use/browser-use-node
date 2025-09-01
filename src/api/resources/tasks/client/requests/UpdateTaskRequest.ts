@@ -11,5 +11,6 @@ import * as BrowserUse from "../../../../index.js";
  *     }
  */
 export interface UpdateTaskRequest {
+    /** The action to perform on the task */
     action: BrowserUse.TaskUpdateAction;
 }

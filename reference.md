@@ -1,8 +1,8 @@
 # Reference
 
-## Account
+## Accounts
 
-<details><summary><code>client.account.<a href="/src/api/resources/account/client/Client.ts">getAccountMe</a>() -> BrowserUse.AccountView</code></summary>
+<details><summary><code>client.accounts.<a href="/src/api/resources/accounts/client/Client.ts">getAccountMe</a>() -> BrowserUse.AccountView</code></summary>
 <dl>
 <dd>
 
@@ -30,7 +30,7 @@ Get authenticated account information including credit balances and account deta
 <dd>
 
 ```typescript
-await client.account.getAccountMe();
+await client.accounts.getAccountMe();
 ```
 
 </dd>
@@ -46,7 +46,7 @@ await client.account.getAccountMe();
 <dl>
 <dd>
 
-**requestOptions:** `Account.RequestOptions`
+**requestOptions:** `Accounts.RequestOptions`
 
 </dd>
 </dl>
@@ -453,7 +453,7 @@ await client.sessions.listSessions();
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">createSession</a>({ ...params }) -> BrowserUse.SessionView</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">createSession</a>({ ...params }) -> BrowserUse.SessionItemView</code></summary>
 <dl>
 <dd>
 
@@ -979,77 +979,6 @@ await client.files.userUploadFilePresignedUrl("session_id", {
 </dl>
 </details>
 
-<details><summary><code>client.files.<a href="/src/api/resources/files/client/Client.ts">getTaskUserUploadedFilePresignedUrl</a>(taskId, fileId) -> BrowserUse.TaskUploadedFileResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get secure download URL for a user uploaded file used in the task.
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.files.getTaskUserUploadedFilePresignedUrl("task_id", "file_id");
-```
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**taskId:** `string`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fileId:** `string`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Files.RequestOptions`
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.files.<a href="/src/api/resources/files/client/Client.ts">getTaskOutputFilePresignedUrl</a>(taskId, fileId) -> BrowserUse.TaskOutputFileResponse</code></summary>
 <dl>
 <dd>
@@ -1275,6 +1204,69 @@ Get profile details.
 
 ```typescript
 await client.profiles.getProfile("profile_id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**profileId:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Profiles.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">deleteBrowserProfile</a>(profileId) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Permanently delete a browser profile and its configuration.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.profiles.deleteBrowserProfile("profile_id");
 ```
 
 </dd>

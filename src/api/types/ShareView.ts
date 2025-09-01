@@ -4,16 +4,14 @@
 
 /**
  * View model for representing a public share of a session.
- *
- * Attributes:
- *     share_token: Token to access the public share.
- *     share_url: URL to access the public share.
- *     view_count: Number of times the public share has been viewed.
- *     last_viewed_at: Timestamp of the last time the public share was viewed (None if never viewed).
  */
 export interface ShareView {
+    /** Token to access the public share */
     shareToken: string;
+    /** URL to access the public share */
     shareUrl: string;
+    /** Number of times the public share has been viewed */
     viewCount: number;
+    /** Timestamp of the last time the public share was viewed (None if never viewed) */
     lastViewedAt?: string;
 }

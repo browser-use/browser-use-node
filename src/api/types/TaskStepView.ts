@@ -4,22 +4,20 @@
 
 /**
  * View model for representing a single step in a task's execution
- *
- * Attributes:
- *     number: Sequential step number within the task
- *     memory: Agent's memory at this step
- *     evaluation_previous_goal: Agent's evaluation of the previous goal completion
- *     next_goal: The goal for the next step
- *     url: Current URL the browser is on for this step
- *     screenshot_url: Optional URL to the screenshot taken at this step
- *     actions: List of stringified json actions performed by the agent in this step
  */
 export interface TaskStepView {
+    /** Sequential step number within the task */
     number: number;
+    /** Agent's memory at this step */
     memory: string;
+    /** Agent's evaluation of the previous goal completion */
     evaluationPreviousGoal: string;
+    /** The goal for the next step */
     nextGoal: string;
+    /** Current URL the browser is on for this step */
     url: string;
+    /** Optional URL to the screenshot taken at this step */
     screenshotUrl?: string;
+    /** List of stringified json actions performed by the agent in this step */
     actions: string[];
 }

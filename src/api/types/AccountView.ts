@@ -4,18 +4,16 @@
 
 /**
  * View model for account information
- *
- * Attributes:
- *     monthly_credits_balance_usd: The monthly credits balance in USD
- *     additional_credits_balance_usd: The additional credits balance in USD
- *     email: The email address of the user
- *     name: The name of the user
- *     signed_up_at: The date and time the user signed up
  */
 export interface AccountView {
+    /** The monthly credits balance in USD */
     monthlyCreditsBalanceUsd: number;
+    /** The additional credits balance in USD */
     additionalCreditsBalanceUsd: number;
+    /** The email address of the user */
     email?: string;
+    /** The name of the user */
     name?: string;
+    /** The date and time the user signed up */
     signedUpAt: string;
 }

@@ -3,19 +3,17 @@
  */
 
 /**
- * Response model for a presigned upload URL
- *
- * Attributes:
- *     url: The URL to upload the file to
- *     method: The HTTP method to use for the upload
- *     fields: The form fields to include in the upload request
- *     file_name: The name of the file to upload (should be referenced when user wants to use the file in a task)
- *     expires_in: The number of seconds until the presigned URL expires
+ * Response model for a presigned upload URL.
  */
 export interface UploadFilePresignedUrlResponse {
+    /** The URL to upload the file to. */
     url: string;
+    /** The HTTP method to use for the upload. */
     method: "POST";
+    /** The form fields to include in the upload request. */
     fields: Record<string, string>;
+    /** The name of the file to upload (should be referenced when user wants to use the file in a task). */
     fileName: string;
+    /** The number of seconds until the presigned URL expires. */
     expiresIn: number;
 }

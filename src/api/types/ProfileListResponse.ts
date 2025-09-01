@@ -5,14 +5,15 @@
 import * as BrowserUse from "../index.js";
 
 /**
- * Response model for paginated profile list requests
- *
- * Attributes:
- *     items: List of profile views for the current page
+ * Response model for paginated profile list requests.
  */
 export interface ProfileListResponse {
+    /** List of profile views for the current page */
     items: BrowserUse.ProfileView[];
+    /** Total number of items in the list */
     totalItems: number;
+    /** Page number */
     pageNumber: number;
+    /** Number of items per page */
     pageSize: number;
 }

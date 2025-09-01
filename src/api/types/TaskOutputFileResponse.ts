@@ -3,15 +3,13 @@
  */
 
 /**
- * Response model for output file requests
- *
- * Attributes:
- *         id: Unique identifier for the output file
- *         file_name: Name of the output file
- *     download_url: URL to download the output file
+ * Response model for output file requests.
  */
 export interface TaskOutputFileResponse {
+    /** Unique identifier for the file */
     id: string;
+    /** Name of the file */
     fileName: string;
+    /** URL to download the file */
     downloadUrl: string;
 }

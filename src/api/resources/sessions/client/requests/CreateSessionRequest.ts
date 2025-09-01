@@ -9,6 +9,8 @@ import * as BrowserUse from "../../../../index.js";
  *     {}
  */
 export interface CreateSessionRequest {
+    /** The ID of the profile to use for the session */
     profileId?: string;
+    /** Proxy settings for the session */
     proxy?: BrowserUse.ProxySettings;
 }

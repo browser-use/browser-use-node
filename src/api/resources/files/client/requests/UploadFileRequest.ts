@@ -11,12 +11,17 @@
  *     }
  */
 export interface UploadFileRequest {
+    /** The name of the file to upload */
     fileName: string;
+    /** The content type of the file to upload */
     contentType: UploadFileRequest.ContentType;
     sizeBytes: number;
 }
 
 export namespace UploadFileRequest {
+    /**
+     * The content type of the file to upload
+     */
     export type ContentType =
         | "image/jpg"
         | "image/jpeg"

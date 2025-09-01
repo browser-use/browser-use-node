@@ -363,9 +363,9 @@ A full reference for this library is available [here](https://github.com/browser
 Instantiate and use the client with the following:
 
 ```typescript
-import { BrowserUseClient } from "";
+import { BrowserUseEnvironment, BrowserUseClient } from "";
 
-const client = new BrowserUseClient({ environment: "YOUR_BASE_URL", apiKey: "YOUR_API_KEY" });
+const client = new BrowserUseClient({ environment: BrowserUseEnvironment.Production, apiKey: "YOUR_API_KEY" });
 await client.tasks.createTask({
     task: "task",
 });

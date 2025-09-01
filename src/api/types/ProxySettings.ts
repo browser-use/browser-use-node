@@ -5,12 +5,11 @@
 import * as BrowserUse from "../index.js";
 
 /**
- * Proxy configuration settings
- * Attributes:
- *         enable: Whether proxy is enabled
- *         proxy_country_code: Country code for proxy location
+ * Proxy configuration settings.
  */
 export interface ProxySettings {
+    /** Whether proxy is enabled */
     enable?: boolean;
+    /** Country code for proxy location */
     proxyCountryCode?: BrowserUse.ProxyCountryCode;
 }
