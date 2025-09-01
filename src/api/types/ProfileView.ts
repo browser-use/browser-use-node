@@ -6,18 +6,14 @@
  * View model for representing a profile. A profile lets you preserve the login state between sessions.
  *
  * We recommend that you create a separate profile for each user of your app.
- *
- * Attributes:
- *     id: Unique identifier for the profile
- *
- *         last_used_at: Timestamp when the profile was last used
- *
- *     created_at: Timestamp when the profile was created
- *     updated_at: Timestamp when the profile was last updated
  */
 export interface ProfileView {
+    /** Unique identifier for the profile */
     id: string;
+    /** Timestamp when the profile was last used */
     lastUsedAt?: string;
+    /** Timestamp when the profile was created */
     createdAt: string;
+    /** Timestamp when the profile was last updated */
     updatedAt: string;
 }

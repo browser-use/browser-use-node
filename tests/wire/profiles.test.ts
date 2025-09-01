@@ -88,4 +88,14 @@ describe("Profiles", () => {
             updatedAt: "2024-01-15T09:30:00Z",
         });
     });
+
+    test("deleteBrowserProfile", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        server.mockEndpoint().delete("/profiles/profile_id").respondWith().statusCode(200).build();
+
+        const response = await client.profiles.deleteBrowserProfile("profile_id");
+        expect(response).toEqual(undefined);
+    });
 });

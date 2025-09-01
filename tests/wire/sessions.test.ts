@@ -53,23 +53,6 @@ describe("Sessions", () => {
             liveUrl: "liveUrl",
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
-            tasks: [
-                {
-                    id: "id",
-                    sessionId: "sessionId",
-                    llm: "llm",
-                    task: "task",
-                    status: "started",
-                    startedAt: "2024-01-15T09:30:00Z",
-                    finishedAt: "2024-01-15T09:30:00Z",
-                    metadata: { key: "value" },
-                    isScheduled: true,
-                    output: "output",
-                    browserUseVersion: "browserUseVersion",
-                    isSuccess: true,
-                },
-            ],
-            publicShareUrl: "publicShareUrl",
         };
         server
             .mockEndpoint()
@@ -87,25 +70,6 @@ describe("Sessions", () => {
             liveUrl: "liveUrl",
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
-            tasks: [
-                {
-                    id: "id",
-                    sessionId: "sessionId",
-                    llm: "llm",
-                    task: "task",
-                    status: "started",
-                    startedAt: "2024-01-15T09:30:00Z",
-                    finishedAt: "2024-01-15T09:30:00Z",
-                    metadata: {
-                        key: "value",
-                    },
-                    isScheduled: true,
-                    output: "output",
-                    browserUseVersion: "browserUseVersion",
-                    isSuccess: true,
-                },
-            ],
-            publicShareUrl: "publicShareUrl",
         });
     });
 

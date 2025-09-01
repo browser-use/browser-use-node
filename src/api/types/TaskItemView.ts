@@ -6,34 +6,29 @@ import * as BrowserUse from "../index.js";
 
 /**
  * View model for representing a task with its execution details
- *
- * Attributes:
- *     id: Unique identifier for the task
- *     session_id: ID of the session this task belongs to
- *     llm: The LLM model used for this task represented as a string
- *     task: The task prompt/instruction given to the agent
- *     status: Current status of the task execution
- *     started_at: Naive UTC timestamp when the task was started
- *     finished_at: Naive UTC timestamp when the task completed (None if still running)
- *     metadata: Optional additional metadata associated with the task set by the user
- *     is_scheduled: Whether this task was created as a scheduled task
- *     steps: Optional list of execution steps
- *     output: Final output/result of the task
- *     output_files: Optional list of files generated as output by this task
- *     browser_use_version: Version of browser-use used for this task (older tasks may not have this set)
- *         is_success: Whether the task was successful (self-reported by the agent)
  */
 export interface TaskItemView {
+    /** Unique identifier for the task */
     id: string;
+    /** ID of the session this task belongs to */
     sessionId: string;
+    /** The LLM model used for this task represented as a string */
     llm: string;
+    /** The task prompt/instruction given to the agent */
     task: string;
     status: BrowserUse.TaskStatus;
+    /** Naive UTC timestamp when the task was started */
     startedAt: string;
+    /** Naive UTC timestamp when the task completed (None if still running) */
     finishedAt?: string;
+    /** Optional additional metadata associated with the task set by the user */
     metadata?: Record<string, unknown>;
+    /** Whether this task was created as a scheduled task */
     isScheduled: boolean;
+    /** Final output/result of the task */
     output?: string;
+    /** Version of browser-use used for this task (older tasks may not have this set) */
     browserUseVersion?: string;
+    /** Whether the task was successful (self-reported by the agent) */
     isSuccess?: boolean;
 }

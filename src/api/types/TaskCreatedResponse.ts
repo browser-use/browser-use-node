@@ -4,10 +4,8 @@
 
 /**
  * Response model for creating a task
- *
- * Attributes:
- *         id: Unique identifier for the created task
  */
 export interface TaskCreatedResponse {
+    /** Unique identifier for the created task */
     id: string;
 }

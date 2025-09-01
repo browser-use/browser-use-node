@@ -11,12 +11,32 @@ import * as BrowserUse from "../../../../index.js";
  *     }
  */
 export interface CreateTaskRequest {
+    /** The task prompt/instruction for the agent. */
     task: string;
-    sessionId?: string;
+    /** The LLM model to use for the agent. */
+    llm?: BrowserUse.SupportedLlMs;
+    /** The URL to start the task from. */
     startUrl?: string;
+    /** Maximum number of steps the agent can take before stopping. */
+    maxSteps?: number;
+    /** The stringified JSON schema for the structured output. */
     structuredOutput?: string;
+    /** The ID of the session where the task will run. */
+    sessionId?: string;
+    /** The metadata for the task. */
     metadata?: Record<string, string | undefined>;
+    /** The secrets for the task. */
     secrets?: Record<string, string | undefined>;
+    /** The allowed domains for the task. */
     allowedDomains?: string[];
-    agent?: BrowserUse.AgentSettings;
+    /** Tells the agent to highlight interactive elements on the page. */
+    highlightElements?: boolean;
+    /** Whether agent flash mode is enabled. */
+    flashMode?: boolean;
+    /** Whether agent thinking mode is enabled. */
+    thinking?: boolean;
+    /** Whether agent vision capabilities are enabled. */
+    vision?: boolean;
+    /** Optional extension to the agent system prompt. */
+    systemPromptExtension?: string;
 }

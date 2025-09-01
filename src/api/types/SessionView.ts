@@ -6,22 +6,20 @@ import * as BrowserUse from "../index.js";
 
 /**
  * View model for representing a (browser) session with its associated tasks.
- *
- * Attributes:
- *     id: Unique identifier for the session.
- *     status: Current status of the session (active/stopped).
- *     live_url: URL where the browser can be viewed live in real-time.
- *     started_at: Timestamp when the session was created and started.
- *     finished_at: Timestamp when the session was stopped (None if still active).
- *     tasks: Optional list of tasks associated with this session.
- *     public_share_url: Optional URL to access the public share of the session.
  */
 export interface SessionView {
+    /** Unique identifier for the session */
     id: string;
+    /** Current status of the session (active/stopped) */
     status: BrowserUse.SessionStatus;
+    /** URL where the browser can be viewed live in real-time */
     liveUrl?: string;
+    /** Timestamp when the session was created and started */
     startedAt: string;
+    /** Timestamp when the session was stopped (None if still active) */
     finishedAt?: string;
-    tasks?: BrowserUse.TaskItemView[];
+    /** List of tasks associated with this session */
+    tasks: BrowserUse.TaskItemView[];
+    /** Optional URL to access the public share of the session */
     publicShareUrl?: string;
 }
