@@ -2,7 +2,6 @@ export * from "./BadRequestErrorBody.js";
 export * from "./NotFoundErrorBody.js";
 export * from "./AccountNotFoundError.js";
 export * from "./AccountView.js";
-export * from "./CreditsDeductionError.js";
 export * from "./DownloadUrlGenerationError.js";
 export * from "./FileView.js";
 export * from "./HttpValidationError.js";
