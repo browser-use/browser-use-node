@@ -182,9 +182,9 @@ export function wrapCreateTaskResponse(
 
         for await (const msg of _watch(response.id, config, options)) {
             for (let i = steps.total; i < msg.data.steps.length; i++) {
+                steps.total = i + 1;
                 yield msg.data.steps[i] satisfies BrowserUse.TaskStepView;
             }
-            steps.total = msg.data.steps.length;
         }
     }
 
@@ -237,38 +237,32 @@ export function wrapCreateTaskResponse(
         config?: PollConfig,
         options?: RequestOptions,
     ): Promise<TaskViewWithSchema<ZodType> | TaskView> {
-        const interval = config?.interval ?? 2000;
-
-        poll: do {
-            if (options?.signal?.aborted) {
-                break poll;
-            }
-
-            const res = await client.getTask(response.id);
-
-            switch (res.status) {
+        for await (const msg of _watch(response.id, config, options)) {
+            switch (msg.data.status) {
                 case "finished":
                 case "stopped":
                 case "paused": {
                     if (schema != null) {
-                        const parsed: TaskViewWithSchema<ZodType> = parseStructuredTaskOutput<ZodType>(res, schema);
+                        const parsed: TaskViewWithSchema<ZodType> = parseStructuredTaskOutput<ZodType>(
+                            msg.data,
+                            schema,
+                        );
 
                         return parsed;
                     } else {
-                        const result: TaskView = res;
+                        const result: TaskView = msg.data;
 
                         return result;
                     }
                 }
                 case "started":
-                    await new Promise((resolve) => setTimeout(resolve, interval));
                     break;
                 default:
-                    throw new ExhaustiveSwitchCheck(res.status);
+                    throw new ExhaustiveSwitchCheck(msg.data.status);
             }
-        } while (true);
+        }
 
-        throw new Error("Task did not finish");
+        throw new Error("Stream ended before the task finished!");
     }
 
     // NOTE: Finally, we return the wrapped task response.

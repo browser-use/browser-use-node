@@ -2,8 +2,11 @@
 src/wrapper/
 tests/wrapper/
 src/index.ts
+assets/
 examples/
 .vscode/
 
 .gitignore
 jest.config.mjs
+
+README.md
