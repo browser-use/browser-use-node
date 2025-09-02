@@ -44,6 +44,8 @@ The BrowserUse TypeScript library provides convenient access to the BrowserUse A
 
 > The full API of this library can be found in [api.md](api.md).
 
+---
+
 ### Structured Output with Zod
 
 ```ts
