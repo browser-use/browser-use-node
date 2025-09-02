@@ -7,27 +7,40 @@
 
 The BrowserUse TypeScript library provides convenient access to the BrowserUse APIs from TypeScript.
 
-## Two-Step QuickStart
+## Three-Step QuickStart
 
-1. ☝️ Get your API Key at [Browser Use Cloud](https://cloud.browser-use.com)...
+1.  📦 Install BrowserUse SDK.
 
-1. ✌️ Automate the web!
+    ```sh
+    # NPM
+    npm i -s browser-use-sdk
 
-```ts
-import { BrowserUseClient } from "browser-use-sdk";
+    # Yarn
+    yarn add browser-use-sdk
 
-const client = new BrowserUseClient({
-    apiKey: "bu_...",
-});
+    # PNPM
+    pnpm add browser-use-sdk
+    ```
 
-const task = await client.tasks.createTask({
-    task: "Search for the top 10 Hacker News posts and return the title and url.",
-});
+1.  🔑 Get your API Key at [Browser Use Cloud](https://cloud.browser-use.com)!
 
-const result = await task.complete();
+1.  🦄 Automate the Internet!
 
-console.log(result.output);
-```
+    ```ts
+    import { BrowserUseClient } from "browser-use-sdk";
+
+    const client = new BrowserUseClient({
+        apiKey: "bu_...",
+    });
+
+    const task = await client.tasks.createTask({
+        task: "Search for the top 10 Hacker News posts and return the title and url.",
+    });
+
+    const result = await task.complete();
+
+    console.log(result.output);
+    ```
 
 > The full API of this library can be found in [api.md](api.md).
 
