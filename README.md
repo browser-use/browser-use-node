@@ -1,7 +1,7 @@
 # BrowserUse TypeScript Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fbrowser-use%2Fbrowser-use-node)
-[![npm shield](https://img.shields.io/npm/v/)](https://www.npmjs.com/package/)
+[![npm shield](https://img.shields.io/npm/v/browser-use-sdk)](https://www.npmjs.com/package/browser-use-sdk)
 
 The BrowserUse TypeScript library provides convenient access to the BrowserUse APIs from TypeScript.
 
@@ -403,7 +403,7 @@ On the other hand, contributions to the README are always very welcome!
 ## Installation
 
 ```sh
-npm i -s
+npm i -s browser-use-sdk
 ```
 
 ## Reference
@@ -415,7 +415,7 @@ A full reference for this library is available [here](https://github.com/browser
 Instantiate and use the client with the following:
 
 ```typescript
-import { BrowserUseClient } from "";
+import { BrowserUseClient } from "browser-use-sdk";
 
 const client = new BrowserUseClient({ apiKey: "YOUR_API_KEY" });
 await client.tasks.createTask({
@@ -429,7 +429,7 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { BrowserUse } from "BrowserUse";
+import { BrowserUse } from "browser-use-sdk";
 
 const request: BrowserUse.ListTasksTasksGetRequest = {
     ...
@@ -442,7 +442,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { BrowserUseError } from "BrowserUse";
+import { BrowserUseError } from "browser-use-sdk";
 
 try {
     await client.tasks.createTask(...);
@@ -553,7 +553,7 @@ The SDK provides a way for you to customize the underlying HTTP client / Fetch f
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { BrowserUseClient } from "BrowserUse";
+import { BrowserUseClient } from "browser-use-sdk";
 
 const client = new BrowserUseClient({
     ...
