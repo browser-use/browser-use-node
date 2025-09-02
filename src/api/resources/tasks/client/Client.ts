@@ -152,10 +152,8 @@ export class Tasks {
      * @param {Tasks.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.BadRequestError}
-     * @throws {@link BrowserUse.PaymentRequiredError}
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
-     * @throws {@link BrowserUse.InternalServerError}
      *
      * @example
      *     await client.tasks.createTask({
@@ -203,11 +201,6 @@ export class Tasks {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new BrowserUse.BadRequestError(_response.error.body as unknown, _response.rawResponse);
-                case 402:
-                    throw new BrowserUse.PaymentRequiredError(
-                        _response.error.body as BrowserUse.InsufficientCreditsError,
-                        _response.rawResponse,
-                    );
                 case 404:
                     throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -215,8 +208,6 @@ export class Tasks {
                         _response.error.body as unknown,
                         _response.rawResponse,
                     );
-                case 500:
-                    throw new BrowserUse.InternalServerError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.BrowserUseError({
                         statusCode: _response.error.statusCode,
