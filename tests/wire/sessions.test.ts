@@ -138,16 +138,6 @@ describe("Sessions", () => {
         });
     });
 
-    test("deleteSession", async () => {
-        const server = mockServerPool.createServer();
-        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
-
-        server.mockEndpoint().delete("/sessions/session_id").respondWith().statusCode(200).build();
-
-        const response = await client.sessions.deleteSession("session_id");
-        expect(response).toEqual(undefined);
-    });
-
     test("updateSession", async () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });

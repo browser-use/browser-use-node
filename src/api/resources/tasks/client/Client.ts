@@ -154,6 +154,7 @@ export class Tasks {
      * @throws {@link BrowserUse.BadRequestError}
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
+     * @throws {@link BrowserUse.TooManyRequestsError}
      *
      * @example
      *     await client.tasks.createTask({
@@ -206,6 +207,11 @@ export class Tasks {
                 case 422:
                     throw new BrowserUse.UnprocessableEntityError(
                         _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                case 429:
+                    throw new BrowserUse.TooManyRequestsError(
+                        _response.error.body as BrowserUse.TooManyConcurrentActiveSessionsError,
                         _response.rawResponse,
                     );
                 default:

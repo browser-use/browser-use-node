@@ -139,6 +139,7 @@ export class Sessions {
      *
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
+     * @throws {@link BrowserUse.TooManyRequestsError}
      *
      * @example
      *     await client.sessions.createSession()
@@ -187,6 +188,11 @@ export class Sessions {
                 case 422:
                     throw new BrowserUse.UnprocessableEntityError(
                         _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                case 429:
+                    throw new BrowserUse.TooManyRequestsError(
+                        _response.error.body as BrowserUse.TooManyConcurrentActiveSessionsError,
                         _response.rawResponse,
                     );
                 default:
@@ -288,81 +294,6 @@ export class Sessions {
                 });
             case "timeout":
                 throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling GET /sessions/{session_id}.");
-            case "unknown":
-                throw new errors.BrowserUseError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
-    }
-
-    /**
-     * Permanently delete a session and all associated data.
-     *
-     * @param {string} sessionId
-     * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link BrowserUse.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.sessions.deleteSession("session_id")
-     */
-    public deleteSession(sessionId: string, requestOptions?: Sessions.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__deleteSession(sessionId, requestOptions));
-    }
-
-    private async __deleteSession(
-        sessionId: string,
-        requestOptions?: Sessions.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.BrowserUseEnvironment.Production,
-                `sessions/${encodeURIComponent(sessionId)}`,
-            ),
-            method: "DELETE",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 422:
-                    throw new BrowserUse.UnprocessableEntityError(
-                        _response.error.body as unknown,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.BrowserUseError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.BrowserUseError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling DELETE /sessions/{session_id}.");
             case "unknown":
                 throw new errors.BrowserUseError({
                     message: _response.error.errorMessage,

@@ -33,6 +33,7 @@ export * from "./TaskStatus.js";
 export * from "./TaskStepView.js";
 export * from "./TaskUpdateAction.js";
 export * from "./TaskView.js";
+export * from "./TooManyConcurrentActiveSessionsError.js";
 export * from "./UnsupportedContentTypeError.js";
 export * from "./UploadFilePresignedUrlResponse.js";
 export * from "./ValidationError.js";

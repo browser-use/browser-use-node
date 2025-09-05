@@ -579,69 +579,6 @@ await client.sessions.getSession("session_id");
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">deleteSession</a>(sessionId) -> void</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Permanently delete a session and all associated data.
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sessions.deleteSession("session_id");
-```
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**sessionId:** `string`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Sessions.RequestOptions`
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">updateSession</a>(sessionId, { ...params }) -> BrowserUse.SessionView</code></summary>
 <dl>
 <dd>
