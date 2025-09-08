@@ -21,7 +21,6 @@ describe("Tasks", () => {
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
                     metadata: { key: "value" },
-                    isScheduled: true,
                     output: "output",
                     browserUseVersion: "browserUseVersion",
                     isSuccess: true,
@@ -47,7 +46,6 @@ describe("Tasks", () => {
                     metadata: {
                         key: "value",
                     },
-                    isScheduled: true,
                     output: "output",
                     browserUseVersion: "browserUseVersion",
                     isSuccess: true,
@@ -94,7 +92,6 @@ describe("Tasks", () => {
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
             metadata: { key: "value" },
-            isScheduled: true,
             steps: [
                 {
                     number: 1,
@@ -125,7 +122,6 @@ describe("Tasks", () => {
             metadata: {
                 key: "value",
             },
-            isScheduled: true,
             steps: [
                 {
                     number: 1,
@@ -162,7 +158,6 @@ describe("Tasks", () => {
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
             metadata: { key: "value" },
-            isScheduled: true,
             steps: [
                 {
                     number: 1,
@@ -202,7 +197,6 @@ describe("Tasks", () => {
             metadata: {
                 key: "value",
             },
-            isScheduled: true,
             steps: [
                 {
                     number: 1,

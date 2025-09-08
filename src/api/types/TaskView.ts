@@ -23,8 +23,6 @@ export interface TaskView {
     finishedAt?: string;
     /** Optional additional metadata associated with the task set by the user */
     metadata?: Record<string, unknown>;
-    /** Whether this task was created as a scheduled task */
-    isScheduled: boolean;
     steps: BrowserUse.TaskStepView[];
     /** Final output/result of the task */
     output?: string;

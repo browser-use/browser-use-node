@@ -93,7 +93,6 @@ describe("Sessions", () => {
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
                     metadata: { key: "value" },
-                    isScheduled: true,
                     output: "output",
                     browserUseVersion: "browserUseVersion",
                     isSuccess: true,
@@ -128,7 +127,6 @@ describe("Sessions", () => {
                     metadata: {
                         key: "value",
                     },
-                    isScheduled: true,
                     output: "output",
                     browserUseVersion: "browserUseVersion",
                     isSuccess: true,
@@ -158,7 +156,6 @@ describe("Sessions", () => {
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
                     metadata: { key: "value" },
-                    isScheduled: true,
                     output: "output",
                     browserUseVersion: "browserUseVersion",
                     isSuccess: true,
@@ -194,7 +191,6 @@ describe("Sessions", () => {
                     metadata: {
                         key: "value",
                     },
-                    isScheduled: true,
                     output: "output",
                     browserUseVersion: "browserUseVersion",
                     isSuccess: true,
