@@ -256,6 +256,7 @@ export function wrapCreateTaskResponse(
                     }
                 }
                 case "started":
+                case "created":
                     break;
                 default:
                     throw new ExhaustiveSwitchCheck(msg.data.status);
