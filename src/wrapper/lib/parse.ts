@@ -161,6 +161,7 @@ export function wrapCreateTaskResponse(
                 case "paused":
                     break poll;
                 case "started":
+                case "created":
                     await new Promise((resolve) => setTimeout(resolve, intervalMs));
                     break;
                 default:
@@ -256,6 +257,7 @@ export function wrapCreateTaskResponse(
                     }
                 }
                 case "started":
+                case "created":
                     break;
                 default:
                     throw new ExhaustiveSwitchCheck(msg.data.status);
