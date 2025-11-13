@@ -11,8 +11,9 @@
  *     FINISHED: Task has finished and the agent has completed the task.
  *     STOPPED: Task execution has been manually stopped (cannot be resumed).
  */
-export type TaskStatus = "started" | "paused" | "finished" | "stopped";
+export type TaskStatus = "created" | "started" | "paused" | "finished" | "stopped";
 export const TaskStatus = {
+    Create: "created",
     Started: "started",
     Paused: "paused",
     Finished: "finished",
