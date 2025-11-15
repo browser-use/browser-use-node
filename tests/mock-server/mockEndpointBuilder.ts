@@ -1,4 +1,4 @@
-import { DefaultBodyType, HttpHandler, HttpResponse, HttpResponseResolver, http } from "msw";
+import { type DefaultBodyType, type HttpHandler, HttpResponse, type HttpResponseResolver, http } from "msw";
 
 import { url } from "../../src/core";
 import { toJson } from "../../src/core/json";
@@ -191,10 +191,15 @@ class ResponseBuilder implements ResponseStatusStage, ResponseHeaderStage, Respo
 
     public build(): HttpHandler {
         const responseResolver: HttpResponseResolver = () => {
-            return new HttpResponse(this.responseBody, {
+            const response = new HttpResponse(this.responseBody, {
                 status: this.responseStatusCode,
                 headers: this.responseHeaders,
             });
+            // if no Content-Type header is set, delete the default text content type that is set
+            if (Object.keys(this.responseHeaders).some((key) => key.toLowerCase() === "content-type") === false) {
+                response.headers.delete("Content-Type");
+            }
+            return response;
         };
 
         const finalResolver = this.requestPredicates.reduceRight((acc, predicate) => predicate(acc), responseResolver);

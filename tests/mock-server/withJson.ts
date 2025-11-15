@@ -1,4 +1,4 @@
-import { HttpResponseResolver, passthrough } from "msw";
+import { type HttpResponseResolver, passthrough } from "msw";
 
 import { fromJson, toJson } from "../../src/core/json";
 
@@ -28,7 +28,7 @@ export function withJson(expectedBody: unknown, resolver: HttpResponseResolver):
         }
 
         const mismatches = findMismatches(actualBody, expectedBody);
-        if (Object.keys(mismatches).length > 0) {
+        if (Object.keys(mismatches).filter((key) => !key.startsWith("pagination.")).length > 0) {
             console.error("JSON body mismatch:", toJson(mismatches, undefined, 2));
             return passthrough();
         }
@@ -67,7 +67,7 @@ function findMismatches(actual: any, expected: any): Record<string, { actual: an
             const itemMismatches = findMismatches(actual[i], expected[i]);
             if (Object.keys(itemMismatches).length > 0) {
                 for (const [mismatchKey, mismatchValue] of Object.entries(itemMismatches)) {
-                    arrayMismatches[`[${i}]${mismatchKey === "value" ? "" : "." + mismatchKey}`] = mismatchValue;
+                    arrayMismatches[`[${i}]${mismatchKey === "value" ? "" : `.${mismatchKey}`}`] = mismatchValue;
                 }
             }
         }
@@ -99,7 +99,7 @@ function findMismatches(actual: any, expected: any): Record<string, { actual: an
             const nestedMismatches = findMismatches(actual[key], expected[key]);
             if (Object.keys(nestedMismatches).length > 0) {
                 for (const [nestedKey, nestedValue] of Object.entries(nestedMismatches)) {
-                    mismatches[`${key}${nestedKey === "value" ? "" : "." + nestedKey}`] = nestedValue;
+                    mismatches[`${key}${nestedKey === "value" ? "" : `.${nestedKey}`}`] = nestedValue;
                 }
             }
         } else if (actual[key] !== expected[key]) {

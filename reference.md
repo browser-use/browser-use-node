@@ -1,7 +1,5 @@
 # Reference
-
 ## Billing
-
 <details><summary><code>client.billing.<a href="/src/api/resources/billing/client/Client.ts">getAccountBilling</a>() -> BrowserUse.AccountView</code></summary>
 <dl>
 <dd>
@@ -15,7 +13,6 @@
 <dd>
 
 Get authenticated account information including credit balances and account details.
-
 </dd>
 </dl>
 </dd>
@@ -31,8 +28,8 @@ Get authenticated account information including credit balances and account deta
 
 ```typescript
 await client.billing.getAccountBilling();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -46,19 +43,19 @@ await client.billing.getAccountBilling();
 <dl>
 <dd>
 
-**requestOptions:** `Billing.RequestOptions`
+**requestOptions:** `Billing.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Tasks
-
 <details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client/Client.ts">listTasks</a>({ ...params }) -> BrowserUse.TaskListResponse</code></summary>
 <dl>
 <dd>
@@ -72,7 +69,6 @@ await client.billing.getAccountBilling();
 <dd>
 
 Get paginated list of AI agent tasks with optional filtering by session and status.
-
 </dd>
 </dl>
 </dd>
@@ -88,8 +84,8 @@ Get paginated list of AI agent tasks with optional filtering by session and stat
 
 ```typescript
 await client.tasks.listTasks();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -103,20 +99,21 @@ await client.tasks.listTasks();
 <dl>
 <dd>
 
-**request:** `BrowserUse.ListTasksTasksGetRequest`
-
+**request:** `BrowserUse.ListTasksTasksGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Tasks.RequestOptions`
+**requestOptions:** `Tasks.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -135,13 +132,12 @@ await client.tasks.listTasks();
 <dd>
 
 You can either:
-
 1. Start a new task (auto creates a new simple session)
 2. Start a new task in an existing session (you can create a custom session before starting the task and reuse it for follow-up tasks)
- </dd>
- </dl>
- </dd>
- </dl>
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -153,10 +149,10 @@ You can either:
 
 ```typescript
 await client.tasks.createTask({
-    task: "task",
+    task: "task"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -170,20 +166,21 @@ await client.tasks.createTask({
 <dl>
 <dd>
 
-**request:** `BrowserUse.CreateTaskRequest`
-
+**request:** `BrowserUse.CreateTaskRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Tasks.RequestOptions`
+**requestOptions:** `Tasks.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -202,7 +199,6 @@ await client.tasks.createTask({
 <dd>
 
 Get detailed task information including status, progress, steps, and file outputs.
-
 </dd>
 </dl>
 </dd>
@@ -218,10 +214,10 @@ Get detailed task information including status, progress, steps, and file output
 
 ```typescript
 await client.tasks.getTask({
-    task_id: "task_id",
+    task_id: "task_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -235,20 +231,21 @@ await client.tasks.getTask({
 <dl>
 <dd>
 
-**request:** `BrowserUse.GetTaskTasksTaskIdGetRequest`
-
+**request:** `BrowserUse.GetTaskTasksTaskIdGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Tasks.RequestOptions`
+**requestOptions:** `Tasks.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -267,7 +264,6 @@ await client.tasks.getTask({
 <dd>
 
 Control task execution with stop, pause, resume, or stop task and session actions.
-
 </dd>
 </dl>
 </dd>
@@ -284,10 +280,10 @@ Control task execution with stop, pause, resume, or stop task and session action
 ```typescript
 await client.tasks.updateTask({
     task_id: "task_id",
-    action: "stop",
+    action: "stop"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -301,20 +297,21 @@ await client.tasks.updateTask({
 <dl>
 <dd>
 
-**request:** `BrowserUse.UpdateTaskRequest`
-
+**request:** `BrowserUse.UpdateTaskRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Tasks.RequestOptions`
+**requestOptions:** `Tasks.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -333,7 +330,6 @@ await client.tasks.updateTask({
 <dd>
 
 Get secure download URL for task execution logs with step-by-step details.
-
 </dd>
 </dl>
 </dd>
@@ -349,10 +345,10 @@ Get secure download URL for task execution logs with step-by-step details.
 
 ```typescript
 await client.tasks.getTaskLogs({
-    task_id: "task_id",
+    task_id: "task_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -366,27 +362,27 @@ await client.tasks.getTaskLogs({
 <dl>
 <dd>
 
-**request:** `BrowserUse.GetTaskLogsTasksTaskIdLogsGetRequest`
-
+**request:** `BrowserUse.GetTaskLogsTasksTaskIdLogsGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Tasks.RequestOptions`
+**requestOptions:** `Tasks.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Sessions
-
 <details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">listSessions</a>({ ...params }) -> BrowserUse.SessionListResponse</code></summary>
 <dl>
 <dd>
@@ -400,7 +396,6 @@ await client.tasks.getTaskLogs({
 <dd>
 
 Get paginated list of AI agent sessions with optional status filtering.
-
 </dd>
 </dl>
 </dd>
@@ -416,8 +411,8 @@ Get paginated list of AI agent sessions with optional status filtering.
 
 ```typescript
 await client.sessions.listSessions();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -431,20 +426,21 @@ await client.sessions.listSessions();
 <dl>
 <dd>
 
-**request:** `BrowserUse.ListSessionsSessionsGetRequest`
-
+**request:** `BrowserUse.ListSessionsSessionsGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions`
+**requestOptions:** `Sessions.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -463,7 +459,6 @@ await client.sessions.listSessions();
 <dd>
 
 Create a new session with a new task.
-
 </dd>
 </dl>
 </dd>
@@ -479,8 +474,8 @@ Create a new session with a new task.
 
 ```typescript
 await client.sessions.createSession();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -494,20 +489,21 @@ await client.sessions.createSession();
 <dl>
 <dd>
 
-**request:** `BrowserUse.CreateSessionRequest`
-
+**request:** `BrowserUse.CreateSessionRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions`
+**requestOptions:** `Sessions.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -526,7 +522,6 @@ await client.sessions.createSession();
 <dd>
 
 Get detailed session information including status, URLs, and task details.
-
 </dd>
 </dl>
 </dd>
@@ -542,10 +537,10 @@ Get detailed session information including status, URLs, and task details.
 
 ```typescript
 await client.sessions.getSession({
-    session_id: "session_id",
+    session_id: "session_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -559,20 +554,21 @@ await client.sessions.getSession({
 <dl>
 <dd>
 
-**request:** `BrowserUse.GetSessionSessionsSessionIdGetRequest`
-
+**request:** `BrowserUse.GetSessionSessionsSessionIdGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions`
+**requestOptions:** `Sessions.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -591,7 +587,6 @@ await client.sessions.getSession({
 <dd>
 
 Stop a session and all its running tasks.
-
 </dd>
 </dl>
 </dd>
@@ -607,10 +602,10 @@ Stop a session and all its running tasks.
 
 ```typescript
 await client.sessions.updateSession({
-    session_id: "session_id",
+    session_id: "session_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -624,20 +619,21 @@ await client.sessions.updateSession({
 <dl>
 <dd>
 
-**request:** `BrowserUse.UpdateSessionRequest`
-
+**request:** `BrowserUse.UpdateSessionRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions`
+**requestOptions:** `Sessions.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -656,7 +652,6 @@ await client.sessions.updateSession({
 <dd>
 
 Get public share information including URL and usage statistics.
-
 </dd>
 </dl>
 </dd>
@@ -672,10 +667,10 @@ Get public share information including URL and usage statistics.
 
 ```typescript
 await client.sessions.getSessionPublicShare({
-    session_id: "session_id",
+    session_id: "session_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -689,20 +684,21 @@ await client.sessions.getSessionPublicShare({
 <dl>
 <dd>
 
-**request:** `BrowserUse.GetSessionPublicShareSessionsSessionIdPublicShareGetRequest`
-
+**request:** `BrowserUse.GetSessionPublicShareSessionsSessionIdPublicShareGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions`
+**requestOptions:** `Sessions.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -721,7 +717,6 @@ await client.sessions.getSessionPublicShare({
 <dd>
 
 Create or return existing public share for a session.
-
 </dd>
 </dl>
 </dd>
@@ -737,10 +732,10 @@ Create or return existing public share for a session.
 
 ```typescript
 await client.sessions.createSessionPublicShare({
-    session_id: "session_id",
+    session_id: "session_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -754,20 +749,21 @@ await client.sessions.createSessionPublicShare({
 <dl>
 <dd>
 
-**request:** `BrowserUse.CreateSessionPublicShareSessionsSessionIdPublicSharePostRequest`
-
+**request:** `BrowserUse.CreateSessionPublicShareSessionsSessionIdPublicSharePostRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions`
+**requestOptions:** `Sessions.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -786,7 +782,6 @@ await client.sessions.createSessionPublicShare({
 <dd>
 
 Remove public share for a session.
-
 </dd>
 </dl>
 </dd>
@@ -802,10 +797,10 @@ Remove public share for a session.
 
 ```typescript
 await client.sessions.deleteSessionPublicShare({
-    session_id: "session_id",
+    session_id: "session_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -819,27 +814,27 @@ await client.sessions.deleteSessionPublicShare({
 <dl>
 <dd>
 
-**request:** `BrowserUse.DeleteSessionPublicShareSessionsSessionIdPublicShareDeleteRequest`
-
+**request:** `BrowserUse.DeleteSessionPublicShareSessionsSessionIdPublicShareDeleteRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions`
+**requestOptions:** `Sessions.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Files
-
 <details><summary><code>client.files.<a href="/src/api/resources/files/client/Client.ts">agentSessionUploadFilePresignedUrl</a>({ ...params }) -> BrowserUse.UploadFilePresignedUrlResponse</code></summary>
 <dl>
 <dd>
@@ -853,7 +848,6 @@ await client.sessions.deleteSessionPublicShare({
 <dd>
 
 Generate a secure presigned URL for uploading files to an agent session.
-
 </dd>
 </dl>
 </dd>
@@ -873,11 +867,11 @@ await client.files.agentSessionUploadFilePresignedUrl({
     body: {
         fileName: "fileName",
         contentType: "image/jpg",
-        sizeBytes: 1,
-    },
+        sizeBytes: 1
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -891,20 +885,21 @@ await client.files.agentSessionUploadFilePresignedUrl({
 <dl>
 <dd>
 
-**request:** `BrowserUse.AgentSessionUploadFilePresignedUrlFilesSessionsSessionIdPresignedUrlPostRequest`
-
+**request:** `BrowserUse.AgentSessionUploadFilePresignedUrlFilesSessionsSessionIdPresignedUrlPostRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Files.RequestOptions`
+**requestOptions:** `Files.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -923,7 +918,6 @@ await client.files.agentSessionUploadFilePresignedUrl({
 <dd>
 
 Generate a secure presigned URL for uploading files to a browser session.
-
 </dd>
 </dl>
 </dd>
@@ -943,11 +937,11 @@ await client.files.browserSessionUploadFilePresignedUrl({
     body: {
         fileName: "fileName",
         contentType: "image/jpg",
-        sizeBytes: 1,
-    },
+        sizeBytes: 1
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -961,20 +955,21 @@ await client.files.browserSessionUploadFilePresignedUrl({
 <dl>
 <dd>
 
-**request:** `BrowserUse.BrowserSessionUploadFilePresignedUrlFilesBrowsersSessionIdPresignedUrlPostRequest`
-
+**request:** `BrowserUse.BrowserSessionUploadFilePresignedUrlFilesBrowsersSessionIdPresignedUrlPostRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Files.RequestOptions`
+**requestOptions:** `Files.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -993,7 +988,6 @@ await client.files.browserSessionUploadFilePresignedUrl({
 <dd>
 
 Get secure download URL for an output file generated by the AI agent.
-
 </dd>
 </dl>
 </dd>
@@ -1010,10 +1004,10 @@ Get secure download URL for an output file generated by the AI agent.
 ```typescript
 await client.files.getTaskOutputFilePresignedUrl({
     task_id: "task_id",
-    file_id: "file_id",
+    file_id: "file_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1027,27 +1021,27 @@ await client.files.getTaskOutputFilePresignedUrl({
 <dl>
 <dd>
 
-**request:** `BrowserUse.GetTaskOutputFilePresignedUrlFilesTasksTaskIdOutputFilesFileIdGetRequest`
-
+**request:** `BrowserUse.GetTaskOutputFilePresignedUrlFilesTasksTaskIdOutputFilesFileIdGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Files.RequestOptions`
+**requestOptions:** `Files.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Profiles
-
 <details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">listProfiles</a>({ ...params }) -> BrowserUse.ProfileListResponse</code></summary>
 <dl>
 <dd>
@@ -1061,7 +1055,6 @@ await client.files.getTaskOutputFilePresignedUrl({
 <dd>
 
 Get paginated list of profiles.
-
 </dd>
 </dl>
 </dd>
@@ -1077,8 +1070,8 @@ Get paginated list of profiles.
 
 ```typescript
 await client.profiles.listProfiles();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1092,20 +1085,21 @@ await client.profiles.listProfiles();
 <dl>
 <dd>
 
-**request:** `BrowserUse.ListProfilesProfilesGetRequest`
-
+**request:** `BrowserUse.ListProfilesProfilesGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Profiles.RequestOptions`
+**requestOptions:** `Profiles.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1129,7 +1123,6 @@ They are most commonly used to allow users to preserve the log-in state in the a
 You'd normally create one profile per user and then use it for all their tasks.
 
 You can create a new profile by calling this endpoint.
-
 </dd>
 </dl>
 </dd>
@@ -1145,8 +1138,8 @@ You can create a new profile by calling this endpoint.
 
 ```typescript
 await client.profiles.createProfile();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1160,20 +1153,21 @@ await client.profiles.createProfile();
 <dl>
 <dd>
 
-**request:** `BrowserUse.ProfileCreateRequest`
-
+**request:** `BrowserUse.ProfileCreateRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Profiles.RequestOptions`
+**requestOptions:** `Profiles.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1192,7 +1186,6 @@ await client.profiles.createProfile();
 <dd>
 
 Get profile details.
-
 </dd>
 </dl>
 </dd>
@@ -1208,10 +1201,10 @@ Get profile details.
 
 ```typescript
 await client.profiles.getProfile({
-    profile_id: "profile_id",
+    profile_id: "profile_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1225,20 +1218,21 @@ await client.profiles.getProfile({
 <dl>
 <dd>
 
-**request:** `BrowserUse.GetProfileProfilesProfileIdGetRequest`
-
+**request:** `BrowserUse.GetProfileProfilesProfileIdGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Profiles.RequestOptions`
+**requestOptions:** `Profiles.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1257,7 +1251,6 @@ await client.profiles.getProfile({
 <dd>
 
 Permanently delete a browser profile and its configuration.
-
 </dd>
 </dl>
 </dd>
@@ -1273,10 +1266,10 @@ Permanently delete a browser profile and its configuration.
 
 ```typescript
 await client.profiles.deleteBrowserProfile({
-    profile_id: "profile_id",
+    profile_id: "profile_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1290,20 +1283,21 @@ await client.profiles.deleteBrowserProfile({
 <dl>
 <dd>
 
-**request:** `BrowserUse.DeleteBrowserProfileProfilesProfileIdDeleteRequest`
-
+**request:** `BrowserUse.DeleteBrowserProfileProfilesProfileIdDeleteRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Profiles.RequestOptions`
+**requestOptions:** `Profiles.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1322,7 +1316,6 @@ await client.profiles.deleteBrowserProfile({
 <dd>
 
 Update a browser profile's information.
-
 </dd>
 </dl>
 </dd>
@@ -1338,10 +1331,10 @@ Update a browser profile's information.
 
 ```typescript
 await client.profiles.updateProfile({
-    profile_id: "profile_id",
+    profile_id: "profile_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1355,27 +1348,27 @@ await client.profiles.updateProfile({
 <dl>
 <dd>
 
-**request:** `BrowserUse.ProfileUpdateRequest`
-
+**request:** `BrowserUse.ProfileUpdateRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Profiles.RequestOptions`
+**requestOptions:** `Profiles.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Browsers
-
 <details><summary><code>client.browsers.<a href="/src/api/resources/browsers/client/Client.ts">listBrowserSessions</a>({ ...params }) -> BrowserUse.BrowserSessionListResponse</code></summary>
 <dl>
 <dd>
@@ -1389,7 +1382,6 @@ await client.profiles.updateProfile({
 <dd>
 
 Get paginated list of browser sessions with optional status filtering.
-
 </dd>
 </dl>
 </dd>
@@ -1405,8 +1397,8 @@ Get paginated list of browser sessions with optional status filtering.
 
 ```typescript
 await client.browsers.listBrowserSessions();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1420,20 +1412,21 @@ await client.browsers.listBrowserSessions();
 <dl>
 <dd>
 
-**request:** `BrowserUse.ListBrowserSessionsBrowsersGetRequest`
-
+**request:** `BrowserUse.ListBrowserSessionsBrowsersGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Browsers.RequestOptions`
+**requestOptions:** `Browsers.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1461,13 +1454,12 @@ Billing is rounded to the nearest minute (minimum 1 minute).
 For example, if you stop a session after 30 minutes, you'll be refunded $0.025.
 
 **Session Limits:**
-
 - Free users (without active subscription): Maximum 15 minutes per session
 - Paid subscribers: Up to 4 hours per session
-  </dd>
-  </dl>
-  </dd>
-  </dl>
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1479,8 +1471,8 @@ For example, if you stop a session after 30 minutes, you'll be refunded $0.025.
 
 ```typescript
 await client.browsers.createBrowserSession();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1494,20 +1486,21 @@ await client.browsers.createBrowserSession();
 <dl>
 <dd>
 
-**request:** `BrowserUse.CreateBrowserSessionRequest`
-
+**request:** `BrowserUse.CreateBrowserSessionRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Browsers.RequestOptions`
+**requestOptions:** `Browsers.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1526,7 +1519,6 @@ await client.browsers.createBrowserSession();
 <dd>
 
 Get detailed browser session information including status and URLs.
-
 </dd>
 </dl>
 </dd>
@@ -1542,10 +1534,10 @@ Get detailed browser session information including status and URLs.
 
 ```typescript
 await client.browsers.getBrowserSession({
-    session_id: "session_id",
+    session_id: "session_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1559,20 +1551,21 @@ await client.browsers.getBrowserSession({
 <dl>
 <dd>
 
-**request:** `BrowserUse.GetBrowserSessionBrowsersSessionIdGetRequest`
-
+**request:** `BrowserUse.GetBrowserSessionBrowsersSessionIdGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Browsers.RequestOptions`
+**requestOptions:** `Browsers.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1595,7 +1588,6 @@ Stop a browser session.
 **Refund:** When you stop a session, unused time is automatically refunded.
 If the session ran for less than 1 hour, you'll receive a proportional refund.
 Billing is ceil to the nearest minute (minimum 1 minute).
-
 </dd>
 </dl>
 </dd>
@@ -1611,10 +1603,10 @@ Billing is ceil to the nearest minute (minimum 1 minute).
 
 ```typescript
 await client.browsers.updateBrowserSession({
-    session_id: "session_id",
+    session_id: "session_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1628,27 +1620,27 @@ await client.browsers.updateBrowserSession({
 <dl>
 <dd>
 
-**request:** `BrowserUse.UpdateBrowserSessionRequest`
-
+**request:** `BrowserUse.UpdateBrowserSessionRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Browsers.RequestOptions`
+**requestOptions:** `Browsers.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Workflows
-
 <details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">listWorkflows</a>({ ...params }) -> BrowserUse.WorkflowListResponse</code></summary>
 <dl>
 <dd>
@@ -1662,7 +1654,6 @@ await client.browsers.updateBrowserSession({
 <dd>
 
 Get paginated list of workflows with optional filtering.
-
 </dd>
 </dl>
 </dd>
@@ -1678,8 +1669,8 @@ Get paginated list of workflows with optional filtering.
 
 ```typescript
 await client.workflows.listWorkflows();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1693,20 +1684,21 @@ await client.workflows.listWorkflows();
 <dl>
 <dd>
 
-**request:** `BrowserUse.ListWorkflowsWorkflowsGetRequest`
-
+**request:** `BrowserUse.ListWorkflowsWorkflowsGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions`
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1725,7 +1717,6 @@ await client.workflows.listWorkflows();
 <dd>
 
 Create a new workflow. The workflow YAML should be uploaded separately via the update endpoint.
-
 </dd>
 </dl>
 </dd>
@@ -1741,10 +1732,10 @@ Create a new workflow. The workflow YAML should be uploaded separately via the u
 
 ```typescript
 await client.workflows.createWorkflow({
-    name: "name",
+    name: "name"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1758,20 +1749,21 @@ await client.workflows.createWorkflow({
 <dl>
 <dd>
 
-**request:** `BrowserUse.WorkflowCreateRequest`
-
+**request:** `BrowserUse.WorkflowCreateRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions`
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1790,7 +1782,6 @@ await client.workflows.createWorkflow({
 <dd>
 
 Get detailed workflow information including presigned URL to download YAML.
-
 </dd>
 </dl>
 </dd>
@@ -1806,10 +1797,10 @@ Get detailed workflow information including presigned URL to download YAML.
 
 ```typescript
 await client.workflows.getWorkflow({
-    workflow_id: "workflow_id",
+    workflow_id: "workflow_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1823,20 +1814,21 @@ await client.workflows.getWorkflow({
 <dl>
 <dd>
 
-**request:** `BrowserUse.GetWorkflowWorkflowsWorkflowIdGetRequest`
-
+**request:** `BrowserUse.GetWorkflowWorkflowsWorkflowIdGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions`
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1855,7 +1847,6 @@ await client.workflows.getWorkflow({
 <dd>
 
 Archive a workflow (soft delete).
-
 </dd>
 </dl>
 </dd>
@@ -1871,10 +1862,10 @@ Archive a workflow (soft delete).
 
 ```typescript
 await client.workflows.deleteWorkflow({
-    workflow_id: "workflow_id",
+    workflow_id: "workflow_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1888,20 +1879,21 @@ await client.workflows.deleteWorkflow({
 <dl>
 <dd>
 
-**request:** `BrowserUse.DeleteWorkflowWorkflowsWorkflowIdDeleteRequest`
-
+**request:** `BrowserUse.DeleteWorkflowWorkflowsWorkflowIdDeleteRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions`
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1920,7 +1912,6 @@ await client.workflows.deleteWorkflow({
 <dd>
 
 Update workflow metadata.
-
 </dd>
 </dl>
 </dd>
@@ -1936,10 +1927,10 @@ Update workflow metadata.
 
 ```typescript
 await client.workflows.updateWorkflow({
-    workflow_id: "workflow_id",
+    workflow_id: "workflow_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1953,20 +1944,21 @@ await client.workflows.updateWorkflow({
 <dl>
 <dd>
 
-**request:** `BrowserUse.WorkflowUpdateRequest`
-
+**request:** `BrowserUse.WorkflowUpdateRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions`
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1988,7 +1980,6 @@ Get a presigned URL to upload workflow YAML directly to S3 from the browser.
 
 This avoids sending the YAML content through the backend, reducing latency
 and avoiding KMS permission issues in local development.
-
 </dd>
 </dl>
 </dd>
@@ -2005,10 +1996,10 @@ and avoiding KMS permission issues in local development.
 ```typescript
 await client.workflows.getWorkflowYamlPresignedUrl({
     workflow_id: "workflow_id",
-    sizeBytes: 1,
+    sizeBytes: 1
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -2022,20 +2013,21 @@ await client.workflows.getWorkflowYamlPresignedUrl({
 <dl>
 <dd>
 
-**request:** `BrowserUse.WorkflowYamlPresignedUploadRequest`
-
+**request:** `BrowserUse.WorkflowYamlPresignedUploadRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions`
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -2057,10 +2049,10 @@ Execute a workflow either synchronously or asynchronously.
 
 - ASYNC mode: Returns execution ID immediately and processes in background via Lambda
 - SYNC mode: Waits for execution to complete and returns results inline (max 5 min timeout)
-  </dd>
-  </dl>
-  </dd>
-  </dl>
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2072,10 +2064,10 @@ Execute a workflow either synchronously or asynchronously.
 
 ```typescript
 await client.workflows.executeWorkflow({
-    workflow_id: "workflow_id",
+    workflow_id: "workflow_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -2089,20 +2081,21 @@ await client.workflows.executeWorkflow({
 <dl>
 <dd>
 
-**request:** `BrowserUse.WorkflowExecuteRequest`
-
+**request:** `BrowserUse.WorkflowExecuteRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions`
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -2123,14 +2116,12 @@ await client.workflows.executeWorkflow({
 Generate a workflow from a natural language task description.
 
 This endpoint uses the workflow-use library's HealingService to:
-
 1. Record browser interactions for the task
 2. Convert interactions to a reusable workflow
 3. Extract variables for parameterization
 4. Save the generated YAML to S3
 
 The generation happens asynchronously via the workflow_worker Lambda.
-
 </dd>
 </dl>
 </dd>
@@ -2147,10 +2138,10 @@ The generation happens asynchronously via the workflow_worker Lambda.
 ```typescript
 await client.workflows.generateWorkflow({
     workflow_id: "workflow_id",
-    taskPrompt: "Go to github.com and search for browser-use",
+    taskPrompt: "Go to github.com and search for browser-use"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -2164,20 +2155,21 @@ await client.workflows.generateWorkflow({
 <dl>
 <dd>
 
-**request:** `BrowserUse.WorkflowGenerateRequest`
-
+**request:** `BrowserUse.WorkflowGenerateRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions`
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -2196,7 +2188,6 @@ await client.workflows.generateWorkflow({
 <dd>
 
 Get detailed execution information including status, results, and costs.
-
 </dd>
 </dl>
 </dd>
@@ -2212,10 +2203,10 @@ Get detailed execution information including status, results, and costs.
 
 ```typescript
 await client.workflows.getExecution({
-    execution_id: "execution_id",
+    execution_id: "execution_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -2229,20 +2220,21 @@ await client.workflows.getExecution({
 <dl>
 <dd>
 
-**request:** `BrowserUse.GetExecutionWorkflowsExecutionsExecutionIdGetRequest`
-
+**request:** `BrowserUse.GetExecutionWorkflowsExecutionsExecutionIdGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions`
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -2261,7 +2253,6 @@ await client.workflows.getExecution({
 <dd>
 
 Get paginated list of executions for a specific workflow.
-
 </dd>
 </dl>
 </dd>
@@ -2277,10 +2268,10 @@ Get paginated list of executions for a specific workflow.
 
 ```typescript
 await client.workflows.listWorkflowExecutions({
-    workflow_id: "workflow_id",
+    workflow_id: "workflow_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -2294,20 +2285,21 @@ await client.workflows.listWorkflowExecutions({
 <dl>
 <dd>
 
-**request:** `BrowserUse.ListWorkflowExecutionsWorkflowsWorkflowIdExecutionsGetRequest`
-
+**request:** `BrowserUse.ListWorkflowExecutionsWorkflowsWorkflowIdExecutionsGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions`
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -2326,7 +2318,6 @@ await client.workflows.listWorkflowExecutions({
 <dd>
 
 Get paginated list of all workflow executions for a project.
-
 </dd>
 </dl>
 </dd>
@@ -2342,8 +2333,8 @@ Get paginated list of all workflow executions for a project.
 
 ```typescript
 await client.workflows.listAllExecutions();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -2357,20 +2348,21 @@ await client.workflows.listAllExecutions();
 <dl>
 <dd>
 
-**request:** `BrowserUse.ListAllExecutionsWorkflowsExecutionsGetRequest`
-
+**request:** `BrowserUse.ListAllExecutionsWorkflowsExecutionsGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions`
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -2389,7 +2381,6 @@ await client.workflows.listAllExecutions();
 <dd>
 
 Cancel a pending or running workflow execution.
-
 </dd>
 </dl>
 </dd>
@@ -2405,10 +2396,10 @@ Cancel a pending or running workflow execution.
 
 ```typescript
 await client.workflows.cancelExecution({
-    execution_id: "execution_id",
+    execution_id: "execution_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -2422,20 +2413,21 @@ await client.workflows.cancelExecution({
 <dl>
 <dd>
 
-**request:** `BrowserUse.CancelExecutionWorkflowsExecutionsExecutionIdCancelPatchRequest`
-
+**request:** `BrowserUse.CancelExecutionWorkflowsExecutionsExecutionIdCancelPatchRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions`
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -2454,7 +2446,6 @@ await client.workflows.cancelExecution({
 <dd>
 
 Get presigned URL to download execution logs.
-
 </dd>
 </dl>
 </dd>
@@ -2470,10 +2461,10 @@ Get presigned URL to download execution logs.
 
 ```typescript
 await client.workflows.getExecutionLogs({
-    execution_id: "execution_id",
+    execution_id: "execution_id"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -2487,20 +2478,21 @@ await client.workflows.getExecutionLogs({
 <dl>
 <dd>
 
-**request:** `BrowserUse.GetExecutionLogsWorkflowsExecutionsExecutionIdLogsGetRequest`
-
+**request:** `BrowserUse.GetExecutionLogsWorkflowsExecutionsExecutionIdLogsGetRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions`
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
