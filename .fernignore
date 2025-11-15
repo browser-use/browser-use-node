@@ -12,3 +12,5 @@ jest.config.mjs
 README.md
 tsconfig.proxy.json
 tsconfig.json
+tsconfig.cjs.json
+tsconfig.esm.json
