@@ -6,7 +6,6 @@ import z, { type ZodType } from "zod";
 import type { BrowserUse } from "../../index.js";
 import type { BrowserUseTasks } from "../api/BrowserUseTasks.js";
 import type { CreateTaskRequest, TaskView } from "../../api/index.js";
-import { ExhaustiveSwitchCheck } from "./types.js";
 
 // RUN
 
@@ -162,8 +161,8 @@ export function wrapCreateTaskResponse(
                 case "started":
                     await new Promise((resolve) => setTimeout(resolve, intervalMs));
                     break;
-                default:
-                    throw new ExhaustiveSwitchCheck(res.status as never);
+                // default:
+                //     throw new ExhaustiveSwitchCheck(res.status as never);
             }
         } while (true);
     }
@@ -242,8 +241,8 @@ export function wrapCreateTaskResponse(
                 case "stopped":
                 case "started":
                     break;
-                default:
-                    throw new ExhaustiveSwitchCheck(msg.data.status as never);
+                // default:
+                // throw new ExhaustiveSwitchCheck(msg.data.status as never);
             }
         }
 
