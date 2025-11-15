@@ -26,10 +26,10 @@ export const zWebhookTest = z.object({
 
 export const zWebhookAgentTaskStatusUpdatePayloadMetadata = z.record(z.string(), z.unknown()).optional();
 
-export const zWebhookAgentTaskStatusUpdatePayloadStatus = z.literal([
+export const zWebhookAgentTaskStatusUpdatePayloadStatus = z.enum([
     "initializing",
     "started",
-    "paused",
+    // "paused", // deprecated
     "stopped",
     "finished",
 ]);
