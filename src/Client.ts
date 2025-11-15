@@ -5,11 +5,13 @@
 import * as environments from "./environments.js";
 import * as core from "./core/index.js";
 import { mergeHeaders } from "./core/headers.js";
-import { Accounts } from "./api/resources/accounts/client/Client.js";
+import { Billing } from "./api/resources/billing/client/Client.js";
 import { Tasks } from "./api/resources/tasks/client/Client.js";
 import { Sessions } from "./api/resources/sessions/client/Client.js";
 import { Files } from "./api/resources/files/client/Client.js";
 import { Profiles } from "./api/resources/profiles/client/Client.js";
+import { Browsers } from "./api/resources/browsers/client/Client.js";
+import { Workflows } from "./api/resources/workflows/client/Client.js";
 
 export declare namespace BrowserUseClient {
     export interface Options {
@@ -37,11 +39,13 @@ export declare namespace BrowserUseClient {
 
 export class BrowserUseClient {
     protected readonly _options: BrowserUseClient.Options;
-    protected _accounts: Accounts | undefined;
+    protected _billing: Billing | undefined;
     protected _tasks: Tasks | undefined;
     protected _sessions: Sessions | undefined;
     protected _files: Files | undefined;
     protected _profiles: Profiles | undefined;
+    protected _browsers: Browsers | undefined;
+    protected _workflows: Workflows | undefined;
 
     constructor(_options: BrowserUseClient.Options) {
         this._options = {
@@ -50,8 +54,8 @@ export class BrowserUseClient {
                 {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "browser-use-sdk",
-                    "X-Fern-SDK-Version": "2.0.4",
-                    "User-Agent": "browser-use-sdk/2.0.4",
+                    "X-Fern-SDK-Version": "2.0.5",
+                    "User-Agent": "browser-use-sdk/2.0.5",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -60,8 +64,8 @@ export class BrowserUseClient {
         };
     }
 
-    public get accounts(): Accounts {
-        return (this._accounts ??= new Accounts(this._options));
+    public get billing(): Billing {
+        return (this._billing ??= new Billing(this._options));
     }
 
     public get tasks(): Tasks {
@@ -78,5 +82,13 @@ export class BrowserUseClient {
 
     public get profiles(): Profiles {
         return (this._profiles ??= new Profiles(this._options));
+    }
+
+    public get browsers(): Browsers {
+        return (this._browsers ??= new Browsers(this._options));
+    }
+
+    public get workflows(): Workflows {
+        return (this._workflows ??= new Workflows(this._options));
     }
 }

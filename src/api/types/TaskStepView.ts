@@ -17,7 +17,7 @@ export interface TaskStepView {
     /** Current URL the browser is on for this step */
     url: string;
     /** Optional URL to the screenshot taken at this step */
-    screenshotUrl?: string;
+    screenshotUrl?: string | null;
     /** List of stringified json actions performed by the agent in this step */
     actions: string[];
 }

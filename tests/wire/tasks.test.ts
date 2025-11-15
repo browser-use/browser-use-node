@@ -17,7 +17,8 @@ describe("Tasks", () => {
                     sessionId: "sessionId",
                     llm: "llm",
                     task: "task",
-                    status: "started",
+                    status: "created",
+                    createdAt: "2024-01-15T09:30:00Z",
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
                     metadata: { key: "value" },
@@ -40,7 +41,8 @@ describe("Tasks", () => {
                     sessionId: "sessionId",
                     llm: "llm",
                     task: "task",
-                    status: "started",
+                    status: "created",
+                    createdAt: "2024-01-15T09:30:00Z",
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
                     metadata: {
@@ -61,7 +63,7 @@ describe("Tasks", () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
         const rawRequestBody = { task: "task" };
-        const rawResponseBody = { id: "id" };
+        const rawResponseBody = { id: "id", sessionId: "sessionId" };
         server
             .mockEndpoint()
             .post("/tasks")
@@ -76,6 +78,7 @@ describe("Tasks", () => {
         });
         expect(response).toEqual({
             id: "id",
+            sessionId: "sessionId",
         });
     });
 
@@ -88,7 +91,8 @@ describe("Tasks", () => {
             sessionId: "sessionId",
             llm: "llm",
             task: "task",
-            status: "started",
+            status: "created",
+            createdAt: "2024-01-15T09:30:00Z",
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
             metadata: { key: "value" },
@@ -110,13 +114,16 @@ describe("Tasks", () => {
         };
         server.mockEndpoint().get("/tasks/task_id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.tasks.getTask("task_id");
+        const response = await client.tasks.getTask({
+            task_id: "task_id",
+        });
         expect(response).toEqual({
             id: "id",
             sessionId: "sessionId",
             llm: "llm",
             task: "task",
-            status: "started",
+            status: "created",
+            createdAt: "2024-01-15T09:30:00Z",
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
             metadata: {
@@ -154,7 +161,8 @@ describe("Tasks", () => {
             sessionId: "sessionId",
             llm: "llm",
             task: "task",
-            status: "started",
+            status: "created",
+            createdAt: "2024-01-15T09:30:00Z",
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
             metadata: { key: "value" },
@@ -183,7 +191,8 @@ describe("Tasks", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.tasks.updateTask("task_id", {
+        const response = await client.tasks.updateTask({
+            task_id: "task_id",
             action: "stop",
         });
         expect(response).toEqual({
@@ -191,7 +200,8 @@ describe("Tasks", () => {
             sessionId: "sessionId",
             llm: "llm",
             task: "task",
-            status: "started",
+            status: "created",
+            createdAt: "2024-01-15T09:30:00Z",
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
             metadata: {
@@ -233,7 +243,9 @@ describe("Tasks", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.tasks.getTaskLogs("task_id");
+        const response = await client.tasks.getTaskLogs({
+            task_id: "task_id",
+        });
         expect(response).toEqual({
             downloadUrl: "downloadUrl",
         });

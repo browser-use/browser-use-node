@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 import { BrowserUseClient } from "../../src/Client";
 
 describe("Files", () => {
-    test("userUploadFilePresignedUrl", async () => {
+    test("agentSessionUploadFilePresignedUrl", async () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
         const rawRequestBody = { fileName: "fileName", contentType: "image/jpg", sizeBytes: 1 };
@@ -26,10 +26,52 @@ describe("Files", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.files.userUploadFilePresignedUrl("session_id", {
+        const response = await client.files.agentSessionUploadFilePresignedUrl({
+            session_id: "session_id",
+            body: {
+                fileName: "fileName",
+                contentType: "image/jpg",
+                sizeBytes: 1,
+            },
+        });
+        expect(response).toEqual({
+            url: "url",
+            method: "POST",
+            fields: {
+                key: "value",
+            },
             fileName: "fileName",
-            contentType: "image/jpg",
-            sizeBytes: 1,
+            expiresIn: 1,
+        });
+    });
+
+    test("browserSessionUploadFilePresignedUrl", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = { fileName: "fileName", contentType: "image/jpg", sizeBytes: 1 };
+        const rawResponseBody = {
+            url: "url",
+            method: "POST",
+            fields: { key: "value" },
+            fileName: "fileName",
+            expiresIn: 1,
+        };
+        server
+            .mockEndpoint()
+            .post("/files/browsers/session_id/presigned-url")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.files.browserSessionUploadFilePresignedUrl({
+            session_id: "session_id",
+            body: {
+                fileName: "fileName",
+                contentType: "image/jpg",
+                sizeBytes: 1,
+            },
         });
         expect(response).toEqual({
             url: "url",
@@ -55,7 +97,10 @@ describe("Files", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.files.getTaskOutputFilePresignedUrl("task_id", "file_id");
+        const response = await client.files.getTaskOutputFilePresignedUrl({
+            task_id: "task_id",
+            file_id: "file_id",
+        });
         expect(response).toEqual({
             id: "id",
             fileName: "fileName",

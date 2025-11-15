@@ -4,6 +4,10 @@
 
 /**
  * @example
- *     {}
+ *     {
+ *         session_id: "session_id"
+ *     }
  */
-export interface UpdateSessionRequest {}
+export interface UpdateSessionRequest {
+    session_id: string;
+}

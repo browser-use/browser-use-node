@@ -8,4 +8,6 @@
 export interface TaskCreatedResponse {
     /** Unique identifier for the created task */
     id: string;
+    /** Session ID where the task was created */
+    sessionId: string;
 }

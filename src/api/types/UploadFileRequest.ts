@@ -3,12 +3,7 @@
  */
 
 /**
- * @example
- *     {
- *         fileName: "fileName",
- *         contentType: "image/jpg",
- *         sizeBytes: 1
- *     }
+ * Request model for uploading a file to the user's files bucket.
  */
 export interface UploadFileRequest {
     /** The name of the file to upload */

@@ -13,5 +13,5 @@ export interface ShareView {
     /** Number of times the public share has been viewed */
     viewCount: number;
     /** Timestamp of the last time the public share was viewed (None if never viewed) */
-    lastViewedAt?: string;
+    lastViewedAt?: string | null;
 }

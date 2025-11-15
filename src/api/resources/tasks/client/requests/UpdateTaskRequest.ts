@@ -7,10 +7,12 @@ import * as BrowserUse from "../../../../index.js";
 /**
  * @example
  *     {
+ *         task_id: "task_id",
  *         action: "stop"
  *     }
  */
 export interface UpdateTaskRequest {
+    task_id: string;
     /** The action to perform on the task */
     action: BrowserUse.TaskUpdateAction;
 }

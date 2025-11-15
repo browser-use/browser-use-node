@@ -11,8 +11,8 @@ import * as BrowserUse from "../../../../index.js";
 export interface ListTasksTasksGetRequest {
     pageSize?: number;
     pageNumber?: number;
-    sessionId?: string;
-    filterBy?: BrowserUse.TaskStatus;
-    after?: string;
-    before?: string;
+    sessionId?: string | null;
+    filterBy?: BrowserUse.TaskStatus | null;
+    after?: string | null;
+    before?: string | null;
 }

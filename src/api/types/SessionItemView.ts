@@ -13,9 +13,9 @@ export interface SessionItemView {
     /** Current status of the session (active/stopped) */
     status: BrowserUse.SessionStatus;
     /** URL where the browser can be viewed live in real-time */
-    liveUrl?: string;
+    liveUrl?: string | null;
     /** Timestamp when the session was created and started */
     startedAt: string;
     /** Timestamp when the session was stopped (None if still active) */
-    finishedAt?: string;
+    finishedAt?: string | null;
 }

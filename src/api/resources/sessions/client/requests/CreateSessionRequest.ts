@@ -10,7 +10,9 @@ import * as BrowserUse from "../../../../index.js";
  */
 export interface CreateSessionRequest {
     /** The ID of the profile to use for the session */
-    profileId?: string;
+    profileId?: string | null;
     /** Country code for proxy location. */
-    proxyCountryCode?: BrowserUse.ProxyCountryCode;
+    proxyCountryCode?: BrowserUse.ProxyCountryCode | null;
+    /** URL to navigate to when the session starts. */
+    startUrl?: string | null;
 }

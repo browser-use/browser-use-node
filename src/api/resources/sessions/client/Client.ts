@@ -71,7 +71,7 @@ export class Sessions {
             _queryParams["pageNumber"] = pageNumber.toString();
         }
 
-        if (filterBy != null) {
+        if (filterBy !== undefined) {
             _queryParams["filterBy"] = filterBy;
         }
 
@@ -224,26 +224,29 @@ export class Sessions {
     /**
      * Get detailed session information including status, URLs, and task details.
      *
-     * @param {string} sessionId
+     * @param {BrowserUse.GetSessionSessionsSessionIdGetRequest} request
      * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.sessions.getSession("session_id")
+     *     await client.sessions.getSession({
+     *         session_id: "session_id"
+     *     })
      */
     public getSession(
-        sessionId: string,
+        request: BrowserUse.GetSessionSessionsSessionIdGetRequest,
         requestOptions?: Sessions.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.SessionView> {
-        return core.HttpResponsePromise.fromPromise(this.__getSession(sessionId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getSession(request, requestOptions));
     }
 
     private async __getSession(
-        sessionId: string,
+        request: BrowserUse.GetSessionSessionsSessionIdGetRequest,
         requestOptions?: Sessions.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.SessionView>> {
+        const { session_id: sessionId } = request;
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -305,7 +308,6 @@ export class Sessions {
     /**
      * Stop a session and all its running tasks.
      *
-     * @param {string} sessionId
      * @param {BrowserUse.UpdateSessionRequest} request
      * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -313,21 +315,22 @@ export class Sessions {
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.sessions.updateSession("session_id", {})
+     *     await client.sessions.updateSession({
+     *         session_id: "session_id"
+     *     })
      */
     public updateSession(
-        sessionId: string,
         request: BrowserUse.UpdateSessionRequest,
         requestOptions?: Sessions.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.SessionView> {
-        return core.HttpResponsePromise.fromPromise(this.__updateSession(sessionId, request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__updateSession(request, requestOptions));
     }
 
     private async __updateSession(
-        sessionId: string,
         request: BrowserUse.UpdateSessionRequest,
         requestOptions?: Sessions.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.SessionView>> {
+        const { session_id: sessionId, ..._body } = request;
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -345,7 +348,7 @@ export class Sessions {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: { ...request, action: "stop" },
+            body: { ..._body, action: "stop" },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -392,26 +395,29 @@ export class Sessions {
     /**
      * Get public share information including URL and usage statistics.
      *
-     * @param {string} sessionId
+     * @param {BrowserUse.GetSessionPublicShareSessionsSessionIdPublicShareGetRequest} request
      * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.sessions.getSessionPublicShare("session_id")
+     *     await client.sessions.getSessionPublicShare({
+     *         session_id: "session_id"
+     *     })
      */
     public getSessionPublicShare(
-        sessionId: string,
+        request: BrowserUse.GetSessionPublicShareSessionsSessionIdPublicShareGetRequest,
         requestOptions?: Sessions.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.ShareView> {
-        return core.HttpResponsePromise.fromPromise(this.__getSessionPublicShare(sessionId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getSessionPublicShare(request, requestOptions));
     }
 
     private async __getSessionPublicShare(
-        sessionId: string,
+        request: BrowserUse.GetSessionPublicShareSessionsSessionIdPublicShareGetRequest,
         requestOptions?: Sessions.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.ShareView>> {
+        const { session_id: sessionId } = request;
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -475,26 +481,29 @@ export class Sessions {
     /**
      * Create or return existing public share for a session.
      *
-     * @param {string} sessionId
+     * @param {BrowserUse.CreateSessionPublicShareSessionsSessionIdPublicSharePostRequest} request
      * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.sessions.createSessionPublicShare("session_id")
+     *     await client.sessions.createSessionPublicShare({
+     *         session_id: "session_id"
+     *     })
      */
     public createSessionPublicShare(
-        sessionId: string,
+        request: BrowserUse.CreateSessionPublicShareSessionsSessionIdPublicSharePostRequest,
         requestOptions?: Sessions.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.ShareView> {
-        return core.HttpResponsePromise.fromPromise(this.__createSessionPublicShare(sessionId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__createSessionPublicShare(request, requestOptions));
     }
 
     private async __createSessionPublicShare(
-        sessionId: string,
+        request: BrowserUse.CreateSessionPublicShareSessionsSessionIdPublicSharePostRequest,
         requestOptions?: Sessions.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.ShareView>> {
+        const { session_id: sessionId } = request;
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -558,26 +567,29 @@ export class Sessions {
     /**
      * Remove public share for a session.
      *
-     * @param {string} sessionId
+     * @param {BrowserUse.DeleteSessionPublicShareSessionsSessionIdPublicShareDeleteRequest} request
      * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.sessions.deleteSessionPublicShare("session_id")
+     *     await client.sessions.deleteSessionPublicShare({
+     *         session_id: "session_id"
+     *     })
      */
     public deleteSessionPublicShare(
-        sessionId: string,
+        request: BrowserUse.DeleteSessionPublicShareSessionsSessionIdPublicShareDeleteRequest,
         requestOptions?: Sessions.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__deleteSessionPublicShare(sessionId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__deleteSessionPublicShare(request, requestOptions));
     }
 
     private async __deleteSessionPublicShare(
-        sessionId: string,
+        request: BrowserUse.DeleteSessionPublicShareSessionsSessionIdPublicShareDeleteRequest,
         requestOptions?: Sessions.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
+        const { session_id: sessionId } = request;
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),

@@ -89,7 +89,8 @@ describe("Sessions", () => {
                     sessionId: "sessionId",
                     llm: "llm",
                     task: "task",
-                    status: "started",
+                    status: "created",
+                    createdAt: "2024-01-15T09:30:00Z",
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
                     metadata: { key: "value" },
@@ -108,7 +109,9 @@ describe("Sessions", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.sessions.getSession("session_id");
+        const response = await client.sessions.getSession({
+            session_id: "session_id",
+        });
         expect(response).toEqual({
             id: "id",
             status: "active",
@@ -121,7 +124,8 @@ describe("Sessions", () => {
                     sessionId: "sessionId",
                     llm: "llm",
                     task: "task",
-                    status: "started",
+                    status: "created",
+                    createdAt: "2024-01-15T09:30:00Z",
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
                     metadata: {
@@ -152,7 +156,8 @@ describe("Sessions", () => {
                     sessionId: "sessionId",
                     llm: "llm",
                     task: "task",
-                    status: "started",
+                    status: "created",
+                    createdAt: "2024-01-15T09:30:00Z",
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
                     metadata: { key: "value" },
@@ -172,7 +177,9 @@ describe("Sessions", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.sessions.updateSession("session_id", {});
+        const response = await client.sessions.updateSession({
+            session_id: "session_id",
+        });
         expect(response).toEqual({
             id: "id",
             status: "active",
@@ -185,7 +192,8 @@ describe("Sessions", () => {
                     sessionId: "sessionId",
                     llm: "llm",
                     task: "task",
-                    status: "started",
+                    status: "created",
+                    createdAt: "2024-01-15T09:30:00Z",
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
                     metadata: {
@@ -218,7 +226,9 @@ describe("Sessions", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.sessions.getSessionPublicShare("session_id");
+        const response = await client.sessions.getSessionPublicShare({
+            session_id: "session_id",
+        });
         expect(response).toEqual({
             shareToken: "shareToken",
             shareUrl: "shareUrl",
@@ -245,7 +255,9 @@ describe("Sessions", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.sessions.createSessionPublicShare("session_id");
+        const response = await client.sessions.createSessionPublicShare({
+            session_id: "session_id",
+        });
         expect(response).toEqual({
             shareToken: "shareToken",
             shareUrl: "shareUrl",
@@ -260,7 +272,9 @@ describe("Sessions", () => {
 
         server.mockEndpoint().delete("/sessions/session_id/public-share").respondWith().statusCode(200).build();
 
-        const response = await client.sessions.deleteSessionPublicShare("session_id");
+        const response = await client.sessions.deleteSessionPublicShare({
+            session_id: "session_id",
+        });
         expect(response).toEqual(undefined);
     });
 });

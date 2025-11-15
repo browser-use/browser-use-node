@@ -1,8 +1,8 @@
 # Reference
 
-## Accounts
+## Billing
 
-<details><summary><code>client.accounts.<a href="/src/api/resources/accounts/client/Client.ts">getAccountMe</a>() -> BrowserUse.AccountView</code></summary>
+<details><summary><code>client.billing.<a href="/src/api/resources/billing/client/Client.ts">getAccountBilling</a>() -> BrowserUse.AccountView</code></summary>
 <dl>
 <dd>
 
@@ -30,7 +30,7 @@ Get authenticated account information including credit balances and account deta
 <dd>
 
 ```typescript
-await client.accounts.getAccountMe();
+await client.billing.getAccountBilling();
 ```
 
 </dd>
@@ -46,7 +46,7 @@ await client.accounts.getAccountMe();
 <dl>
 <dd>
 
-**requestOptions:** `Accounts.RequestOptions`
+**requestOptions:** `Billing.RequestOptions`
 
 </dd>
 </dl>
@@ -189,7 +189,7 @@ await client.tasks.createTask({
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client/Client.ts">getTask</a>(taskId) -> BrowserUse.TaskView</code></summary>
+<details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client/Client.ts">getTask</a>({ ...params }) -> BrowserUse.TaskView</code></summary>
 <dl>
 <dd>
 
@@ -217,7 +217,9 @@ Get detailed task information including status, progress, steps, and file output
 <dd>
 
 ```typescript
-await client.tasks.getTask("task_id");
+await client.tasks.getTask({
+    task_id: "task_id",
+});
 ```
 
 </dd>
@@ -233,7 +235,7 @@ await client.tasks.getTask("task_id");
 <dl>
 <dd>
 
-**taskId:** `string`
+**request:** `BrowserUse.GetTaskTasksTaskIdGetRequest`
 
 </dd>
 </dl>
@@ -252,7 +254,7 @@ await client.tasks.getTask("task_id");
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client/Client.ts">updateTask</a>(taskId, { ...params }) -> BrowserUse.TaskView</code></summary>
+<details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client/Client.ts">updateTask</a>({ ...params }) -> BrowserUse.TaskView</code></summary>
 <dl>
 <dd>
 
@@ -280,7 +282,8 @@ Control task execution with stop, pause, resume, or stop task and session action
 <dd>
 
 ```typescript
-await client.tasks.updateTask("task_id", {
+await client.tasks.updateTask({
+    task_id: "task_id",
     action: "stop",
 });
 ```
@@ -294,14 +297,6 @@ await client.tasks.updateTask("task_id", {
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**taskId:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -325,7 +320,7 @@ await client.tasks.updateTask("task_id", {
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client/Client.ts">getTaskLogs</a>(taskId) -> BrowserUse.TaskLogFileResponse</code></summary>
+<details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client/Client.ts">getTaskLogs</a>({ ...params }) -> BrowserUse.TaskLogFileResponse</code></summary>
 <dl>
 <dd>
 
@@ -353,7 +348,9 @@ Get secure download URL for task execution logs with step-by-step details.
 <dd>
 
 ```typescript
-await client.tasks.getTaskLogs("task_id");
+await client.tasks.getTaskLogs({
+    task_id: "task_id",
+});
 ```
 
 </dd>
@@ -369,7 +366,7 @@ await client.tasks.getTaskLogs("task_id");
 <dl>
 <dd>
 
-**taskId:** `string`
+**request:** `BrowserUse.GetTaskLogsTasksTaskIdLogsGetRequest`
 
 </dd>
 </dl>
@@ -516,7 +513,7 @@ await client.sessions.createSession();
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">getSession</a>(sessionId) -> BrowserUse.SessionView</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">getSession</a>({ ...params }) -> BrowserUse.SessionView</code></summary>
 <dl>
 <dd>
 
@@ -544,7 +541,9 @@ Get detailed session information including status, URLs, and task details.
 <dd>
 
 ```typescript
-await client.sessions.getSession("session_id");
+await client.sessions.getSession({
+    session_id: "session_id",
+});
 ```
 
 </dd>
@@ -560,7 +559,7 @@ await client.sessions.getSession("session_id");
 <dl>
 <dd>
 
-**sessionId:** `string`
+**request:** `BrowserUse.GetSessionSessionsSessionIdGetRequest`
 
 </dd>
 </dl>
@@ -579,7 +578,7 @@ await client.sessions.getSession("session_id");
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">updateSession</a>(sessionId, { ...params }) -> BrowserUse.SessionView</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">updateSession</a>({ ...params }) -> BrowserUse.SessionView</code></summary>
 <dl>
 <dd>
 
@@ -607,7 +606,9 @@ Stop a session and all its running tasks.
 <dd>
 
 ```typescript
-await client.sessions.updateSession("session_id", {});
+await client.sessions.updateSession({
+    session_id: "session_id",
+});
 ```
 
 </dd>
@@ -619,14 +620,6 @@ await client.sessions.updateSession("session_id", {});
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**sessionId:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -650,7 +643,7 @@ await client.sessions.updateSession("session_id", {});
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">getSessionPublicShare</a>(sessionId) -> BrowserUse.ShareView</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">getSessionPublicShare</a>({ ...params }) -> BrowserUse.ShareView</code></summary>
 <dl>
 <dd>
 
@@ -678,7 +671,9 @@ Get public share information including URL and usage statistics.
 <dd>
 
 ```typescript
-await client.sessions.getSessionPublicShare("session_id");
+await client.sessions.getSessionPublicShare({
+    session_id: "session_id",
+});
 ```
 
 </dd>
@@ -694,7 +689,7 @@ await client.sessions.getSessionPublicShare("session_id");
 <dl>
 <dd>
 
-**sessionId:** `string`
+**request:** `BrowserUse.GetSessionPublicShareSessionsSessionIdPublicShareGetRequest`
 
 </dd>
 </dl>
@@ -713,7 +708,7 @@ await client.sessions.getSessionPublicShare("session_id");
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">createSessionPublicShare</a>(sessionId) -> BrowserUse.ShareView</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">createSessionPublicShare</a>({ ...params }) -> BrowserUse.ShareView</code></summary>
 <dl>
 <dd>
 
@@ -741,7 +736,9 @@ Create or return existing public share for a session.
 <dd>
 
 ```typescript
-await client.sessions.createSessionPublicShare("session_id");
+await client.sessions.createSessionPublicShare({
+    session_id: "session_id",
+});
 ```
 
 </dd>
@@ -757,7 +754,7 @@ await client.sessions.createSessionPublicShare("session_id");
 <dl>
 <dd>
 
-**sessionId:** `string`
+**request:** `BrowserUse.CreateSessionPublicShareSessionsSessionIdPublicSharePostRequest`
 
 </dd>
 </dl>
@@ -776,7 +773,7 @@ await client.sessions.createSessionPublicShare("session_id");
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">deleteSessionPublicShare</a>(sessionId) -> void</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">deleteSessionPublicShare</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -804,7 +801,9 @@ Remove public share for a session.
 <dd>
 
 ```typescript
-await client.sessions.deleteSessionPublicShare("session_id");
+await client.sessions.deleteSessionPublicShare({
+    session_id: "session_id",
+});
 ```
 
 </dd>
@@ -820,7 +819,7 @@ await client.sessions.deleteSessionPublicShare("session_id");
 <dl>
 <dd>
 
-**sessionId:** `string`
+**request:** `BrowserUse.DeleteSessionPublicShareSessionsSessionIdPublicShareDeleteRequest`
 
 </dd>
 </dl>
@@ -841,7 +840,7 @@ await client.sessions.deleteSessionPublicShare("session_id");
 
 ## Files
 
-<details><summary><code>client.files.<a href="/src/api/resources/files/client/Client.ts">userUploadFilePresignedUrl</a>(sessionId, { ...params }) -> BrowserUse.UploadFilePresignedUrlResponse</code></summary>
+<details><summary><code>client.files.<a href="/src/api/resources/files/client/Client.ts">agentSessionUploadFilePresignedUrl</a>({ ...params }) -> BrowserUse.UploadFilePresignedUrlResponse</code></summary>
 <dl>
 <dd>
 
@@ -853,7 +852,7 @@ await client.sessions.deleteSessionPublicShare("session_id");
 <dl>
 <dd>
 
-Generate a secure presigned URL for uploading files that AI agents can use during tasks.
+Generate a secure presigned URL for uploading files to an agent session.
 
 </dd>
 </dl>
@@ -869,10 +868,13 @@ Generate a secure presigned URL for uploading files that AI agents can use durin
 <dd>
 
 ```typescript
-await client.files.userUploadFilePresignedUrl("session_id", {
-    fileName: "fileName",
-    contentType: "image/jpg",
-    sizeBytes: 1,
+await client.files.agentSessionUploadFilePresignedUrl({
+    session_id: "session_id",
+    body: {
+        fileName: "fileName",
+        contentType: "image/jpg",
+        sizeBytes: 1,
+    },
 });
 ```
 
@@ -889,15 +891,7 @@ await client.files.userUploadFilePresignedUrl("session_id", {
 <dl>
 <dd>
 
-**sessionId:** `string`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.UploadFileRequest`
+**request:** `BrowserUse.AgentSessionUploadFilePresignedUrlFilesSessionsSessionIdPresignedUrlPostRequest`
 
 </dd>
 </dl>
@@ -916,7 +910,77 @@ await client.files.userUploadFilePresignedUrl("session_id", {
 </dl>
 </details>
 
-<details><summary><code>client.files.<a href="/src/api/resources/files/client/Client.ts">getTaskOutputFilePresignedUrl</a>(taskId, fileId) -> BrowserUse.TaskOutputFileResponse</code></summary>
+<details><summary><code>client.files.<a href="/src/api/resources/files/client/Client.ts">browserSessionUploadFilePresignedUrl</a>({ ...params }) -> BrowserUse.UploadFilePresignedUrlResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generate a secure presigned URL for uploading files to a browser session.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.files.browserSessionUploadFilePresignedUrl({
+    session_id: "session_id",
+    body: {
+        fileName: "fileName",
+        contentType: "image/jpg",
+        sizeBytes: 1,
+    },
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.BrowserSessionUploadFilePresignedUrlFilesBrowsersSessionIdPresignedUrlPostRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Files.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.files.<a href="/src/api/resources/files/client/Client.ts">getTaskOutputFilePresignedUrl</a>({ ...params }) -> BrowserUse.TaskOutputFileResponse</code></summary>
 <dl>
 <dd>
 
@@ -944,7 +1008,10 @@ Get secure download URL for an output file generated by the AI agent.
 <dd>
 
 ```typescript
-await client.files.getTaskOutputFilePresignedUrl("task_id", "file_id");
+await client.files.getTaskOutputFilePresignedUrl({
+    task_id: "task_id",
+    file_id: "file_id",
+});
 ```
 
 </dd>
@@ -960,15 +1027,7 @@ await client.files.getTaskOutputFilePresignedUrl("task_id", "file_id");
 <dl>
 <dd>
 
-**taskId:** `string`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fileId:** `string`
+**request:** `BrowserUse.GetTaskOutputFilePresignedUrlFilesTasksTaskIdOutputFilesFileIdGetRequest`
 
 </dd>
 </dl>
@@ -1052,7 +1111,7 @@ await client.profiles.listProfiles();
 </dl>
 </details>
 
-<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">createProfile</a>() -> BrowserUse.ProfileView</code></summary>
+<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">createProfile</a>({ ...params }) -> BrowserUse.ProfileView</code></summary>
 <dl>
 <dd>
 
@@ -1101,6 +1160,14 @@ await client.profiles.createProfile();
 <dl>
 <dd>
 
+**request:** `BrowserUse.ProfileCreateRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **requestOptions:** `Profiles.RequestOptions`
 
 </dd>
@@ -1112,7 +1179,7 @@ await client.profiles.createProfile();
 </dl>
 </details>
 
-<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">getProfile</a>(profileId) -> BrowserUse.ProfileView</code></summary>
+<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">getProfile</a>({ ...params }) -> BrowserUse.ProfileView</code></summary>
 <dl>
 <dd>
 
@@ -1140,7 +1207,9 @@ Get profile details.
 <dd>
 
 ```typescript
-await client.profiles.getProfile("profile_id");
+await client.profiles.getProfile({
+    profile_id: "profile_id",
+});
 ```
 
 </dd>
@@ -1156,7 +1225,7 @@ await client.profiles.getProfile("profile_id");
 <dl>
 <dd>
 
-**profileId:** `string`
+**request:** `BrowserUse.GetProfileProfilesProfileIdGetRequest`
 
 </dd>
 </dl>
@@ -1175,7 +1244,7 @@ await client.profiles.getProfile("profile_id");
 </dl>
 </details>
 
-<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">deleteBrowserProfile</a>(profileId) -> void</code></summary>
+<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">deleteBrowserProfile</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -1203,7 +1272,9 @@ Permanently delete a browser profile and its configuration.
 <dd>
 
 ```typescript
-await client.profiles.deleteBrowserProfile("profile_id");
+await client.profiles.deleteBrowserProfile({
+    profile_id: "profile_id",
+});
 ```
 
 </dd>
@@ -1219,7 +1290,7 @@ await client.profiles.deleteBrowserProfile("profile_id");
 <dl>
 <dd>
 
-**profileId:** `string`
+**request:** `BrowserUse.DeleteBrowserProfileProfilesProfileIdDeleteRequest`
 
 </dd>
 </dl>
@@ -1228,6 +1299,1203 @@ await client.profiles.deleteBrowserProfile("profile_id");
 <dd>
 
 **requestOptions:** `Profiles.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">updateProfile</a>({ ...params }) -> BrowserUse.ProfileView</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a browser profile's information.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.profiles.updateProfile({
+    profile_id: "profile_id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.ProfileUpdateRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Profiles.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Browsers
+
+<details><summary><code>client.browsers.<a href="/src/api/resources/browsers/client/Client.ts">listBrowserSessions</a>({ ...params }) -> BrowserUse.BrowserSessionListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get paginated list of browser sessions with optional status filtering.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.browsers.listBrowserSessions();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.ListBrowserSessionsBrowsersGetRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Browsers.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.browsers.<a href="/src/api/resources/browsers/client/Client.ts">createBrowserSession</a>({ ...params }) -> BrowserUse.BrowserSessionItemView</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new browser session.
+
+**Pricing:** Browser sessions are charged at $0.05 per hour.
+The full hourly rate is charged upfront when the session starts.
+When you stop the session, any unused time is automatically refunded proportionally.
+
+Billing is rounded to the nearest minute (minimum 1 minute).
+For example, if you stop a session after 30 minutes, you'll be refunded $0.025.
+
+**Session Limits:**
+
+- Free users (without active subscription): Maximum 15 minutes per session
+- Paid subscribers: Up to 4 hours per session
+  </dd>
+  </dl>
+  </dd>
+  </dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.browsers.createBrowserSession();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.CreateBrowserSessionRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Browsers.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.browsers.<a href="/src/api/resources/browsers/client/Client.ts">getBrowserSession</a>({ ...params }) -> BrowserUse.BrowserSessionView</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get detailed browser session information including status and URLs.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.browsers.getBrowserSession({
+    session_id: "session_id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.GetBrowserSessionBrowsersSessionIdGetRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Browsers.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.browsers.<a href="/src/api/resources/browsers/client/Client.ts">updateBrowserSession</a>({ ...params }) -> BrowserUse.BrowserSessionView</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stop a browser session.
+
+**Refund:** When you stop a session, unused time is automatically refunded.
+If the session ran for less than 1 hour, you'll receive a proportional refund.
+Billing is ceil to the nearest minute (minimum 1 minute).
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.browsers.updateBrowserSession({
+    session_id: "session_id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.UpdateBrowserSessionRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Browsers.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Workflows
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">listWorkflows</a>({ ...params }) -> BrowserUse.WorkflowListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get paginated list of workflows with optional filtering.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.listWorkflows();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.ListWorkflowsWorkflowsGetRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">createWorkflow</a>({ ...params }) -> BrowserUse.WorkflowResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new workflow. The workflow YAML should be uploaded separately via the update endpoint.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.createWorkflow({
+    name: "name",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.WorkflowCreateRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getWorkflow</a>({ ...params }) -> BrowserUse.WorkflowResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get detailed workflow information including presigned URL to download YAML.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.getWorkflow({
+    workflow_id: "workflow_id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.GetWorkflowWorkflowsWorkflowIdGetRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">deleteWorkflow</a>({ ...params }) -> BrowserUse.WorkflowResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Archive a workflow (soft delete).
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.deleteWorkflow({
+    workflow_id: "workflow_id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.DeleteWorkflowWorkflowsWorkflowIdDeleteRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">updateWorkflow</a>({ ...params }) -> BrowserUse.WorkflowResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update workflow metadata.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.updateWorkflow({
+    workflow_id: "workflow_id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.WorkflowUpdateRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getWorkflowYamlPresignedUrl</a>({ ...params }) -> BrowserUse.WorkflowYamlPresignedUploadResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a presigned URL to upload workflow YAML directly to S3 from the browser.
+
+This avoids sending the YAML content through the backend, reducing latency
+and avoiding KMS permission issues in local development.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.getWorkflowYamlPresignedUrl({
+    workflow_id: "workflow_id",
+    sizeBytes: 1,
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.WorkflowYamlPresignedUploadRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">executeWorkflow</a>({ ...params }) -> BrowserUse.ExecuteWorkflowWorkflowsWorkflowIdExecutePostResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Execute a workflow either synchronously or asynchronously.
+
+- ASYNC mode: Returns execution ID immediately and processes in background via Lambda
+- SYNC mode: Waits for execution to complete and returns results inline (max 5 min timeout)
+  </dd>
+  </dl>
+  </dd>
+  </dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.executeWorkflow({
+    workflow_id: "workflow_id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.WorkflowExecuteRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">generateWorkflow</a>({ ...params }) -> BrowserUse.WorkflowGenerateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generate a workflow from a natural language task description.
+
+This endpoint uses the workflow-use library's HealingService to:
+
+1. Record browser interactions for the task
+2. Convert interactions to a reusable workflow
+3. Extract variables for parameterization
+4. Save the generated YAML to S3
+
+The generation happens asynchronously via the workflow_worker Lambda.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.generateWorkflow({
+    workflow_id: "workflow_id",
+    taskPrompt: "Go to github.com and search for browser-use",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.WorkflowGenerateRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getExecution</a>({ ...params }) -> BrowserUse.WorkflowExecutionResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get detailed execution information including status, results, and costs.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.getExecution({
+    execution_id: "execution_id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.GetExecutionWorkflowsExecutionsExecutionIdGetRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">listWorkflowExecutions</a>({ ...params }) -> BrowserUse.WorkflowExecutionListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get paginated list of executions for a specific workflow.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.listWorkflowExecutions({
+    workflow_id: "workflow_id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.ListWorkflowExecutionsWorkflowsWorkflowIdExecutionsGetRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">listAllExecutions</a>({ ...params }) -> BrowserUse.WorkflowExecutionListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get paginated list of all workflow executions for a project.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.listAllExecutions();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.ListAllExecutionsWorkflowsExecutionsGetRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">cancelExecution</a>({ ...params }) -> BrowserUse.WorkflowExecutionResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancel a pending or running workflow execution.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.cancelExecution({
+    execution_id: "execution_id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.CancelExecutionWorkflowsExecutionsExecutionIdCancelPatchRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getExecutionLogs</a>({ ...params }) -> BrowserUse.WorkflowExecutionLogResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get presigned URL to download execution logs.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.getExecutionLogs({
+    execution_id: "execution_id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.GetExecutionLogsWorkflowsExecutionsExecutionIdLogsGetRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions`
 
 </dd>
 </dl>

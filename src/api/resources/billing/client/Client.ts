@@ -8,7 +8,7 @@ import * as BrowserUse from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 
-export declare namespace Accounts {
+export declare namespace Billing {
     export interface Options {
         environment?: core.Supplier<environments.BrowserUseEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
@@ -32,29 +32,32 @@ export declare namespace Accounts {
     }
 }
 
-export class Accounts {
-    protected readonly _options: Accounts.Options;
+export class Billing {
+    protected readonly _options: Billing.Options;
 
-    constructor(_options: Accounts.Options) {
+    constructor(_options: Billing.Options) {
         this._options = _options;
     }
 
     /**
      * Get authenticated account information including credit balances and account details.
      *
-     * @param {Accounts.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {Billing.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.NotFoundError}
+     * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.accounts.getAccountMe()
+     *     await client.billing.getAccountBilling()
      */
-    public getAccountMe(requestOptions?: Accounts.RequestOptions): core.HttpResponsePromise<BrowserUse.AccountView> {
-        return core.HttpResponsePromise.fromPromise(this.__getAccountMe(requestOptions));
+    public getAccountBilling(
+        requestOptions?: Billing.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.AccountView> {
+        return core.HttpResponsePromise.fromPromise(this.__getAccountBilling(requestOptions));
     }
 
-    private async __getAccountMe(
-        requestOptions?: Accounts.RequestOptions,
+    private async __getAccountBilling(
+        requestOptions?: Billing.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.AccountView>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -66,7 +69,7 @@ export class Accounts {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.BrowserUseEnvironment.Production,
-                "accounts/me",
+                "billing/account",
             ),
             method: "GET",
             headers: _headers,
@@ -83,6 +86,11 @@ export class Accounts {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 422:
+                    throw new BrowserUse.UnprocessableEntityError(
+                        _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.BrowserUseError({
                         statusCode: _response.error.statusCode,
@@ -100,7 +108,7 @@ export class Accounts {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling GET /accounts/me.");
+                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling GET /billing/account.");
             case "unknown":
                 throw new errors.BrowserUseError({
                     message: _response.error.errorMessage,

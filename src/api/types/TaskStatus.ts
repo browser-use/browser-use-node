@@ -6,15 +6,15 @@
  * Enumeration of possible task execution states
  *
  * Attributes:
+ *         CREATED: Task has been created but not yet started.
  *     STARTED: Task has been started and is currently running.
- *     PAUSED: Task execution has been temporarily paused (can be resumed)
  *     FINISHED: Task has finished and the agent has completed the task.
  *     STOPPED: Task execution has been manually stopped (cannot be resumed).
  */
-export type TaskStatus = "started" | "paused" | "finished" | "stopped";
+export type TaskStatus = "created" | "started" | "finished" | "stopped";
 export const TaskStatus = {
+    Created: "created",
     Started: "started",
-    Paused: "paused",
     Finished: "finished",
     Stopped: "stopped",
 } as const;

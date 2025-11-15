@@ -3,25 +3,33 @@
  */
 
 export type SupportedLlMs =
+    | "browser-use-llm"
     | "gpt-4.1"
     | "gpt-4.1-mini"
     | "o4-mini"
     | "o3"
     | "gemini-2.5-flash"
     | "gemini-2.5-pro"
+    | "gemini-flash-latest"
+    | "gemini-flash-lite-latest"
     | "claude-sonnet-4-20250514"
+    | "claude-sonnet-4-5-20250929"
     | "gpt-4o"
     | "gpt-4o-mini"
     | "llama-4-maverick-17b-128e-instruct"
     | "claude-3-7-sonnet-20250219";
 export const SupportedLlMs = {
+    BrowserUseLlm: "browser-use-llm",
     Gpt41: "gpt-4.1",
     Gpt41Mini: "gpt-4.1-mini",
     O4Mini: "o4-mini",
     O3: "o3",
     Gemini25Flash: "gemini-2.5-flash",
     Gemini25Pro: "gemini-2.5-pro",
+    GeminiFlashLatest: "gemini-flash-latest",
+    GeminiFlashLiteLatest: "gemini-flash-lite-latest",
     ClaudeSonnet420250514: "claude-sonnet-4-20250514",
+    ClaudeSonnet4520250929: "claude-sonnet-4-5-20250929",
     Gpt4O: "gpt-4o",
     Gpt4OMini: "gpt-4o-mini",
     Llama4Maverick17B128EInstruct: "llama-4-maverick-17b-128e-instruct",

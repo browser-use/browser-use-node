@@ -10,10 +10,14 @@
 export interface ProfileView {
     /** Unique identifier for the profile */
     id: string;
+    /** Optional name for the profile */
+    name?: string | null;
     /** Timestamp when the profile was last used */
-    lastUsedAt?: string;
+    lastUsedAt?: string | null;
     /** Timestamp when the profile was created */
     createdAt: string;
     /** Timestamp when the profile was last updated */
     updatedAt: string;
+    /** List of domain URLs that have cookies stored for this profile */
+    cookieDomains?: string[] | null;
 }

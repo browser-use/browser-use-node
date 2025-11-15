@@ -1,1 +1,3 @@
-export { type UploadFileRequest } from "./UploadFileRequest.js";
+export { type AgentSessionUploadFilePresignedUrlFilesSessionsSessionIdPresignedUrlPostRequest } from "./AgentSessionUploadFilePresignedUrlFilesSessionsSessionIdPresignedUrlPostRequest.js";
+export { type BrowserSessionUploadFilePresignedUrlFilesBrowsersSessionIdPresignedUrlPostRequest } from "./BrowserSessionUploadFilePresignedUrlFilesBrowsersSessionIdPresignedUrlPostRequest.js";
+export { type GetTaskOutputFilePresignedUrlFilesTasksTaskIdOutputFilesFileIdGetRequest } from "./GetTaskOutputFilePresignedUrlFilesTasksTaskIdOutputFilesFileIdGetRequest.js";

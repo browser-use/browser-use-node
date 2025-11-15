@@ -11,5 +11,5 @@ import * as BrowserUse from "../../../../index.js";
 export interface ListSessionsSessionsGetRequest {
     pageSize?: number;
     pageNumber?: number;
-    filterBy?: BrowserUse.SessionStatus;
+    filterBy?: BrowserUse.SessionStatus | null;
 }

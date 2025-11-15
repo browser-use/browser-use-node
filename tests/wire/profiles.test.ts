@@ -14,9 +14,11 @@ describe("Profiles", () => {
             items: [
                 {
                     id: "id",
+                    name: "name",
                     lastUsedAt: "2024-01-15T09:30:00Z",
                     createdAt: "2024-01-15T09:30:00Z",
                     updatedAt: "2024-01-15T09:30:00Z",
+                    cookieDomains: ["cookieDomains"],
                 },
             ],
             totalItems: 1,
@@ -30,9 +32,11 @@ describe("Profiles", () => {
             items: [
                 {
                     id: "id",
+                    name: "name",
                     lastUsedAt: "2024-01-15T09:30:00Z",
                     createdAt: "2024-01-15T09:30:00Z",
                     updatedAt: "2024-01-15T09:30:00Z",
+                    cookieDomains: ["cookieDomains"],
                 },
             ],
             totalItems: 1,
@@ -44,21 +48,32 @@ describe("Profiles", () => {
     test("createProfile", async () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
-
+        const rawRequestBody = {};
         const rawResponseBody = {
             id: "id",
+            name: "name",
             lastUsedAt: "2024-01-15T09:30:00Z",
             createdAt: "2024-01-15T09:30:00Z",
             updatedAt: "2024-01-15T09:30:00Z",
+            cookieDomains: ["cookieDomains"],
         };
-        server.mockEndpoint().post("/profiles").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server
+            .mockEndpoint()
+            .post("/profiles")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.profiles.createProfile();
         expect(response).toEqual({
             id: "id",
+            name: "name",
             lastUsedAt: "2024-01-15T09:30:00Z",
             createdAt: "2024-01-15T09:30:00Z",
             updatedAt: "2024-01-15T09:30:00Z",
+            cookieDomains: ["cookieDomains"],
         });
     });
 
@@ -68,9 +83,11 @@ describe("Profiles", () => {
 
         const rawResponseBody = {
             id: "id",
+            name: "name",
             lastUsedAt: "2024-01-15T09:30:00Z",
             createdAt: "2024-01-15T09:30:00Z",
             updatedAt: "2024-01-15T09:30:00Z",
+            cookieDomains: ["cookieDomains"],
         };
         server
             .mockEndpoint()
@@ -80,12 +97,16 @@ describe("Profiles", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.profiles.getProfile("profile_id");
+        const response = await client.profiles.getProfile({
+            profile_id: "profile_id",
+        });
         expect(response).toEqual({
             id: "id",
+            name: "name",
             lastUsedAt: "2024-01-15T09:30:00Z",
             createdAt: "2024-01-15T09:30:00Z",
             updatedAt: "2024-01-15T09:30:00Z",
+            cookieDomains: ["cookieDomains"],
         });
     });
 
@@ -95,7 +116,43 @@ describe("Profiles", () => {
 
         server.mockEndpoint().delete("/profiles/profile_id").respondWith().statusCode(200).build();
 
-        const response = await client.profiles.deleteBrowserProfile("profile_id");
+        const response = await client.profiles.deleteBrowserProfile({
+            profile_id: "profile_id",
+        });
         expect(response).toEqual(undefined);
+    });
+
+    test("updateProfile", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = {};
+        const rawResponseBody = {
+            id: "id",
+            name: "name",
+            lastUsedAt: "2024-01-15T09:30:00Z",
+            createdAt: "2024-01-15T09:30:00Z",
+            updatedAt: "2024-01-15T09:30:00Z",
+            cookieDomains: ["cookieDomains"],
+        };
+        server
+            .mockEndpoint()
+            .patch("/profiles/profile_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.profiles.updateProfile({
+            profile_id: "profile_id",
+        });
+        expect(response).toEqual({
+            id: "id",
+            name: "name",
+            lastUsedAt: "2024-01-15T09:30:00Z",
+            createdAt: "2024-01-15T09:30:00Z",
+            updatedAt: "2024-01-15T09:30:00Z",
+            cookieDomains: ["cookieDomains"],
+        });
     });
 });

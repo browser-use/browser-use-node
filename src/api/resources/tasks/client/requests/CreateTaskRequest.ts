@@ -16,27 +16,36 @@ export interface CreateTaskRequest {
     /** The LLM model to use for the agent. */
     llm?: BrowserUse.SupportedLlMs;
     /** The URL to start the task from. */
-    startUrl?: string;
+    startUrl?: string | null;
     /** Maximum number of steps the agent can take before stopping. */
     maxSteps?: number;
     /** The stringified JSON schema for the structured output. */
-    structuredOutput?: string;
+    structuredOutput?: string | null;
     /** The ID of the session where the task will run. */
-    sessionId?: string;
-    /** The metadata for the task. */
-    metadata?: Record<string, string | undefined>;
-    /** The secrets for the task. */
-    secrets?: Record<string, string | undefined>;
+    sessionId?: string | null;
+    /** The metadata for the task. Up to 10 key-value pairs. */
+    metadata?: Record<string, string | null> | null;
+    /** The secrets for the task. Allowed domains are not required for secrets to be injected, but are recommended. */
+    secrets?: Record<string, string | null> | null;
     /** The allowed domains for the task. */
-    allowedDomains?: string[];
+    allowedDomains?: string[] | null;
+    /** The ID of the 1Password vault to use for the task. This is used to inject secrets into the task. */
+    opVaultId?: string | null;
     /** Tells the agent to highlight interactive elements on the page. */
     highlightElements?: boolean;
     /** Whether agent flash mode is enabled. */
     flashMode?: boolean;
     /** Whether agent thinking mode is enabled. */
     thinking?: boolean;
-    /** Whether agent vision capabilities are enabled. */
-    vision?: boolean;
+    /** Whether agent vision capabilities are enabled. Set to 'auto' to let the agent decide based on the model capabilities. */
+    vision?: CreateTaskRequest.Vision;
     /** Optional extension to the agent system prompt. */
     systemPromptExtension?: string;
+}
+
+export namespace CreateTaskRequest {
+    /**
+     * Whether agent vision capabilities are enabled. Set to 'auto' to let the agent decide based on the model capabilities.
+     */
+    export type Vision = boolean | "auto";
 }

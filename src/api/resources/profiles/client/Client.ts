@@ -135,6 +135,7 @@ export class Profiles {
      *
      * You can create a new profile by calling this endpoint.
      *
+     * @param {BrowserUse.ProfileCreateRequest} request
      * @param {Profiles.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.PaymentRequiredError}
@@ -143,11 +144,15 @@ export class Profiles {
      * @example
      *     await client.profiles.createProfile()
      */
-    public createProfile(requestOptions?: Profiles.RequestOptions): core.HttpResponsePromise<BrowserUse.ProfileView> {
-        return core.HttpResponsePromise.fromPromise(this.__createProfile(requestOptions));
+    public createProfile(
+        request: BrowserUse.ProfileCreateRequest = {},
+        requestOptions?: Profiles.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.ProfileView> {
+        return core.HttpResponsePromise.fromPromise(this.__createProfile(request, requestOptions));
     }
 
     private async __createProfile(
+        request: BrowserUse.ProfileCreateRequest = {},
         requestOptions?: Profiles.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.ProfileView>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -164,7 +169,10 @@ export class Profiles {
             ),
             method: "POST",
             headers: _headers,
+            contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -214,26 +222,29 @@ export class Profiles {
     /**
      * Get profile details.
      *
-     * @param {string} profileId
+     * @param {BrowserUse.GetProfileProfilesProfileIdGetRequest} request
      * @param {Profiles.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.profiles.getProfile("profile_id")
+     *     await client.profiles.getProfile({
+     *         profile_id: "profile_id"
+     *     })
      */
     public getProfile(
-        profileId: string,
+        request: BrowserUse.GetProfileProfilesProfileIdGetRequest,
         requestOptions?: Profiles.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.ProfileView> {
-        return core.HttpResponsePromise.fromPromise(this.__getProfile(profileId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getProfile(request, requestOptions));
     }
 
     private async __getProfile(
-        profileId: string,
+        request: BrowserUse.GetProfileProfilesProfileIdGetRequest,
         requestOptions?: Profiles.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.ProfileView>> {
+        const { profile_id: profileId } = request;
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -295,25 +306,28 @@ export class Profiles {
     /**
      * Permanently delete a browser profile and its configuration.
      *
-     * @param {string} profileId
+     * @param {BrowserUse.DeleteBrowserProfileProfilesProfileIdDeleteRequest} request
      * @param {Profiles.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.profiles.deleteBrowserProfile("profile_id")
+     *     await client.profiles.deleteBrowserProfile({
+     *         profile_id: "profile_id"
+     *     })
      */
     public deleteBrowserProfile(
-        profileId: string,
+        request: BrowserUse.DeleteBrowserProfileProfilesProfileIdDeleteRequest,
         requestOptions?: Profiles.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__deleteBrowserProfile(profileId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__deleteBrowserProfile(request, requestOptions));
     }
 
     private async __deleteBrowserProfile(
-        profileId: string,
+        request: BrowserUse.DeleteBrowserProfileProfilesProfileIdDeleteRequest,
         requestOptions?: Profiles.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
+        const { profile_id: profileId } = request;
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -362,6 +376,93 @@ export class Profiles {
                 });
             case "timeout":
                 throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling DELETE /profiles/{profile_id}.");
+            case "unknown":
+                throw new errors.BrowserUseError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Update a browser profile's information.
+     *
+     * @param {BrowserUse.ProfileUpdateRequest} request
+     * @param {Profiles.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link BrowserUse.NotFoundError}
+     * @throws {@link BrowserUse.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.profiles.updateProfile({
+     *         profile_id: "profile_id"
+     *     })
+     */
+    public updateProfile(
+        request: BrowserUse.ProfileUpdateRequest,
+        requestOptions?: Profiles.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.ProfileView> {
+        return core.HttpResponsePromise.fromPromise(this.__updateProfile(request, requestOptions));
+    }
+
+    private async __updateProfile(
+        request: BrowserUse.ProfileUpdateRequest,
+        requestOptions?: Profiles.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.ProfileView>> {
+        const { profile_id: profileId, ..._body } = request;
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
+                `profiles/${encodeURIComponent(profileId)}`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: _body,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: _response.body as BrowserUse.ProfileView, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 422:
+                    throw new BrowserUse.UnprocessableEntityError(
+                        _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.BrowserUseError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.BrowserUseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling PATCH /profiles/{profile_id}.");
             case "unknown":
                 throw new errors.BrowserUseError({
                     message: _response.error.errorMessage,

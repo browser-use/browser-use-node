@@ -17,16 +17,18 @@ export interface TaskItemView {
     /** The task prompt/instruction given to the agent */
     task: string;
     status: BrowserUse.TaskStatus;
-    /** Naive UTC timestamp when the task was started */
-    startedAt: string;
+    /** Naive UTC timestamp when the task was created */
+    createdAt: string;
+    /** Naive UTC timestamp when the task was started (None if task has not started yet) */
+    startedAt?: string | null;
     /** Naive UTC timestamp when the task completed (None if still running) */
-    finishedAt?: string;
+    finishedAt?: string | null;
     /** Optional additional metadata associated with the task set by the user */
     metadata?: Record<string, unknown>;
     /** Final output/result of the task */
-    output?: string;
+    output?: string | null;
     /** Version of browser-use used for this task (older tasks may not have this set) */
-    browserUseVersion?: string;
+    browserUseVersion?: string | null;
     /** Whether the task was successful (self-reported by the agent) */
-    isSuccess?: boolean;
+    isSuccess?: boolean | null;
 }

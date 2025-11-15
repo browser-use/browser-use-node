@@ -40,10 +40,9 @@ export class Files {
     }
 
     /**
-     * Generate a secure presigned URL for uploading files that AI agents can use during tasks.
+     * Generate a secure presigned URL for uploading files to an agent session.
      *
-     * @param {string} sessionId
-     * @param {BrowserUse.UploadFileRequest} request
+     * @param {BrowserUse.AgentSessionUploadFilePresignedUrlFilesSessionsSessionIdPresignedUrlPostRequest} request
      * @param {Files.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.BadRequestError}
@@ -52,27 +51,27 @@ export class Files {
      * @throws {@link BrowserUse.InternalServerError}
      *
      * @example
-     *     await client.files.userUploadFilePresignedUrl("session_id", {
-     *         fileName: "fileName",
-     *         contentType: "image/jpg",
-     *         sizeBytes: 1
+     *     await client.files.agentSessionUploadFilePresignedUrl({
+     *         session_id: "session_id",
+     *         body: {
+     *             fileName: "fileName",
+     *             contentType: "image/jpg",
+     *             sizeBytes: 1
+     *         }
      *     })
      */
-    public userUploadFilePresignedUrl(
-        sessionId: string,
-        request: BrowserUse.UploadFileRequest,
+    public agentSessionUploadFilePresignedUrl(
+        request: BrowserUse.AgentSessionUploadFilePresignedUrlFilesSessionsSessionIdPresignedUrlPostRequest,
         requestOptions?: Files.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.UploadFilePresignedUrlResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__userUploadFilePresignedUrl(sessionId, request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__agentSessionUploadFilePresignedUrl(request, requestOptions));
     }
 
-    private async __userUploadFilePresignedUrl(
-        sessionId: string,
-        request: BrowserUse.UploadFileRequest,
+    private async __agentSessionUploadFilePresignedUrl(
+        request: BrowserUse.AgentSessionUploadFilePresignedUrlFilesSessionsSessionIdPresignedUrlPostRequest,
         requestOptions?: Files.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.UploadFilePresignedUrlResponse>> {
+        const { session_id: sessionId, body: _body } = request;
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -90,7 +89,7 @@ export class Files {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: _body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -144,10 +143,114 @@ export class Files {
     }
 
     /**
+     * Generate a secure presigned URL for uploading files to a browser session.
+     *
+     * @param {BrowserUse.BrowserSessionUploadFilePresignedUrlFilesBrowsersSessionIdPresignedUrlPostRequest} request
+     * @param {Files.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link BrowserUse.BadRequestError}
+     * @throws {@link BrowserUse.NotFoundError}
+     * @throws {@link BrowserUse.UnprocessableEntityError}
+     * @throws {@link BrowserUse.InternalServerError}
+     *
+     * @example
+     *     await client.files.browserSessionUploadFilePresignedUrl({
+     *         session_id: "session_id",
+     *         body: {
+     *             fileName: "fileName",
+     *             contentType: "image/jpg",
+     *             sizeBytes: 1
+     *         }
+     *     })
+     */
+    public browserSessionUploadFilePresignedUrl(
+        request: BrowserUse.BrowserSessionUploadFilePresignedUrlFilesBrowsersSessionIdPresignedUrlPostRequest,
+        requestOptions?: Files.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.UploadFilePresignedUrlResponse> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__browserSessionUploadFilePresignedUrl(request, requestOptions),
+        );
+    }
+
+    private async __browserSessionUploadFilePresignedUrl(
+        request: BrowserUse.BrowserSessionUploadFilePresignedUrlFilesBrowsersSessionIdPresignedUrlPostRequest,
+        requestOptions?: Files.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.UploadFilePresignedUrlResponse>> {
+        const { session_id: sessionId, body: _body } = request;
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
+                `files/browsers/${encodeURIComponent(sessionId)}/presigned-url`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: _body,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as BrowserUse.UploadFilePresignedUrlResponse,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new BrowserUse.BadRequestError(_response.error.body as unknown, _response.rawResponse);
+                case 404:
+                    throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 422:
+                    throw new BrowserUse.UnprocessableEntityError(
+                        _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                case 500:
+                    throw new BrowserUse.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.BrowserUseError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.BrowserUseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.BrowserUseTimeoutError(
+                    "Timeout exceeded when calling POST /files/browsers/{session_id}/presigned-url.",
+                );
+            case "unknown":
+                throw new errors.BrowserUseError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
      * Get secure download URL for an output file generated by the AI agent.
      *
-     * @param {string} taskId
-     * @param {string} fileId
+     * @param {BrowserUse.GetTaskOutputFilePresignedUrlFilesTasksTaskIdOutputFilesFileIdGetRequest} request
      * @param {Files.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.NotFoundError}
@@ -155,23 +258,23 @@ export class Files {
      * @throws {@link BrowserUse.InternalServerError}
      *
      * @example
-     *     await client.files.getTaskOutputFilePresignedUrl("task_id", "file_id")
+     *     await client.files.getTaskOutputFilePresignedUrl({
+     *         task_id: "task_id",
+     *         file_id: "file_id"
+     *     })
      */
     public getTaskOutputFilePresignedUrl(
-        taskId: string,
-        fileId: string,
+        request: BrowserUse.GetTaskOutputFilePresignedUrlFilesTasksTaskIdOutputFilesFileIdGetRequest,
         requestOptions?: Files.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.TaskOutputFileResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getTaskOutputFilePresignedUrl(taskId, fileId, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getTaskOutputFilePresignedUrl(request, requestOptions));
     }
 
     private async __getTaskOutputFilePresignedUrl(
-        taskId: string,
-        fileId: string,
+        request: BrowserUse.GetTaskOutputFilePresignedUrlFilesTasksTaskIdOutputFilesFileIdGetRequest,
         requestOptions?: Files.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.TaskOutputFileResponse>> {
+        const { task_id: taskId, file_id: fileId } = request;
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),

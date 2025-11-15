@@ -71,19 +71,19 @@ export class Tasks {
             _queryParams["pageNumber"] = pageNumber.toString();
         }
 
-        if (sessionId != null) {
+        if (sessionId !== undefined) {
             _queryParams["sessionId"] = sessionId;
         }
 
-        if (filterBy != null) {
+        if (filterBy !== undefined) {
             _queryParams["filterBy"] = filterBy;
         }
 
-        if (after != null) {
+        if (after !== undefined) {
             _queryParams["after"] = after;
         }
 
-        if (before != null) {
+        if (before !== undefined) {
             _queryParams["before"] = before;
         }
 
@@ -243,26 +243,29 @@ export class Tasks {
     /**
      * Get detailed task information including status, progress, steps, and file outputs.
      *
-     * @param {string} taskId
+     * @param {BrowserUse.GetTaskTasksTaskIdGetRequest} request
      * @param {Tasks.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.tasks.getTask("task_id")
+     *     await client.tasks.getTask({
+     *         task_id: "task_id"
+     *     })
      */
     public getTask(
-        taskId: string,
+        request: BrowserUse.GetTaskTasksTaskIdGetRequest,
         requestOptions?: Tasks.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.TaskView> {
-        return core.HttpResponsePromise.fromPromise(this.__getTask(taskId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getTask(request, requestOptions));
     }
 
     private async __getTask(
-        taskId: string,
+        request: BrowserUse.GetTaskTasksTaskIdGetRequest,
         requestOptions?: Tasks.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.TaskView>> {
+        const { task_id: taskId } = request;
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -324,7 +327,6 @@ export class Tasks {
     /**
      * Control task execution with stop, pause, resume, or stop task and session actions.
      *
-     * @param {string} taskId
      * @param {BrowserUse.UpdateTaskRequest} request
      * @param {Tasks.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -332,23 +334,23 @@ export class Tasks {
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.tasks.updateTask("task_id", {
+     *     await client.tasks.updateTask({
+     *         task_id: "task_id",
      *         action: "stop"
      *     })
      */
     public updateTask(
-        taskId: string,
         request: BrowserUse.UpdateTaskRequest,
         requestOptions?: Tasks.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.TaskView> {
-        return core.HttpResponsePromise.fromPromise(this.__updateTask(taskId, request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__updateTask(request, requestOptions));
     }
 
     private async __updateTask(
-        taskId: string,
         request: BrowserUse.UpdateTaskRequest,
         requestOptions?: Tasks.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.TaskView>> {
+        const { task_id: taskId, ..._body } = request;
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -366,7 +368,7 @@ export class Tasks {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: _body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -413,7 +415,7 @@ export class Tasks {
     /**
      * Get secure download URL for task execution logs with step-by-step details.
      *
-     * @param {string} taskId
+     * @param {BrowserUse.GetTaskLogsTasksTaskIdLogsGetRequest} request
      * @param {Tasks.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.NotFoundError}
@@ -421,19 +423,22 @@ export class Tasks {
      * @throws {@link BrowserUse.InternalServerError}
      *
      * @example
-     *     await client.tasks.getTaskLogs("task_id")
+     *     await client.tasks.getTaskLogs({
+     *         task_id: "task_id"
+     *     })
      */
     public getTaskLogs(
-        taskId: string,
+        request: BrowserUse.GetTaskLogsTasksTaskIdLogsGetRequest,
         requestOptions?: Tasks.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.TaskLogFileResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__getTaskLogs(taskId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getTaskLogs(request, requestOptions));
     }
 
     private async __getTaskLogs(
-        taskId: string,
+        request: BrowserUse.GetTaskLogsTasksTaskIdLogsGetRequest,
         requestOptions?: Tasks.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.TaskLogFileResponse>> {
+        const { task_id: taskId } = request;
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),

@@ -7,14 +7,10 @@
  *
  * Attributes:
  *     STOP: Stop the current task execution
- *     PAUSE: Pause the current task execution
- *     RESUME: Resume a paused task execution
  *     STOP_TASK_AND_SESSION: Stop both the task and its parent session
  */
-export type TaskUpdateAction = "stop" | "pause" | "resume" | "stop_task_and_session";
+export type TaskUpdateAction = "stop" | "stop_task_and_session";
 export const TaskUpdateAction = {
     Stop: "stop",
-    Pause: "pause",
-    Resume: "resume",
     StopTaskAndSession: "stop_task_and_session",
 } as const;
