@@ -145,7 +145,7 @@ export function wrapCreateTaskResponse(
                 break poll;
             }
 
-            const res = await client.getTask(taskId);
+            const res = await client.getTask({ task_id: taskId });
 
             const resHash = getTaskViewHash(res);
 
@@ -158,13 +158,12 @@ export function wrapCreateTaskResponse(
             switch (res.status) {
                 case "finished":
                 case "stopped":
-                case "paused":
-                    break poll;
+
                 case "started":
                     await new Promise((resolve) => setTimeout(resolve, intervalMs));
                     break;
                 default:
-                    throw new ExhaustiveSwitchCheck(res.status);
+                    throw new ExhaustiveSwitchCheck(res.status as never);
             }
         } while (true);
     }
@@ -241,24 +240,10 @@ export function wrapCreateTaskResponse(
             switch (msg.data.status) {
                 case "finished":
                 case "stopped":
-                case "paused": {
-                    if (schema != null) {
-                        const parsed: TaskViewWithSchema<ZodType> = parseStructuredTaskOutput<ZodType>(
-                            msg.data,
-                            schema,
-                        );
-
-                        return parsed;
-                    } else {
-                        const result: TaskView = msg.data;
-
-                        return result;
-                    }
-                }
                 case "started":
                     break;
                 default:
-                    throw new ExhaustiveSwitchCheck(msg.data.status);
+                    throw new ExhaustiveSwitchCheck(msg.data.status as never);
             }
         }
 

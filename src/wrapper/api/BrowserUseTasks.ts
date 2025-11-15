@@ -69,25 +69,25 @@ export class BrowserUseTasks extends Tasks {
     }
 
     public getTask<T extends ZodType>(
-        request: { taskId: string; schema: T },
+        request: { task_id: string; schema: T },
         requestOptions?: Tasks.RequestOptions,
     ): core.HttpResponsePromise<TaskViewWithSchema<T>>;
     public getTask(
-        taskId: string,
+        request: BrowserUse.GetTaskTasksTaskIdGetRequest,
         requestOptions?: Tasks.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.TaskView>;
     public getTask(
-        request: { taskId: string; schema: ZodType } | string,
+        request: { task_id: string; schema?: ZodType },
         requestOptions?: Tasks.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.TaskView | TaskViewWithSchema<ZodType>> {
-        if (typeof request === "string") {
+        if (!request.schema) {
             return super.getTask(request, requestOptions);
         }
 
-        const { taskId, schema } = request;
+        const { task_id, schema } = request;
 
         const promise: Promise<core.WithRawResponse<TaskViewWithSchema<ZodType>>> = super
-            .getTask(taskId, requestOptions)
+            .getTask({ task_id }, requestOptions)
             .withRawResponse()
             .then((res) => {
                 const parsed = parseStructuredTaskOutput(res.data, schema);
