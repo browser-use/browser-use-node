@@ -10,3 +10,5 @@ examples/
 jest.config.mjs
 
 README.md
+tsconfig.proxy.json
+tsconfig.json
