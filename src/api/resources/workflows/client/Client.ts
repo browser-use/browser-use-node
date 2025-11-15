@@ -883,7 +883,7 @@ export class Workflows {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.BrowserUseEnvironment.Production,
-                `workflows/${encodeURIComponent(workflowId_)}/executions`,
+                `workflows/${encodeURIComponent(workflowId_ ?? "null")}/executions`,
             ),
             method: "GET",
             headers: _headers,
