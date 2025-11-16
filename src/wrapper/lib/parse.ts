@@ -157,7 +157,9 @@ export function wrapCreateTaskResponse(
             switch (res.status) {
                 case "finished":
                 case "stopped":
+                    break poll;
 
+                case "created":
                 case "started":
                     await new Promise((resolve) => setTimeout(resolve, intervalMs));
                     break;
@@ -236,14 +238,15 @@ export function wrapCreateTaskResponse(
         options?: RequestOptions,
     ): Promise<TaskViewWithSchema<ZodType> | TaskView> {
         for await (const msg of _watch(response.id, config, options)) {
-            switch (msg.data.status) {
-                case "finished":
-                case "stopped":
-                case "started":
-                    break;
-                // default:
-                // throw new ExhaustiveSwitchCheck(msg.data.status as never);
+            // Return on terminal statuses
+            if (msg.data.status === "finished" || msg.data.status === "stopped") {
+                if (schema != null) {
+                    return parseStructuredTaskOutput<ZodType>(msg.data, schema);
+                } else {
+                    return msg.data;
+                }
             }
+            // Continue polling for any other status (created, started, or future statuses)
         }
 
         throw new Error("Stream ended before the task finished!");

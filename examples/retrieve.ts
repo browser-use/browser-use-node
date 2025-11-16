@@ -28,11 +28,11 @@ async function basic() {
 
     poll: do {
         // Wait for Task to Finish
-        const status = await browseruse.tasks.getTask(rsp.id);
+        const status = await browseruse.tasks.getTask({ task_id: rsp.id });
 
         switch (status.status) {
             case "started":
-            case "paused":
+            case "created":
             case "stopped":
                 log = `agent ${status.status} ${status.sessionId} ${status.steps.length} steps`;
 
@@ -73,13 +73,13 @@ async function structured() {
     poll: do {
         // Wait for Task to Finish
         const status = await browseruse.tasks.getTask({
-            taskId: rsp.id,
+            task_id: rsp.id,
             schema: TaskOutput,
         });
 
         switch (status.status) {
             case "started":
-            case "paused":
+            case "created":
             case "stopped": {
                 log = `agent ${status.status} ${status.sessionId} | ${status.steps.length} steps`;
 

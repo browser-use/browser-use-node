@@ -22,6 +22,11 @@ async function basic() {
         task: "What's the weather in SF and what's the temperature?",
     });
 
+
+    for await (const msg of rsp.watch()) {
+        console.log(msg);
+    }
+
     const result = await rsp.complete();
 
     console.log(`Basic: ${result.output}`);
