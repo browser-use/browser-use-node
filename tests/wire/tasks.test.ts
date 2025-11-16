@@ -24,6 +24,8 @@ describe("Tasks", () => {
                     output: "output",
                     browserUseVersion: "browserUseVersion",
                     isSuccess: true,
+                    judgement: "judgement",
+                    judgeVerdict: true,
                 },
             ],
             totalItems: 1,
@@ -50,6 +52,8 @@ describe("Tasks", () => {
                     output: "output",
                     browserUseVersion: "browserUseVersion",
                     isSuccess: true,
+                    judgement: "judgement",
+                    judgeVerdict: true,
                 },
             ],
             totalItems: 1,
@@ -206,6 +210,8 @@ describe("Tasks", () => {
             outputFiles: [{ id: "id", fileName: "fileName" }],
             browserUseVersion: "browserUseVersion",
             isSuccess: true,
+            judgement: "judgement",
+            judgeVerdict: true,
         };
         server.mockEndpoint().get("/tasks/task_id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
@@ -244,6 +250,8 @@ describe("Tasks", () => {
             ],
             browserUseVersion: "browserUseVersion",
             isSuccess: true,
+            judgement: "judgement",
+            judgeVerdict: true,
         });
     });
 
@@ -304,6 +312,8 @@ describe("Tasks", () => {
             outputFiles: [{ id: "id", fileName: "fileName" }],
             browserUseVersion: "browserUseVersion",
             isSuccess: true,
+            judgement: "judgement",
+            judgeVerdict: true,
         };
         server
             .mockEndpoint()
@@ -350,6 +360,8 @@ describe("Tasks", () => {
             ],
             browserUseVersion: "browserUseVersion",
             isSuccess: true,
+            judgement: "judgement",
+            judgeVerdict: true,
         });
     });
 

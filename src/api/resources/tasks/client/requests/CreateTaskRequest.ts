@@ -39,6 +39,12 @@ export interface CreateTaskRequest {
     vision?: CreateTaskRequest.Vision;
     /** Optional extension to the agent system prompt. */
     systemPromptExtension?: string;
+    /** Enable judge mode to evaluate task completion against ground truth. */
+    judge?: boolean;
+    /** Expected answer for judge evaluation. */
+    judgeGroundTruth?: string | null;
+    /** The LLM model to use for judging. If not provided, uses the default judge LLM. */
+    judgeLlm?: BrowserUse.SupportedLlMs | null;
 }
 
 export namespace CreateTaskRequest {

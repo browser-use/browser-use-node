@@ -29,6 +29,10 @@ export interface TaskView {
     outputFiles: BrowserUse.FileView[];
     /** Version of browser-use used for this task (older tasks may not have this set) */
     browserUseVersion?: string | null;
-    /** Whether the task was successful (self-reported by the agent) */
+    /** Whether the task was successful based on the agent's self-reported output (less reliable than the judge) */
     isSuccess?: boolean | null;
+    /** Stringified JSON object containing the full report from the judge */
+    judgement?: string | null;
+    /** Judge verdict - True if the judge found the task to be successful, False otherwise (None if judge is not enabled) */
+    judgeVerdict?: boolean | null;
 }

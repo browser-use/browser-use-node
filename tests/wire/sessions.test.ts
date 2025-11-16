@@ -165,6 +165,8 @@ describe("Sessions", () => {
                     output: "output",
                     browserUseVersion: "browserUseVersion",
                     isSuccess: true,
+                    judgement: "judgement",
+                    judgeVerdict: true,
                 },
             ],
             publicShareUrl: "publicShareUrl",
@@ -202,6 +204,8 @@ describe("Sessions", () => {
                     output: "output",
                     browserUseVersion: "browserUseVersion",
                     isSuccess: true,
+                    judgement: "judgement",
+                    judgeVerdict: true,
                 },
             ],
             publicShareUrl: "publicShareUrl",
@@ -248,6 +252,58 @@ describe("Sessions", () => {
         }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
     });
 
+    test("deleteSession (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        server.mockEndpoint().delete("/sessions/session_id").respondWith().statusCode(200).build();
+
+        const response = await client.sessions.deleteSession({
+            session_id: "session_id",
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("deleteSession (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .delete("/sessions/session_id")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sessions.deleteSession({
+                session_id: "session_id",
+            });
+        }).rejects.toThrow(BrowserUse.NotFoundError);
+    });
+
+    test("deleteSession (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .delete("/sessions/session_id")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sessions.deleteSession({
+                session_id: "session_id",
+            });
+        }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
+    });
+
     test("updateSession (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
@@ -272,6 +328,8 @@ describe("Sessions", () => {
                     output: "output",
                     browserUseVersion: "browserUseVersion",
                     isSuccess: true,
+                    judgement: "judgement",
+                    judgeVerdict: true,
                 },
             ],
             publicShareUrl: "publicShareUrl",
@@ -310,6 +368,8 @@ describe("Sessions", () => {
                     output: "output",
                     browserUseVersion: "browserUseVersion",
                     isSuccess: true,
+                    judgement: "judgement",
+                    judgeVerdict: true,
                 },
             ],
             publicShareUrl: "publicShareUrl",

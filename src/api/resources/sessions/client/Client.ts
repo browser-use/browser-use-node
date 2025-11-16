@@ -293,6 +293,92 @@ export class Sessions {
     }
 
     /**
+     * Delete a session with all its tasks.
+     *
+     * @param {BrowserUse.DeleteSessionSessionsSessionIdDeleteRequest} request
+     * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link BrowserUse.NotFoundError}
+     * @throws {@link BrowserUse.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.sessions.deleteSession({
+     *         session_id: "session_id"
+     *     })
+     */
+    public deleteSession(
+        request: BrowserUse.DeleteSessionSessionsSessionIdDeleteRequest,
+        requestOptions?: Sessions.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__deleteSession(request, requestOptions));
+    }
+
+    private async __deleteSession(
+        request: BrowserUse.DeleteSessionSessionsSessionIdDeleteRequest,
+        requestOptions?: Sessions.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { session_id: sessionId } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
+                `sessions/${core.url.encodePathParam(sessionId)}`,
+            ),
+            method: "DELETE",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 422:
+                    throw new BrowserUse.UnprocessableEntityError(
+                        _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.BrowserUseError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.BrowserUseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling DELETE /sessions/{session_id}.");
+            case "unknown":
+                throw new errors.BrowserUseError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
      * Stop a session and all its running tasks.
      *
      * @param {BrowserUse.UpdateSessionRequest} request
