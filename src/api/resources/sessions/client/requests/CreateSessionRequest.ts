@@ -13,4 +13,8 @@ export interface CreateSessionRequest {
     proxyCountryCode?: BrowserUse.ProxyCountryCode | null;
     /** URL to navigate to when the session starts. */
     startUrl?: string | null;
+    /** Custom screen width in pixels for the browser. */
+    browserScreenWidth?: number | null;
+    /** Custom screen height in pixels for the browser. */
+    browserScreenHeight?: number | null;
 }

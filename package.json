@@ -1,6 +1,6 @@
 {
     "name": "browser-use-sdk",
-    "version": "2.0.7",
+    "version": "2.0.8",
     "private": false,
     "repository": "github:browser-use/browser-use-node",
     "type": "commonjs",
@@ -44,8 +44,7 @@
         "tsn": "ts-node -r tsconfig-paths/register"
     },
     "dependencies": {
-        "fast-json-stable-stringify": "^2.1.0",
-        "zod": "^4"
+        "fast-json-stable-stringify": "^2.1.0"
     },
     "peerDependencies": {
         "react": "^18 || ^19",
@@ -63,7 +62,8 @@
         "react": "^19.1.1",
         "react-dom": "^19.1.1",
         "tsconfig-paths": "^4.2.0",
-        "ts-node": "^10.5.0"
+        "ts-node": "^10.5.0",
+        "zod": "^4"
     },
     "browser": {
         "fs": false,

@@ -1,7 +1,10 @@
 export type { CancelExecutionWorkflowsExecutionsExecutionIdCancelPatchRequest } from "./CancelExecutionWorkflowsExecutionsExecutionIdCancelPatchRequest.js";
 export type { DeleteWorkflowWorkflowsWorkflowIdDeleteRequest } from "./DeleteWorkflowWorkflowsWorkflowIdDeleteRequest.js";
 export type { GetExecutionLogsWorkflowsExecutionsExecutionIdLogsGetRequest } from "./GetExecutionLogsWorkflowsExecutionsExecutionIdLogsGetRequest.js";
+export type { GetExecutionMediaWorkflowsExecutionsExecutionIdMediaGetRequest } from "./GetExecutionMediaWorkflowsExecutionsExecutionIdMediaGetRequest.js";
+export type { GetExecutionStateWorkflowsExecutionsExecutionIdStateGetRequest } from "./GetExecutionStateWorkflowsExecutionsExecutionIdStateGetRequest.js";
 export type { GetExecutionWorkflowsExecutionsExecutionIdGetRequest } from "./GetExecutionWorkflowsExecutionsExecutionIdGetRequest.js";
+export type { GetWorkflowGenerationStateWorkflowsWorkflowIdGenerationStateGetRequest } from "./GetWorkflowGenerationStateWorkflowsWorkflowIdGenerationStateGetRequest.js";
 export type { GetWorkflowWorkflowsWorkflowIdGetRequest } from "./GetWorkflowWorkflowsWorkflowIdGetRequest.js";
 export type { ListAllExecutionsWorkflowsExecutionsGetRequest } from "./ListAllExecutionsWorkflowsExecutionsGetRequest.js";
 export type { ListWorkflowExecutionsWorkflowsWorkflowIdExecutionsGetRequest } from "./ListWorkflowExecutionsWorkflowsWorkflowIdExecutionsGetRequest.js";

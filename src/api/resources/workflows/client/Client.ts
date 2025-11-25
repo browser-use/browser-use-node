@@ -460,6 +460,98 @@ export class Workflows {
     }
 
     /**
+     * Get workflow generation state with live browser URL for polling.
+     *
+     * This endpoint returns the current state of workflow generation including
+     * the live browser URL (if available). It's designed to be polled every 2 seconds
+     * during generation to show real-time browser activity in the frontend.
+     *
+     * @param {BrowserUse.GetWorkflowGenerationStateWorkflowsWorkflowIdGenerationStateGetRequest} request
+     * @param {Workflows.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link BrowserUse.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.workflows.getWorkflowGenerationState({
+     *         workflow_id: "workflow_id"
+     *     })
+     */
+    public getWorkflowGenerationState(
+        request: BrowserUse.GetWorkflowGenerationStateWorkflowsWorkflowIdGenerationStateGetRequest,
+        requestOptions?: Workflows.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.WorkflowGenerationStateView> {
+        return core.HttpResponsePromise.fromPromise(this.__getWorkflowGenerationState(request, requestOptions));
+    }
+
+    private async __getWorkflowGenerationState(
+        request: BrowserUse.GetWorkflowGenerationStateWorkflowsWorkflowIdGenerationStateGetRequest,
+        requestOptions?: Workflows.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.WorkflowGenerationStateView>> {
+        const { workflow_id: workflowId } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
+                `workflows/${core.url.encodePathParam(workflowId)}/generation-state`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as BrowserUse.WorkflowGenerationStateView,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 422:
+                    throw new BrowserUse.UnprocessableEntityError(
+                        _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.BrowserUseError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.BrowserUseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.BrowserUseTimeoutError(
+                    "Timeout exceeded when calling GET /workflows/{workflow_id}/generation-state.",
+                );
+            case "unknown":
+                throw new errors.BrowserUseError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
      * Get a presigned URL to upload workflow YAML directly to S3 from the browser.
      *
      * This avoids sending the YAML content through the backend, reducing latency
@@ -555,10 +647,10 @@ export class Workflows {
     }
 
     /**
-     * Execute a workflow either synchronously or asynchronously.
+     * Execute a workflow asynchronously.
      *
-     * - ASYNC mode: Returns execution ID immediately and processes in background via Lambda
-     * - SYNC mode: Waits for execution to complete and returns results inline (max 5 min timeout)
+     * Returns execution ID immediately and processes in background via Inngest.
+     * Use the GET /workflows/executions/{execution_id} endpoint to check status and retrieve results.
      *
      * @param {BrowserUse.WorkflowExecuteRequest} request
      * @param {Workflows.RequestOptions} requestOptions - Request-specific configuration.
@@ -566,21 +658,21 @@ export class Workflows {
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.workflows.executeWorkflow({
+     *     await client.workflows.runWorkflow({
      *         workflow_id: "workflow_id"
      *     })
      */
-    public executeWorkflow(
+    public runWorkflow(
         request: BrowserUse.WorkflowExecuteRequest,
         requestOptions?: Workflows.RequestOptions,
-    ): core.HttpResponsePromise<BrowserUse.ExecuteWorkflowWorkflowsWorkflowIdExecutePostResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__executeWorkflow(request, requestOptions));
+    ): core.HttpResponsePromise<BrowserUse.WorkflowExecutionCreatedResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__runWorkflow(request, requestOptions));
     }
 
-    private async __executeWorkflow(
+    private async __runWorkflow(
         request: BrowserUse.WorkflowExecuteRequest,
         requestOptions?: Workflows.RequestOptions,
-    ): Promise<core.WithRawResponse<BrowserUse.ExecuteWorkflowWorkflowsWorkflowIdExecutePostResponse>> {
+    ): Promise<core.WithRawResponse<BrowserUse.WorkflowExecutionCreatedResponse>> {
         const { workflow_id: workflowId, ..._body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -592,7 +684,7 @@ export class Workflows {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.BrowserUseEnvironment.Production,
-                `workflows/${core.url.encodePathParam(workflowId)}/execute`,
+                `workflows/${core.url.encodePathParam(workflowId)}/run`,
             ),
             method: "POST",
             headers: _headers,
@@ -608,7 +700,7 @@ export class Workflows {
         });
         if (_response.ok) {
             return {
-                data: _response.body as BrowserUse.ExecuteWorkflowWorkflowsWorkflowIdExecutePostResponse,
+                data: _response.body as BrowserUse.WorkflowExecutionCreatedResponse,
                 rawResponse: _response.rawResponse,
             };
         }
@@ -638,7 +730,7 @@ export class Workflows {
                 });
             case "timeout":
                 throw new errors.BrowserUseTimeoutError(
-                    "Timeout exceeded when calling POST /workflows/{workflow_id}/execute.",
+                    "Timeout exceeded when calling POST /workflows/{workflow_id}/run.",
                 );
             case "unknown":
                 throw new errors.BrowserUseError({
@@ -1200,6 +1292,190 @@ export class Workflows {
             case "timeout":
                 throw new errors.BrowserUseTimeoutError(
                     "Timeout exceeded when calling GET /workflows/executions/{execution_id}/logs.",
+                );
+            case "unknown":
+                throw new errors.BrowserUseError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Get workflow execution state with steps for live UI polling.
+     *
+     * This endpoint returns the current state of a workflow execution including all steps
+     * with their details. It's designed to be polled every 2 seconds during execution
+     * to show real-time progress in the frontend.
+     *
+     * @param {BrowserUse.GetExecutionStateWorkflowsExecutionsExecutionIdStateGetRequest} request
+     * @param {Workflows.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link BrowserUse.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.workflows.getExecutionState({
+     *         execution_id: "execution_id"
+     *     })
+     */
+    public getExecutionState(
+        request: BrowserUse.GetExecutionStateWorkflowsExecutionsExecutionIdStateGetRequest,
+        requestOptions?: Workflows.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.WorkflowExecutionStateView> {
+        return core.HttpResponsePromise.fromPromise(this.__getExecutionState(request, requestOptions));
+    }
+
+    private async __getExecutionState(
+        request: BrowserUse.GetExecutionStateWorkflowsExecutionsExecutionIdStateGetRequest,
+        requestOptions?: Workflows.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.WorkflowExecutionStateView>> {
+        const { execution_id: executionId } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
+                `workflows/executions/${core.url.encodePathParam(executionId)}/state`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as BrowserUse.WorkflowExecutionStateView,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 422:
+                    throw new BrowserUse.UnprocessableEntityError(
+                        _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.BrowserUseError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.BrowserUseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.BrowserUseTimeoutError(
+                    "Timeout exceeded when calling GET /workflows/executions/{execution_id}/state.",
+                );
+            case "unknown":
+                throw new errors.BrowserUseError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Get workflow execution media (screenshots) with presigned URLs.
+     *
+     * This endpoint returns media URLs for completed executions. Screenshots
+     * are returned with presigned S3 URLs for direct access from the frontend.
+     * Should be called when execution status is 'completed', 'failed', or 'cancelled'.
+     *
+     * @param {BrowserUse.GetExecutionMediaWorkflowsExecutionsExecutionIdMediaGetRequest} request
+     * @param {Workflows.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link BrowserUse.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.workflows.getExecutionMedia({
+     *         execution_id: "execution_id"
+     *     })
+     */
+    public getExecutionMedia(
+        request: BrowserUse.GetExecutionMediaWorkflowsExecutionsExecutionIdMediaGetRequest,
+        requestOptions?: Workflows.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.WorkflowExecutionMediaView> {
+        return core.HttpResponsePromise.fromPromise(this.__getExecutionMedia(request, requestOptions));
+    }
+
+    private async __getExecutionMedia(
+        request: BrowserUse.GetExecutionMediaWorkflowsExecutionsExecutionIdMediaGetRequest,
+        requestOptions?: Workflows.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.WorkflowExecutionMediaView>> {
+        const { execution_id: executionId } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
+                `workflows/executions/${core.url.encodePathParam(executionId)}/media`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as BrowserUse.WorkflowExecutionMediaView,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 422:
+                    throw new BrowserUse.UnprocessableEntityError(
+                        _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.BrowserUseError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.BrowserUseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.BrowserUseTimeoutError(
+                    "Timeout exceeded when calling GET /workflows/executions/{execution_id}/media.",
                 );
             case "unknown":
                 throw new errors.BrowserUseError({

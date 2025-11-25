@@ -13,4 +13,8 @@ export interface CreateBrowserSessionRequest {
     proxyCountryCode?: BrowserUse.ProxyCountryCode | null;
     /** The timeout for the session in minutes. Free users are limited to 15 minutes, paid users can use up to 240 minutes (4 hours). */
     timeout?: number;
+    /** Custom screen width in pixels for the browser. */
+    browserScreenWidth?: number | null;
+    /** Custom screen height in pixels for the browser. */
+    browserScreenHeight?: number | null;
 }

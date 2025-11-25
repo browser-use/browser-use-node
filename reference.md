@@ -2029,6 +2029,75 @@ await client.workflows.updateWorkflow({
 </dl>
 </details>
 
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getWorkflowGenerationState</a>({ ...params }) -> BrowserUse.WorkflowGenerationStateView</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get workflow generation state with live browser URL for polling.
+
+This endpoint returns the current state of workflow generation including
+the live browser URL (if available). It's designed to be polled every 2 seconds
+during generation to show real-time browser activity in the frontend.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.getWorkflowGenerationState({
+    workflow_id: "workflow_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.GetWorkflowGenerationStateWorkflowsWorkflowIdGenerationStateGetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getWorkflowYamlPresignedUrl</a>({ ...params }) -> BrowserUse.WorkflowYamlPresignedUploadResponse</code></summary>
 <dl>
 <dd>
@@ -2098,7 +2167,7 @@ await client.workflows.getWorkflowYamlPresignedUrl({
 </dl>
 </details>
 
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">executeWorkflow</a>({ ...params }) -> BrowserUse.ExecuteWorkflowWorkflowsWorkflowIdExecutePostResponse</code></summary>
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">runWorkflow</a>({ ...params }) -> BrowserUse.WorkflowExecutionCreatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -2110,10 +2179,10 @@ await client.workflows.getWorkflowYamlPresignedUrl({
 <dl>
 <dd>
 
-Execute a workflow either synchronously or asynchronously.
+Execute a workflow asynchronously.
 
-- ASYNC mode: Returns execution ID immediately and processes in background via Lambda
-- SYNC mode: Waits for execution to complete and returns results inline (max 5 min timeout)
+Returns execution ID immediately and processes in background via Inngest.
+Use the GET /workflows/executions/{execution_id} endpoint to check status and retrieve results.
 </dd>
 </dl>
 </dd>
@@ -2128,7 +2197,7 @@ Execute a workflow either synchronously or asynchronously.
 <dd>
 
 ```typescript
-await client.workflows.executeWorkflow({
+await client.workflows.runWorkflow({
     workflow_id: "workflow_id"
 });
 
@@ -2544,6 +2613,144 @@ await client.workflows.getExecutionLogs({
 <dd>
 
 **request:** `BrowserUse.GetExecutionLogsWorkflowsExecutionsExecutionIdLogsGetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getExecutionState</a>({ ...params }) -> BrowserUse.WorkflowExecutionStateView</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get workflow execution state with steps for live UI polling.
+
+This endpoint returns the current state of a workflow execution including all steps
+with their details. It's designed to be polled every 2 seconds during execution
+to show real-time progress in the frontend.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.getExecutionState({
+    execution_id: "execution_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.GetExecutionStateWorkflowsExecutionsExecutionIdStateGetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getExecutionMedia</a>({ ...params }) -> BrowserUse.WorkflowExecutionMediaView</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get workflow execution media (screenshots) with presigned URLs.
+
+This endpoint returns media URLs for completed executions. Screenshots
+are returned with presigned S3 URLs for direct access from the frontend.
+Should be called when execution status is 'completed', 'failed', or 'cancelled'.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.getExecutionMedia({
+    execution_id: "execution_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.GetExecutionMediaWorkflowsExecutionsExecutionIdMediaGetRequest` 
     
 </dd>
 </dl>
