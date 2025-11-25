@@ -2,7 +2,7 @@ import type { ZodType } from "zod";
 
 import * as BrowserUse from "../../api/index.js";
 import * as core from "../../core/index.js";
-import { Tasks } from "../../api/resources/tasks/client/Client.js";
+import { TasksClient } from "../../api/resources/tasks/client/Client.js";
 import {
     type CreateTaskRequestWithSchema,
     type WrappedTaskFnsWithSchema,
@@ -13,22 +13,22 @@ import {
     parseStructuredTaskOutput,
 } from "../lib/parse.js";
 
-export class BrowserUseTasks extends Tasks {
-    constructor(options: Tasks.Options) {
+export class BrowserUseTasks extends TasksClient {
+    constructor(options: TasksClient.Options) {
         super(options);
     }
 
     public createTask<T extends ZodType>(
         request: CreateTaskRequestWithSchema<T>,
-        requestOptions?: Tasks.RequestOptions,
+        requestOptions?: TasksClient.RequestOptions,
     ): core.HttpResponsePromise<WrappedTaskFnsWithSchema<T>>;
     public createTask(
         request: BrowserUse.CreateTaskRequest,
-        requestOptions?: Tasks.RequestOptions,
+        requestOptions?: TasksClient.RequestOptions,
     ): core.HttpResponsePromise<WrappedTaskFnsWithoutSchema>;
     public createTask(
         request: BrowserUse.CreateTaskRequest | CreateTaskRequestWithSchema<ZodType>,
-        requestOptions?: Tasks.RequestOptions,
+        requestOptions?: TasksClient.RequestOptions,
     ):
         | core.HttpResponsePromise<WrappedTaskFnsWithSchema<ZodType>>
         | core.HttpResponsePromise<WrappedTaskFnsWithoutSchema> {
@@ -70,15 +70,15 @@ export class BrowserUseTasks extends Tasks {
 
     public getTask<T extends ZodType>(
         request: { task_id: string; schema: T },
-        requestOptions?: Tasks.RequestOptions,
+        requestOptions?: TasksClient.RequestOptions,
     ): core.HttpResponsePromise<TaskViewWithSchema<T>>;
     public getTask(
         request: BrowserUse.GetTaskTasksTaskIdGetRequest,
-        requestOptions?: Tasks.RequestOptions,
+        requestOptions?: TasksClient.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.TaskView>;
     public getTask(
         request: { task_id: string; schema?: ZodType },
-        requestOptions?: Tasks.RequestOptions,
+        requestOptions?: TasksClient.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.TaskView | TaskViewWithSchema<ZodType>> {
         if (!request.schema) {
             return super.getTask(request, requestOptions);
