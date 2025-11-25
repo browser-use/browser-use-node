@@ -81,7 +81,7 @@ export async function verifyWebhookEventSignature(
         }
 
         const signature = createWebhookSignature({
-            payload: event.data.payload,
+            body: event.data, // NOTE: We need to encrypt the entire body, not just the payload
             timestamp: evt.timestamp,
             secret: cfg.secret,
         });
@@ -102,15 +102,15 @@ export async function verifyWebhookEventSignature(
  * Creates a webhook signature for the given payload, timestamp, and secret.
  */
 export function createWebhookSignature({
-    payload,
+    body,
     timestamp,
     secret,
 }: {
-    payload: unknown;
+    body: unknown;
     timestamp: string;
     secret: string;
 }): string {
-    const dump = stringify(payload);
+    const dump = stringify(body);
     const message = `${timestamp}.${dump}`;
 
     const hmac = createHmac("sha256", secret);
