@@ -43,7 +43,7 @@ await client.billing.getAccountBilling();
 <dl>
 <dd>
 
-**requestOptions:** `Billing.RequestOptions` 
+**requestOptions:** `BillingClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -107,7 +107,7 @@ await client.tasks.listTasks();
 <dl>
 <dd>
 
-**requestOptions:** `Tasks.RequestOptions` 
+**requestOptions:** `TasksClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -174,7 +174,7 @@ await client.tasks.createTask({
 <dl>
 <dd>
 
-**requestOptions:** `Tasks.RequestOptions` 
+**requestOptions:** `TasksClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -239,7 +239,7 @@ await client.tasks.getTask({
 <dl>
 <dd>
 
-**requestOptions:** `Tasks.RequestOptions` 
+**requestOptions:** `TasksClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -305,7 +305,7 @@ await client.tasks.updateTask({
 <dl>
 <dd>
 
-**requestOptions:** `Tasks.RequestOptions` 
+**requestOptions:** `TasksClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -370,7 +370,7 @@ await client.tasks.getTaskLogs({
 <dl>
 <dd>
 
-**requestOptions:** `Tasks.RequestOptions` 
+**requestOptions:** `TasksClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -434,7 +434,7 @@ await client.sessions.listSessions();
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions` 
+**requestOptions:** `SessionsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -497,7 +497,7 @@ await client.sessions.createSession();
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions` 
+**requestOptions:** `SessionsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -562,7 +562,7 @@ await client.sessions.getSession({
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions` 
+**requestOptions:** `SessionsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -627,7 +627,7 @@ await client.sessions.deleteSession({
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions` 
+**requestOptions:** `SessionsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -692,7 +692,7 @@ await client.sessions.updateSession({
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions` 
+**requestOptions:** `SessionsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -757,7 +757,7 @@ await client.sessions.getSessionPublicShare({
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions` 
+**requestOptions:** `SessionsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -822,7 +822,7 @@ await client.sessions.createSessionPublicShare({
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions` 
+**requestOptions:** `SessionsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -887,7 +887,7 @@ await client.sessions.deleteSessionPublicShare({
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions` 
+**requestOptions:** `SessionsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -958,7 +958,7 @@ await client.files.agentSessionUploadFilePresignedUrl({
 <dl>
 <dd>
 
-**requestOptions:** `Files.RequestOptions` 
+**requestOptions:** `FilesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1028,7 +1028,7 @@ await client.files.browserSessionUploadFilePresignedUrl({
 <dl>
 <dd>
 
-**requestOptions:** `Files.RequestOptions` 
+**requestOptions:** `FilesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1094,7 +1094,7 @@ await client.files.getTaskOutputFilePresignedUrl({
 <dl>
 <dd>
 
-**requestOptions:** `Files.RequestOptions` 
+**requestOptions:** `FilesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1158,7 +1158,7 @@ await client.profiles.listProfiles();
 <dl>
 <dd>
 
-**requestOptions:** `Profiles.RequestOptions` 
+**requestOptions:** `ProfilesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1226,7 +1226,7 @@ await client.profiles.createProfile();
 <dl>
 <dd>
 
-**requestOptions:** `Profiles.RequestOptions` 
+**requestOptions:** `ProfilesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1291,7 +1291,7 @@ await client.profiles.getProfile({
 <dl>
 <dd>
 
-**requestOptions:** `Profiles.RequestOptions` 
+**requestOptions:** `ProfilesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1356,7 +1356,7 @@ await client.profiles.deleteBrowserProfile({
 <dl>
 <dd>
 
-**requestOptions:** `Profiles.RequestOptions` 
+**requestOptions:** `ProfilesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1421,7 +1421,7 @@ await client.profiles.updateProfile({
 <dl>
 <dd>
 
-**requestOptions:** `Profiles.RequestOptions` 
+**requestOptions:** `ProfilesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1485,7 +1485,7 @@ await client.browsers.listBrowserSessions();
 <dl>
 <dd>
 
-**requestOptions:** `Browsers.RequestOptions` 
+**requestOptions:** `BrowsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1559,7 +1559,7 @@ await client.browsers.createBrowserSession();
 <dl>
 <dd>
 
-**requestOptions:** `Browsers.RequestOptions` 
+**requestOptions:** `BrowsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1624,7 +1624,7 @@ await client.browsers.getBrowserSession({
 <dl>
 <dd>
 
-**requestOptions:** `Browsers.RequestOptions` 
+**requestOptions:** `BrowsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1693,7 +1693,7 @@ await client.browsers.updateBrowserSession({
 <dl>
 <dd>
 
-**requestOptions:** `Browsers.RequestOptions` 
+**requestOptions:** `BrowsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1757,7 +1757,7 @@ await client.workflows.listWorkflows();
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1822,7 +1822,7 @@ await client.workflows.createWorkflow({
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1887,7 +1887,7 @@ await client.workflows.getWorkflow({
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1952,7 +1952,7 @@ await client.workflows.deleteWorkflow({
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2017,7 +2017,7 @@ await client.workflows.updateWorkflow({
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2086,7 +2086,7 @@ await client.workflows.getWorkflowGenerationState({
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2155,7 +2155,7 @@ await client.workflows.getWorkflowYamlPresignedUrl({
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2223,7 +2223,7 @@ await client.workflows.runWorkflow({
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2297,7 +2297,7 @@ await client.workflows.generateWorkflow({
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2362,7 +2362,7 @@ await client.workflows.getExecution({
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2427,7 +2427,7 @@ await client.workflows.listWorkflowExecutions({
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2490,7 +2490,7 @@ await client.workflows.listAllExecutions();
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2555,7 +2555,7 @@ await client.workflows.cancelExecution({
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2620,7 +2620,7 @@ await client.workflows.getExecutionLogs({
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2689,7 +2689,7 @@ await client.workflows.getExecutionState({
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2758,7 +2758,7 @@ await client.workflows.getExecutionMedia({
 <dl>
 <dd>
 
-**requestOptions:** `Workflows.RequestOptions` 
+**requestOptions:** `WorkflowsClient.RequestOptions` 
     
 </dd>
 </dl>
