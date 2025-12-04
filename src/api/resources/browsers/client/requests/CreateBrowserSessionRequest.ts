@@ -17,4 +17,6 @@ export interface CreateBrowserSessionRequest {
     browserScreenWidth?: number | null;
     /** Custom screen height in pixels for the browser. */
     browserScreenHeight?: number | null;
+    /** Whether to allow the browser to be resized during the session (not recommended since it reduces stealthiness). */
+    allowResizing?: boolean;
 }

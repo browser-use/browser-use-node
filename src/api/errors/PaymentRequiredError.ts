@@ -2,10 +2,9 @@
 
 import type * as core from "../../core/index.js";
 import * as errors from "../../errors/index.js";
-import type * as BrowserUse from "../index.js";
 
 export class PaymentRequiredError extends errors.BrowserUseError {
-    constructor(body: BrowserUse.InsufficientCreditsError, rawResponse?: core.RawResponse) {
+    constructor(body?: unknown, rawResponse?: core.RawResponse) {
         super({
             message: "PaymentRequiredError",
             statusCode: 402,

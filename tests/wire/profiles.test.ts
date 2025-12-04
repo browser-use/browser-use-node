@@ -4,7 +4,7 @@ import * as BrowserUse from "../../src/api/index";
 import { BrowserUseClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("ProfilesClient", () => {
+describe("Profiles", () => {
     test("listProfiles (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
@@ -92,7 +92,7 @@ describe("ProfilesClient", () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
         const rawRequestBody = {};
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
         server
             .mockEndpoint()
             .post("/profiles")

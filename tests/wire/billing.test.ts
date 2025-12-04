@@ -4,7 +4,7 @@ import * as BrowserUse from "../../src/api/index";
 import { BrowserUseClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("BillingClient", () => {
+describe("Billing", () => {
     test("getAccountBilling (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });

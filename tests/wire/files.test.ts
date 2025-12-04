@@ -4,7 +4,7 @@ import * as BrowserUse from "../../src/api/index";
 import { BrowserUseClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("FilesClient", () => {
+describe("Files", () => {
     test("agentSessionUploadFilePresignedUrl (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });

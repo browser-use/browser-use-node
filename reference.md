@@ -43,7 +43,7 @@ await client.billing.getAccountBilling();
 <dl>
 <dd>
 
-**requestOptions:** `BillingClient.RequestOptions` 
+**requestOptions:** `Billing.RequestOptions` 
     
 </dd>
 </dl>
@@ -107,7 +107,7 @@ await client.tasks.listTasks();
 <dl>
 <dd>
 
-**requestOptions:** `TasksClient.RequestOptions` 
+**requestOptions:** `Tasks.RequestOptions` 
     
 </dd>
 </dl>
@@ -174,7 +174,7 @@ await client.tasks.createTask({
 <dl>
 <dd>
 
-**requestOptions:** `TasksClient.RequestOptions` 
+**requestOptions:** `Tasks.RequestOptions` 
     
 </dd>
 </dl>
@@ -239,7 +239,7 @@ await client.tasks.getTask({
 <dl>
 <dd>
 
-**requestOptions:** `TasksClient.RequestOptions` 
+**requestOptions:** `Tasks.RequestOptions` 
     
 </dd>
 </dl>
@@ -305,7 +305,7 @@ await client.tasks.updateTask({
 <dl>
 <dd>
 
-**requestOptions:** `TasksClient.RequestOptions` 
+**requestOptions:** `Tasks.RequestOptions` 
     
 </dd>
 </dl>
@@ -370,7 +370,7 @@ await client.tasks.getTaskLogs({
 <dl>
 <dd>
 
-**requestOptions:** `TasksClient.RequestOptions` 
+**requestOptions:** `Tasks.RequestOptions` 
     
 </dd>
 </dl>
@@ -434,7 +434,7 @@ await client.sessions.listSessions();
 <dl>
 <dd>
 
-**requestOptions:** `SessionsClient.RequestOptions` 
+**requestOptions:** `Sessions.RequestOptions` 
     
 </dd>
 </dl>
@@ -497,7 +497,7 @@ await client.sessions.createSession();
 <dl>
 <dd>
 
-**requestOptions:** `SessionsClient.RequestOptions` 
+**requestOptions:** `Sessions.RequestOptions` 
     
 </dd>
 </dl>
@@ -562,7 +562,7 @@ await client.sessions.getSession({
 <dl>
 <dd>
 
-**requestOptions:** `SessionsClient.RequestOptions` 
+**requestOptions:** `Sessions.RequestOptions` 
     
 </dd>
 </dl>
@@ -627,7 +627,7 @@ await client.sessions.deleteSession({
 <dl>
 <dd>
 
-**requestOptions:** `SessionsClient.RequestOptions` 
+**requestOptions:** `Sessions.RequestOptions` 
     
 </dd>
 </dl>
@@ -692,7 +692,7 @@ await client.sessions.updateSession({
 <dl>
 <dd>
 
-**requestOptions:** `SessionsClient.RequestOptions` 
+**requestOptions:** `Sessions.RequestOptions` 
     
 </dd>
 </dl>
@@ -757,7 +757,7 @@ await client.sessions.getSessionPublicShare({
 <dl>
 <dd>
 
-**requestOptions:** `SessionsClient.RequestOptions` 
+**requestOptions:** `Sessions.RequestOptions` 
     
 </dd>
 </dl>
@@ -822,7 +822,7 @@ await client.sessions.createSessionPublicShare({
 <dl>
 <dd>
 
-**requestOptions:** `SessionsClient.RequestOptions` 
+**requestOptions:** `Sessions.RequestOptions` 
     
 </dd>
 </dl>
@@ -887,7 +887,7 @@ await client.sessions.deleteSessionPublicShare({
 <dl>
 <dd>
 
-**requestOptions:** `SessionsClient.RequestOptions` 
+**requestOptions:** `Sessions.RequestOptions` 
     
 </dd>
 </dl>
@@ -958,7 +958,7 @@ await client.files.agentSessionUploadFilePresignedUrl({
 <dl>
 <dd>
 
-**requestOptions:** `FilesClient.RequestOptions` 
+**requestOptions:** `Files.RequestOptions` 
     
 </dd>
 </dl>
@@ -1028,7 +1028,7 @@ await client.files.browserSessionUploadFilePresignedUrl({
 <dl>
 <dd>
 
-**requestOptions:** `FilesClient.RequestOptions` 
+**requestOptions:** `Files.RequestOptions` 
     
 </dd>
 </dl>
@@ -1094,7 +1094,7 @@ await client.files.getTaskOutputFilePresignedUrl({
 <dl>
 <dd>
 
-**requestOptions:** `FilesClient.RequestOptions` 
+**requestOptions:** `Files.RequestOptions` 
     
 </dd>
 </dl>
@@ -1158,7 +1158,7 @@ await client.profiles.listProfiles();
 <dl>
 <dd>
 
-**requestOptions:** `ProfilesClient.RequestOptions` 
+**requestOptions:** `Profiles.RequestOptions` 
     
 </dd>
 </dl>
@@ -1226,7 +1226,7 @@ await client.profiles.createProfile();
 <dl>
 <dd>
 
-**requestOptions:** `ProfilesClient.RequestOptions` 
+**requestOptions:** `Profiles.RequestOptions` 
     
 </dd>
 </dl>
@@ -1291,7 +1291,7 @@ await client.profiles.getProfile({
 <dl>
 <dd>
 
-**requestOptions:** `ProfilesClient.RequestOptions` 
+**requestOptions:** `Profiles.RequestOptions` 
     
 </dd>
 </dl>
@@ -1356,7 +1356,7 @@ await client.profiles.deleteBrowserProfile({
 <dl>
 <dd>
 
-**requestOptions:** `ProfilesClient.RequestOptions` 
+**requestOptions:** `Profiles.RequestOptions` 
     
 </dd>
 </dl>
@@ -1421,7 +1421,7 @@ await client.profiles.updateProfile({
 <dl>
 <dd>
 
-**requestOptions:** `ProfilesClient.RequestOptions` 
+**requestOptions:** `Profiles.RequestOptions` 
     
 </dd>
 </dl>
@@ -1485,7 +1485,7 @@ await client.browsers.listBrowserSessions();
 <dl>
 <dd>
 
-**requestOptions:** `BrowsersClient.RequestOptions` 
+**requestOptions:** `Browsers.RequestOptions` 
     
 </dd>
 </dl>
@@ -1559,7 +1559,7 @@ await client.browsers.createBrowserSession();
 <dl>
 <dd>
 
-**requestOptions:** `BrowsersClient.RequestOptions` 
+**requestOptions:** `Browsers.RequestOptions` 
     
 </dd>
 </dl>
@@ -1624,7 +1624,7 @@ await client.browsers.getBrowserSession({
 <dl>
 <dd>
 
-**requestOptions:** `BrowsersClient.RequestOptions` 
+**requestOptions:** `Browsers.RequestOptions` 
     
 </dd>
 </dl>
@@ -1693,7 +1693,528 @@ await client.browsers.updateBrowserSession({
 <dl>
 <dd>
 
-**requestOptions:** `BrowsersClient.RequestOptions` 
+**requestOptions:** `Browsers.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Skills
+<details><summary><code>client.skills.<a href="/src/api/resources/skills/client/Client.ts">listSkills</a>({ ...params }) -> BrowserUse.SkillListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all skills owned by the authenticated project with optional filtering by public status.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skills.listSkills();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.ListSkillsSkillsGetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Skills.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.skills.<a href="/src/api/resources/skills/client/Client.ts">createSkill</a>({ ...params }) -> BrowserUse.CreateSkillResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new skill via automated generation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skills.createSkill({
+    goal: "goal",
+    agentPrompt: "agentPrompt"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.CreateSkillRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Skills.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.skills.<a href="/src/api/resources/skills/client/Client.ts">getSkill</a>({ ...params }) -> BrowserUse.SkillResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get details of a specific skill owned by the project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skills.getSkill({
+    skill_id: "skill_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.GetSkillSkillsSkillIdGetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Skills.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.skills.<a href="/src/api/resources/skills/client/Client.ts">deleteSkill</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a skill owned by the project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skills.deleteSkill({
+    skill_id: "skill_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.DeleteSkillSkillsSkillIdDeleteRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Skills.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.skills.<a href="/src/api/resources/skills/client/Client.ts">updateSkill</a>({ ...params }) -> BrowserUse.SkillResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update skill metadata (name, description, enabled, etc.).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skills.updateSkill({
+    skill_id: "skill_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.UpdateSkillRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Skills.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.skills.<a href="/src/api/resources/skills/client/Client.ts">cancelGeneration</a>({ ...params }) -> BrowserUse.SkillResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancel the current in-progress generation for a skill.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skills.cancelGeneration({
+    skill_id: "skill_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.CancelGenerationSkillsSkillIdCancelGenerationPostRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Skills.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.skills.<a href="/src/api/resources/skills/client/Client.ts">executeSkill</a>({ ...params }) -> BrowserUse.ExecuteSkillResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Execute a skill with the provided parameters.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skills.executeSkill({
+    skill_id: "skill_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.ExecuteSkillRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Skills.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.skills.<a href="/src/api/resources/skills/client/Client.ts">refineSkill</a>({ ...params }) -> BrowserUse.RefineSkillResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Refine a skill based on feedback.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skills.refineSkill({
+    skill_id: "skill_id",
+    feedback: "feedback"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.RefineSkillRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Skills.RequestOptions` 
     
 </dd>
 </dl>
@@ -1757,7 +2278,7 @@ await client.workflows.listWorkflows();
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -1822,7 +2343,7 @@ await client.workflows.createWorkflow({
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -1887,7 +2408,7 @@ await client.workflows.getWorkflow({
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -1952,7 +2473,7 @@ await client.workflows.deleteWorkflow({
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -2017,7 +2538,7 @@ await client.workflows.updateWorkflow({
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -2086,7 +2607,7 @@ await client.workflows.getWorkflowGenerationState({
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -2155,7 +2676,7 @@ await client.workflows.getWorkflowYamlPresignedUrl({
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -2223,7 +2744,7 @@ await client.workflows.runWorkflow({
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -2297,7 +2818,7 @@ await client.workflows.generateWorkflow({
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -2362,7 +2883,7 @@ await client.workflows.getExecution({
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -2427,7 +2948,7 @@ await client.workflows.listWorkflowExecutions({
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -2490,7 +3011,7 @@ await client.workflows.listAllExecutions();
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -2555,7 +3076,7 @@ await client.workflows.cancelExecution({
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -2620,7 +3141,7 @@ await client.workflows.getExecutionLogs({
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -2689,7 +3210,7 @@ await client.workflows.getExecutionState({
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>
@@ -2758,7 +3279,7 @@ await client.workflows.getExecutionMedia({
 <dl>
 <dd>
 
-**requestOptions:** `WorkflowsClient.RequestOptions` 
+**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>

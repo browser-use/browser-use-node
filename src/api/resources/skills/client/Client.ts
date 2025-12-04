@@ -7,42 +7,42 @@ import * as environments from "../../../../environments.js";
 import * as errors from "../../../../errors/index.js";
 import * as BrowserUse from "../../../index.js";
 
-export declare namespace Sessions {
+export declare namespace Skills {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class Sessions {
-    protected readonly _options: Sessions.Options;
+export class Skills {
+    protected readonly _options: Skills.Options;
 
-    constructor(_options: Sessions.Options) {
+    constructor(_options: Skills.Options) {
         this._options = _options;
     }
 
     /**
-     * Get paginated list of AI agent sessions with optional status filtering.
+     * List all skills owned by the authenticated project with optional filtering by public status.
      *
-     * @param {BrowserUse.ListSessionsSessionsGetRequest} request
-     * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {BrowserUse.ListSkillsSkillsGetRequest} request
+     * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.sessions.listSessions()
+     *     await client.skills.listSkills()
      */
-    public listSessions(
-        request: BrowserUse.ListSessionsSessionsGetRequest = {},
-        requestOptions?: Sessions.RequestOptions,
-    ): core.HttpResponsePromise<BrowserUse.SessionListResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listSessions(request, requestOptions));
+    public listSkills(
+        request: BrowserUse.ListSkillsSkillsGetRequest = {},
+        requestOptions?: Skills.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.SkillListResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listSkills(request, requestOptions));
     }
 
-    private async __listSessions(
-        request: BrowserUse.ListSessionsSessionsGetRequest = {},
-        requestOptions?: Sessions.RequestOptions,
-    ): Promise<core.WithRawResponse<BrowserUse.SessionListResponse>> {
-        const { pageSize, pageNumber, filterBy } = request;
+    private async __listSkills(
+        request: BrowserUse.ListSkillsSkillsGetRequest = {},
+        requestOptions?: Skills.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.SkillListResponse>> {
+        const { pageSize, pageNumber, isPublic } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (pageSize != null) {
             _queryParams.pageSize = pageSize.toString();
@@ -52,8 +52,8 @@ export class Sessions {
             _queryParams.pageNumber = pageNumber.toString();
         }
 
-        if (filterBy !== undefined) {
-            _queryParams.filterBy = filterBy;
+        if (isPublic !== undefined) {
+            _queryParams.isPublic = isPublic?.toString() ?? null;
         }
 
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -66,7 +66,7 @@ export class Sessions {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.BrowserUseEnvironment.Production,
-                "sessions",
+                "skills",
             ),
             method: "GET",
             headers: _headers,
@@ -78,7 +78,7 @@ export class Sessions {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as BrowserUse.SessionListResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as BrowserUse.SkillListResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -105,7 +105,7 @@ export class Sessions {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling GET /sessions.");
+                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling GET /skills.");
             case "unknown":
                 throw new errors.BrowserUseError({
                     message: _response.error.errorMessage,
@@ -115,29 +115,31 @@ export class Sessions {
     }
 
     /**
-     * Create a new session with a new task.
+     * Create a new skill via automated generation.
      *
-     * @param {BrowserUse.CreateSessionRequest} request
-     * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {BrowserUse.CreateSkillRequest} request
+     * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link BrowserUse.NotFoundError}
+     * @throws {@link BrowserUse.BadRequestError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
-     * @throws {@link BrowserUse.TooManyRequestsError}
      *
      * @example
-     *     await client.sessions.createSession()
+     *     await client.skills.createSkill({
+     *         goal: "goal",
+     *         agentPrompt: "agentPrompt"
+     *     })
      */
-    public createSession(
-        request: BrowserUse.CreateSessionRequest = {},
-        requestOptions?: Sessions.RequestOptions,
-    ): core.HttpResponsePromise<BrowserUse.SessionItemView> {
-        return core.HttpResponsePromise.fromPromise(this.__createSession(request, requestOptions));
+    public createSkill(
+        request: BrowserUse.CreateSkillRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.CreateSkillResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__createSkill(request, requestOptions));
     }
 
-    private async __createSession(
-        request: BrowserUse.CreateSessionRequest = {},
-        requestOptions?: Sessions.RequestOptions,
-    ): Promise<core.WithRawResponse<BrowserUse.SessionItemView>> {
+    private async __createSkill(
+        request: BrowserUse.CreateSkillRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.CreateSkillResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -148,7 +150,7 @@ export class Sessions {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.BrowserUseEnvironment.Production,
-                "sessions",
+                "skills",
             ),
             method: "POST",
             headers: _headers,
@@ -163,21 +165,16 @@ export class Sessions {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as BrowserUse.SessionItemView, rawResponse: _response.rawResponse };
+            return { data: _response.body as BrowserUse.CreateSkillResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 404:
-                    throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 400:
+                    throw new BrowserUse.BadRequestError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
                     throw new BrowserUse.UnprocessableEntityError(
                         _response.error.body as unknown,
-                        _response.rawResponse,
-                    );
-                case 429:
-                    throw new BrowserUse.TooManyRequestsError(
-                        _response.error.body as BrowserUse.TooManyConcurrentActiveSessionsError,
                         _response.rawResponse,
                     );
                 default:
@@ -197,7 +194,7 @@ export class Sessions {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling POST /sessions.");
+                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling POST /skills.");
             case "unknown":
                 throw new errors.BrowserUseError({
                     message: _response.error.errorMessage,
@@ -207,31 +204,31 @@ export class Sessions {
     }
 
     /**
-     * Get detailed session information including status, URLs, and task details.
+     * Get details of a specific skill owned by the project.
      *
-     * @param {BrowserUse.GetSessionSessionsSessionIdGetRequest} request
-     * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {BrowserUse.GetSkillSkillsSkillIdGetRequest} request
+     * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.sessions.getSession({
-     *         session_id: "session_id"
+     *     await client.skills.getSkill({
+     *         skill_id: "skill_id"
      *     })
      */
-    public getSession(
-        request: BrowserUse.GetSessionSessionsSessionIdGetRequest,
-        requestOptions?: Sessions.RequestOptions,
-    ): core.HttpResponsePromise<BrowserUse.SessionView> {
-        return core.HttpResponsePromise.fromPromise(this.__getSession(request, requestOptions));
+    public getSkill(
+        request: BrowserUse.GetSkillSkillsSkillIdGetRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.SkillResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getSkill(request, requestOptions));
     }
 
-    private async __getSession(
-        request: BrowserUse.GetSessionSessionsSessionIdGetRequest,
-        requestOptions?: Sessions.RequestOptions,
-    ): Promise<core.WithRawResponse<BrowserUse.SessionView>> {
-        const { session_id: sessionId } = request;
+    private async __getSkill(
+        request: BrowserUse.GetSkillSkillsSkillIdGetRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.SkillResponse>> {
+        const { skill_id: skillId } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -242,7 +239,7 @@ export class Sessions {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.BrowserUseEnvironment.Production,
-                `sessions/${core.url.encodePathParam(sessionId)}`,
+                `skills/${core.url.encodePathParam(skillId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -254,7 +251,7 @@ export class Sessions {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as BrowserUse.SessionView, rawResponse: _response.rawResponse };
+            return { data: _response.body as BrowserUse.SkillResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -283,7 +280,7 @@ export class Sessions {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling GET /sessions/{session_id}.");
+                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling GET /skills/{skill_id}.");
             case "unknown":
                 throw new errors.BrowserUseError({
                     message: _response.error.errorMessage,
@@ -293,31 +290,32 @@ export class Sessions {
     }
 
     /**
-     * Delete a session with all its tasks.
+     * Delete a skill owned by the project.
      *
-     * @param {BrowserUse.DeleteSessionSessionsSessionIdDeleteRequest} request
-     * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {BrowserUse.DeleteSkillSkillsSkillIdDeleteRequest} request
+     * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link BrowserUse.BadRequestError}
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.sessions.deleteSession({
-     *         session_id: "session_id"
+     *     await client.skills.deleteSkill({
+     *         skill_id: "skill_id"
      *     })
      */
-    public deleteSession(
-        request: BrowserUse.DeleteSessionSessionsSessionIdDeleteRequest,
-        requestOptions?: Sessions.RequestOptions,
+    public deleteSkill(
+        request: BrowserUse.DeleteSkillSkillsSkillIdDeleteRequest,
+        requestOptions?: Skills.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__deleteSession(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__deleteSkill(request, requestOptions));
     }
 
-    private async __deleteSession(
-        request: BrowserUse.DeleteSessionSessionsSessionIdDeleteRequest,
-        requestOptions?: Sessions.RequestOptions,
+    private async __deleteSkill(
+        request: BrowserUse.DeleteSkillSkillsSkillIdDeleteRequest,
+        requestOptions?: Skills.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const { session_id: sessionId } = request;
+        const { skill_id: skillId } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -328,7 +326,7 @@ export class Sessions {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.BrowserUseEnvironment.Production,
-                `sessions/${core.url.encodePathParam(sessionId)}`,
+                `skills/${core.url.encodePathParam(skillId)}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -345,6 +343,8 @@ export class Sessions {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new BrowserUse.BadRequestError(_response.error.body as unknown, _response.rawResponse);
                 case 404:
                     throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -369,7 +369,7 @@ export class Sessions {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling DELETE /sessions/{session_id}.");
+                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling DELETE /skills/{skill_id}.");
             case "unknown":
                 throw new errors.BrowserUseError({
                     message: _response.error.errorMessage,
@@ -379,31 +379,31 @@ export class Sessions {
     }
 
     /**
-     * Stop a session and all its running tasks.
+     * Update skill metadata (name, description, enabled, etc.).
      *
-     * @param {BrowserUse.UpdateSessionRequest} request
-     * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {BrowserUse.UpdateSkillRequest} request
+     * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.sessions.updateSession({
-     *         session_id: "session_id"
+     *     await client.skills.updateSkill({
+     *         skill_id: "skill_id"
      *     })
      */
-    public updateSession(
-        request: BrowserUse.UpdateSessionRequest,
-        requestOptions?: Sessions.RequestOptions,
-    ): core.HttpResponsePromise<BrowserUse.SessionView> {
-        return core.HttpResponsePromise.fromPromise(this.__updateSession(request, requestOptions));
+    public updateSkill(
+        request: BrowserUse.UpdateSkillRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.SkillResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__updateSkill(request, requestOptions));
     }
 
-    private async __updateSession(
-        request: BrowserUse.UpdateSessionRequest,
-        requestOptions?: Sessions.RequestOptions,
-    ): Promise<core.WithRawResponse<BrowserUse.SessionView>> {
-        const { session_id: sessionId, ..._body } = request;
+    private async __updateSkill(
+        request: BrowserUse.UpdateSkillRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.SkillResponse>> {
+        const { skill_id: skillId, ..._body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -414,14 +414,14 @@ export class Sessions {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.BrowserUseEnvironment.Production,
-                `sessions/${core.url.encodePathParam(sessionId)}`,
+                `skills/${core.url.encodePathParam(skillId)}`,
             ),
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: { ..._body, action: "stop" },
+            body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -429,7 +429,7 @@ export class Sessions {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as BrowserUse.SessionView, rawResponse: _response.rawResponse };
+            return { data: _response.body as BrowserUse.SkillResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -458,7 +458,7 @@ export class Sessions {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling PATCH /sessions/{session_id}.");
+                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling PATCH /skills/{skill_id}.");
             case "unknown":
                 throw new errors.BrowserUseError({
                     message: _response.error.errorMessage,
@@ -468,31 +468,32 @@ export class Sessions {
     }
 
     /**
-     * Get public share information including URL and usage statistics.
+     * Cancel the current in-progress generation for a skill.
      *
-     * @param {BrowserUse.GetSessionPublicShareSessionsSessionIdPublicShareGetRequest} request
-     * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {BrowserUse.CancelGenerationSkillsSkillIdCancelGenerationPostRequest} request
+     * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link BrowserUse.BadRequestError}
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.sessions.getSessionPublicShare({
-     *         session_id: "session_id"
+     *     await client.skills.cancelGeneration({
+     *         skill_id: "skill_id"
      *     })
      */
-    public getSessionPublicShare(
-        request: BrowserUse.GetSessionPublicShareSessionsSessionIdPublicShareGetRequest,
-        requestOptions?: Sessions.RequestOptions,
-    ): core.HttpResponsePromise<BrowserUse.ShareView> {
-        return core.HttpResponsePromise.fromPromise(this.__getSessionPublicShare(request, requestOptions));
+    public cancelGeneration(
+        request: BrowserUse.CancelGenerationSkillsSkillIdCancelGenerationPostRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.SkillResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__cancelGeneration(request, requestOptions));
     }
 
-    private async __getSessionPublicShare(
-        request: BrowserUse.GetSessionPublicShareSessionsSessionIdPublicShareGetRequest,
-        requestOptions?: Sessions.RequestOptions,
-    ): Promise<core.WithRawResponse<BrowserUse.ShareView>> {
-        const { session_id: sessionId } = request;
+    private async __cancelGeneration(
+        request: BrowserUse.CancelGenerationSkillsSkillIdCancelGenerationPostRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.SkillResponse>> {
+        const { skill_id: skillId } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -503,95 +504,7 @@ export class Sessions {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.BrowserUseEnvironment.Production,
-                `sessions/${core.url.encodePathParam(sessionId)}/public-share`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as BrowserUse.ShareView, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
-                case 422:
-                    throw new BrowserUse.UnprocessableEntityError(
-                        _response.error.body as unknown,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.BrowserUseError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.BrowserUseError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.BrowserUseTimeoutError(
-                    "Timeout exceeded when calling GET /sessions/{session_id}/public-share.",
-                );
-            case "unknown":
-                throw new errors.BrowserUseError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
-    }
-
-    /**
-     * Create or return existing public share for a session.
-     *
-     * @param {BrowserUse.CreateSessionPublicShareSessionsSessionIdPublicSharePostRequest} request
-     * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link BrowserUse.NotFoundError}
-     * @throws {@link BrowserUse.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.sessions.createSessionPublicShare({
-     *         session_id: "session_id"
-     *     })
-     */
-    public createSessionPublicShare(
-        request: BrowserUse.CreateSessionPublicShareSessionsSessionIdPublicSharePostRequest,
-        requestOptions?: Sessions.RequestOptions,
-    ): core.HttpResponsePromise<BrowserUse.ShareView> {
-        return core.HttpResponsePromise.fromPromise(this.__createSessionPublicShare(request, requestOptions));
-    }
-
-    private async __createSessionPublicShare(
-        request: BrowserUse.CreateSessionPublicShareSessionsSessionIdPublicSharePostRequest,
-        requestOptions?: Sessions.RequestOptions,
-    ): Promise<core.WithRawResponse<BrowserUse.ShareView>> {
-        const { session_id: sessionId } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.BrowserUseEnvironment.Production,
-                `sessions/${core.url.encodePathParam(sessionId)}/public-share`,
+                `skills/${core.url.encodePathParam(skillId)}/cancel-generation`,
             ),
             method: "POST",
             headers: _headers,
@@ -603,11 +516,13 @@ export class Sessions {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as BrowserUse.ShareView, rawResponse: _response.rawResponse };
+            return { data: _response.body as BrowserUse.SkillResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new BrowserUse.BadRequestError(_response.error.body as unknown, _response.rawResponse);
                 case 404:
                     throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -633,7 +548,7 @@ export class Sessions {
                 });
             case "timeout":
                 throw new errors.BrowserUseTimeoutError(
-                    "Timeout exceeded when calling POST /sessions/{session_id}/public-share.",
+                    "Timeout exceeded when calling POST /skills/{skill_id}/cancel-generation.",
                 );
             case "unknown":
                 throw new errors.BrowserUseError({
@@ -644,31 +559,33 @@ export class Sessions {
     }
 
     /**
-     * Remove public share for a session.
+     * Execute a skill with the provided parameters.
      *
-     * @param {BrowserUse.DeleteSessionPublicShareSessionsSessionIdPublicShareDeleteRequest} request
-     * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {BrowserUse.ExecuteSkillRequest} request
+     * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link BrowserUse.BadRequestError}
+     * @throws {@link BrowserUse.PaymentRequiredError}
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
      * @example
-     *     await client.sessions.deleteSessionPublicShare({
-     *         session_id: "session_id"
+     *     await client.skills.executeSkill({
+     *         skill_id: "skill_id"
      *     })
      */
-    public deleteSessionPublicShare(
-        request: BrowserUse.DeleteSessionPublicShareSessionsSessionIdPublicShareDeleteRequest,
-        requestOptions?: Sessions.RequestOptions,
-    ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__deleteSessionPublicShare(request, requestOptions));
+    public executeSkill(
+        request: BrowserUse.ExecuteSkillRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.ExecuteSkillResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__executeSkill(request, requestOptions));
     }
 
-    private async __deleteSessionPublicShare(
-        request: BrowserUse.DeleteSessionPublicShareSessionsSessionIdPublicShareDeleteRequest,
-        requestOptions?: Sessions.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const { session_id: sessionId } = request;
+    private async __executeSkill(
+        request: BrowserUse.ExecuteSkillRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.ExecuteSkillResponse>> {
+        const { skill_id: skillId, ..._body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -679,11 +596,14 @@ export class Sessions {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.BrowserUseEnvironment.Production,
-                `sessions/${core.url.encodePathParam(sessionId)}/public-share`,
+                `skills/${core.url.encodePathParam(skillId)}/execute`,
             ),
-            method: "DELETE",
+            method: "POST",
             headers: _headers,
+            contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -691,11 +611,15 @@ export class Sessions {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
+            return { data: _response.body as BrowserUse.ExecuteSkillResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new BrowserUse.BadRequestError(_response.error.body as unknown, _response.rawResponse);
+                case 402:
+                    throw new BrowserUse.PaymentRequiredError(_response.error.body as unknown, _response.rawResponse);
                 case 404:
                     throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -721,7 +645,102 @@ export class Sessions {
                 });
             case "timeout":
                 throw new errors.BrowserUseTimeoutError(
-                    "Timeout exceeded when calling DELETE /sessions/{session_id}/public-share.",
+                    "Timeout exceeded when calling POST /skills/{skill_id}/execute.",
+                );
+            case "unknown":
+                throw new errors.BrowserUseError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Refine a skill based on feedback.
+     *
+     * @param {BrowserUse.RefineSkillRequest} request
+     * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link BrowserUse.BadRequestError}
+     * @throws {@link BrowserUse.NotFoundError}
+     * @throws {@link BrowserUse.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.skills.refineSkill({
+     *         skill_id: "skill_id",
+     *         feedback: "feedback"
+     *     })
+     */
+    public refineSkill(
+        request: BrowserUse.RefineSkillRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.RefineSkillResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__refineSkill(request, requestOptions));
+    }
+
+    private async __refineSkill(
+        request: BrowserUse.RefineSkillRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.RefineSkillResponse>> {
+        const { skill_id: skillId, ..._body } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
+                `skills/${core.url.encodePathParam(skillId)}/refine`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: _body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as BrowserUse.RefineSkillResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new BrowserUse.BadRequestError(_response.error.body as unknown, _response.rawResponse);
+                case 404:
+                    throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 422:
+                    throw new BrowserUse.UnprocessableEntityError(
+                        _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.BrowserUseError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.BrowserUseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.BrowserUseTimeoutError(
+                    "Timeout exceeded when calling POST /skills/{skill_id}/refine.",
                 );
             case "unknown":
                 throw new errors.BrowserUseError({
