@@ -667,7 +667,8 @@ Stop a session and all its running tasks.
 
 ```typescript
 await client.sessions.updateSession({
-    session_id: "session_id"
+    session_id: "session_id",
+    action: "stop"
 });
 
 ```
@@ -1668,7 +1669,8 @@ Billing is ceil to the nearest minute (minimum 1 minute).
 
 ```typescript
 await client.browsers.updateBrowserSession({
-    session_id: "session_id"
+    session_id: "session_id",
+    action: "stop"
 });
 
 ```
@@ -1718,7 +1720,7 @@ await client.browsers.updateBrowserSession({
 <dl>
 <dd>
 
-List all skills owned by the authenticated project with optional filtering by public status.
+List all skills owned by the authenticated project with optional filtering.
 </dd>
 </dl>
 </dd>
@@ -2215,6 +2217,200 @@ await client.skills.refineSkill({
 <dd>
 
 **requestOptions:** `Skills.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## SkillsMarketplace
+<details><summary><code>client.skillsMarketplace.<a href="/src/api/resources/skillsMarketplace/client/Client.ts">listSkills</a>({ ...params }) -> BrowserUse.MarketplaceSkillListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all public skills available in the marketplace with optional filtering.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skillsMarketplace.listSkills();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.ListSkillsMarketplaceSkillsGetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SkillsMarketplace.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.skillsMarketplace.<a href="/src/api/resources/skillsMarketplace/client/Client.ts">getSkill</a>({ ...params }) -> BrowserUse.MarketplaceSkillResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get details of a specific public skill from the marketplace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skillsMarketplace.getSkill({
+    skill_id: "skill_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.GetSkillMarketplaceSkillsSkillIdGetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SkillsMarketplace.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.skillsMarketplace.<a href="/src/api/resources/skillsMarketplace/client/Client.ts">cloneSkill</a>({ ...params }) -> BrowserUse.MarketplaceSkillResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Clone a public marketplace skill to the user's project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skillsMarketplace.cloneSkill({
+    skill_id: "skill_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.CloneSkillMarketplaceSkillsSkillIdClonePostRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SkillsMarketplace.RequestOptions` 
     
 </dd>
 </dl>

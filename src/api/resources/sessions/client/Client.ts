@@ -389,7 +389,8 @@ export class Sessions {
      *
      * @example
      *     await client.sessions.updateSession({
-     *         session_id: "session_id"
+     *         session_id: "session_id",
+     *         action: "stop"
      *     })
      */
     public updateSession(
@@ -421,7 +422,7 @@ export class Sessions {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: { ..._body, action: "stop" },
+            body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

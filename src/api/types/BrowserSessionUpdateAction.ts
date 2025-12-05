@@ -6,4 +6,7 @@
  * Attributes:
  *     STOP: Stop the browser session (cannot be undone)
  */
-export type BrowserSessionUpdateAction = "stop";
+export const BrowserSessionUpdateAction = {
+    Stop: "stop",
+} as const;
+export type BrowserSessionUpdateAction = (typeof BrowserSessionUpdateAction)[keyof typeof BrowserSessionUpdateAction];

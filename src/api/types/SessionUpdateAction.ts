@@ -6,4 +6,7 @@
  * Attributes:
  *     STOP: Stop the session and all its associated tasks (cannot be undone)
  */
-export type SessionUpdateAction = "stop";
+export const SessionUpdateAction = {
+    Stop: "stop",
+} as const;
+export type SessionUpdateAction = (typeof SessionUpdateAction)[keyof typeof SessionUpdateAction];

@@ -21,7 +21,7 @@ export class Skills {
     }
 
     /**
-     * List all skills owned by the authenticated project with optional filtering by public status.
+     * List all skills owned by the authenticated project with optional filtering.
      *
      * @param {BrowserUse.ListSkillsSkillsGetRequest} request
      * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
@@ -42,7 +42,7 @@ export class Skills {
         request: BrowserUse.ListSkillsSkillsGetRequest = {},
         requestOptions?: Skills.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.SkillListResponse>> {
-        const { pageSize, pageNumber, isPublic } = request;
+        const { pageSize, pageNumber, isPublic, isEnabled, query, fromDate, toDate } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (pageSize != null) {
             _queryParams.pageSize = pageSize.toString();
@@ -54,6 +54,22 @@ export class Skills {
 
         if (isPublic !== undefined) {
             _queryParams.isPublic = isPublic?.toString() ?? null;
+        }
+
+        if (isEnabled !== undefined) {
+            _queryParams.isEnabled = isEnabled?.toString() ?? null;
+        }
+
+        if (query !== undefined) {
+            _queryParams.query = query;
+        }
+
+        if (fromDate !== undefined) {
+            _queryParams.fromDate = fromDate;
+        }
+
+        if (toDate !== undefined) {
+            _queryParams.toDate = toDate;
         }
 
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

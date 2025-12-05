@@ -7,11 +7,19 @@ export interface UploadFilePresignedUrlResponse {
     /** The URL to upload the file to. */
     url: string;
     /** The HTTP method to use for the upload. */
-    method: "POST";
+    method: UploadFilePresignedUrlResponse.Method;
     /** The form fields to include in the upload request. */
     fields: Record<string, string>;
     /** The name of the file to upload (should be referenced when user wants to use the file in a task). */
     fileName: string;
     /** The number of seconds until the presigned URL expires. */
     expiresIn: number;
+}
+
+export namespace UploadFilePresignedUrlResponse {
+    /** The HTTP method to use for the upload. */
+    export const Method = {
+        Post: "POST",
+    } as const;
+    export type Method = (typeof Method)[keyof typeof Method];
 }

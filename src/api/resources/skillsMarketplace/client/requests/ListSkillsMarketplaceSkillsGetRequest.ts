@@ -4,11 +4,9 @@
  * @example
  *     {}
  */
-export interface ListSkillsSkillsGetRequest {
+export interface ListSkillsMarketplaceSkillsGetRequest {
     pageSize?: number;
     pageNumber?: number;
-    isPublic?: boolean | null;
-    isEnabled?: boolean | null;
     query?: string | null;
     fromDate?: string | null;
     toDate?: string | null;

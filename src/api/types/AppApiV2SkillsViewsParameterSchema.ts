@@ -5,9 +5,9 @@ import type * as BrowserUse from "../index.js";
 /**
  * Schema for a skill parameter.
  */
-export interface ParameterSchema {
+export interface AppApiV2SkillsViewsParameterSchema {
     name: string;
-    type: BrowserUse.ParameterType;
+    type: BrowserUse.AppApiV2SkillsViewsParameterType;
     required?: boolean;
     description?: string | null;
     default?: unknown | null;

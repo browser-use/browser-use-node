@@ -10,6 +10,8 @@
 export interface CreateSkillRequest {
     /** Optional title for the skill (will be generated if not provided) */
     title?: string | null;
+    /** Optional description for the skill (will be generated if not provided) */
+    description?: string | null;
     /** Goal of the skill (description of what the skill does and what the user should expect from it) */
     goal: string;
     /** Prompt for the agent to use when generating the skill automatically */

@@ -327,7 +327,8 @@ export class Browsers {
      *
      * @example
      *     await client.browsers.updateBrowserSession({
-     *         session_id: "session_id"
+     *         session_id: "session_id",
+     *         action: "stop"
      *     })
      */
     public updateBrowserSession(
@@ -359,7 +360,7 @@ export class Browsers {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: { ..._body, action: "stop" },
+            body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

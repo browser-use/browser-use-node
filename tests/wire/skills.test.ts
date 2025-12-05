@@ -24,6 +24,7 @@ describe("Skills", () => {
                     isPublic: true,
                     isOwner: true,
                     currentVersion: 1,
+                    code: "code",
                     createdAt: "createdAt",
                     updatedAt: "updatedAt",
                 },
@@ -57,6 +58,7 @@ describe("Skills", () => {
                     isPublic: true,
                     isOwner: true,
                     currentVersion: 1,
+                    code: "code",
                     createdAt: "createdAt",
                     updatedAt: "updatedAt",
                 },
@@ -165,6 +167,7 @@ describe("Skills", () => {
             isPublic: true,
             isOwner: true,
             currentVersion: 1,
+            code: "code",
             createdAt: "createdAt",
             updatedAt: "updatedAt",
         };
@@ -198,6 +201,7 @@ describe("Skills", () => {
             isPublic: true,
             isOwner: true,
             currentVersion: 1,
+            code: "code",
             createdAt: "createdAt",
             updatedAt: "updatedAt",
         });
@@ -322,6 +326,7 @@ describe("Skills", () => {
             isPublic: true,
             isOwner: true,
             currentVersion: 1,
+            code: "code",
             createdAt: "createdAt",
             updatedAt: "updatedAt",
         };
@@ -362,6 +367,7 @@ describe("Skills", () => {
             isPublic: true,
             isOwner: true,
             currentVersion: 1,
+            code: "code",
             createdAt: "createdAt",
             updatedAt: "updatedAt",
         });
@@ -428,6 +434,7 @@ describe("Skills", () => {
             isPublic: true,
             isOwner: true,
             currentVersion: 1,
+            code: "code",
             createdAt: "createdAt",
             updatedAt: "updatedAt",
         };
@@ -467,6 +474,7 @@ describe("Skills", () => {
             isPublic: true,
             isOwner: true,
             currentVersion: 1,
+            code: "code",
             createdAt: "createdAt",
             updatedAt: "updatedAt",
         });

@@ -9,6 +9,8 @@ export * from "./sessions/client/requests/index.js";
 export * as sessions from "./sessions/index.js";
 export * from "./skills/client/requests/index.js";
 export * as skills from "./skills/index.js";
+export * from "./skillsMarketplace/client/requests/index.js";
+export * as skillsMarketplace from "./skillsMarketplace/index.js";
 export * from "./tasks/client/requests/index.js";
 export * as tasks from "./tasks/index.js";
 export * from "./workflows/client/requests/index.js";

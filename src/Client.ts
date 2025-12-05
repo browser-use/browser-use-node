@@ -6,6 +6,7 @@ import { Files } from "./api/resources/files/client/Client.js";
 import { Profiles } from "./api/resources/profiles/client/Client.js";
 import { Sessions } from "./api/resources/sessions/client/Client.js";
 import { Skills } from "./api/resources/skills/client/Client.js";
+import { SkillsMarketplace } from "./api/resources/skillsMarketplace/client/Client.js";
 import { Tasks } from "./api/resources/tasks/client/Client.js";
 import { Workflows } from "./api/resources/workflows/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
@@ -27,6 +28,7 @@ export class BrowserUseClient {
     protected _profiles: Profiles | undefined;
     protected _browsers: Browsers | undefined;
     protected _skills: Skills | undefined;
+    protected _skillsMarketplace: SkillsMarketplace | undefined;
     protected _workflows: Workflows | undefined;
 
     constructor(_options: BrowserUseClient.Options) {
@@ -37,8 +39,8 @@ export class BrowserUseClient {
                 {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "browser-use-sdk",
-                    "X-Fern-SDK-Version": "2.0.10",
-                    "User-Agent": "browser-use-sdk/2.0.10",
+                    "X-Fern-SDK-Version": "2.0.11",
+                    "User-Agent": "browser-use-sdk/2.0.11",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -73,6 +75,10 @@ export class BrowserUseClient {
 
     public get skills(): Skills {
         return (this._skills ??= new Skills(this._options));
+    }
+
+    public get skillsMarketplace(): SkillsMarketplace {
+        return (this._skillsMarketplace ??= new SkillsMarketplace(this._options));
     }
 
     public get workflows(): Workflows {

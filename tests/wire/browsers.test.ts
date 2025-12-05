@@ -267,6 +267,7 @@ describe("Browsers", () => {
 
         const response = await client.browsers.updateBrowserSession({
             session_id: "session_id",
+            action: "stop",
         });
         expect(response).toEqual({
             id: "id",
@@ -296,6 +297,7 @@ describe("Browsers", () => {
         await expect(async () => {
             return await client.browsers.updateBrowserSession({
                 session_id: "session_id",
+                action: "stop",
             });
         }).rejects.toThrow(BrowserUse.NotFoundError);
     });
@@ -317,6 +319,7 @@ describe("Browsers", () => {
         await expect(async () => {
             return await client.browsers.updateBrowserSession({
                 session_id: "session_id",
+                action: "stop",
             });
         }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
     });
