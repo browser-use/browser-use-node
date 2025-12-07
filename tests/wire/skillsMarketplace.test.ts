@@ -90,7 +90,14 @@ describe("SkillsMarketplace", () => {
             title: "title",
             description: "description",
             parameters: [
-                { name: "name", type: "string", required: true, description: "description", default: { key: "value" } },
+                {
+                    name: "name",
+                    type: "string",
+                    required: true,
+                    description: "description",
+                    default: { key: "value" },
+                    cookieDomain: "cookieDomain",
+                },
             ],
             outputSchema: { key: "value" },
             currentVersion: 1,
@@ -122,6 +129,7 @@ describe("SkillsMarketplace", () => {
                     default: {
                         key: "value",
                     },
+                    cookieDomain: "cookieDomain",
                 },
             ],
             outputSchema: {
@@ -183,7 +191,14 @@ describe("SkillsMarketplace", () => {
             title: "title",
             description: "description",
             parameters: [
-                { name: "name", type: "string", required: true, description: "description", default: { key: "value" } },
+                {
+                    name: "name",
+                    type: "string",
+                    required: true,
+                    description: "description",
+                    default: { key: "value" },
+                    cookieDomain: "cookieDomain",
+                },
             ],
             outputSchema: { key: "value" },
             currentVersion: 1,
@@ -215,6 +230,7 @@ describe("SkillsMarketplace", () => {
                     default: {
                         key: "value",
                     },
+                    cookieDomain: "cookieDomain",
                 },
             ],
             outputSchema: {

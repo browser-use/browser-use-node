@@ -39,8 +39,8 @@ export class BrowserUseClient {
                 {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "browser-use-sdk",
-                    "X-Fern-SDK-Version": "2.0.11",
-                    "User-Agent": "browser-use-sdk/2.0.11",
+                    "X-Fern-SDK-Version": "2.0.12",
+                    "User-Agent": "browser-use-sdk/2.0.12",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },

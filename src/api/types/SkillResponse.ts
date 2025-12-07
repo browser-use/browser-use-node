@@ -19,7 +19,7 @@ export interface SkillResponse {
     /** Status of the skill */
     status: BrowserUse.SkillsGenerationStatus;
     /** Input parameters of the skill */
-    parameters: BrowserUse.AppApiV2SkillsViewsParameterSchema[];
+    parameters: BrowserUse.ParameterSchema[];
     /** Output schema of the skill */
     outputSchema: Record<string, unknown>;
     /** Whether the skill is enabled */
@@ -30,6 +30,10 @@ export interface SkillResponse {
     isOwner: boolean;
     /** Current version of the skill */
     currentVersion: number | null;
+    /** When the current version started generating */
+    currentVersionStartedAt?: string | null;
+    /** When the current version finished generating */
+    currentVersionFinishedAt?: string | null;
     /** Base64 encoded generated code (contact support@browser-use.com to get access) - ENTERPRISE ONLY */
     code?: string | null;
     /** Creation timestamp */

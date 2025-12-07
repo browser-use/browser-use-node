@@ -24,6 +24,8 @@ describe("Skills", () => {
                     isPublic: true,
                     isOwner: true,
                     currentVersion: 1,
+                    currentVersionStartedAt: "currentVersionStartedAt",
+                    currentVersionFinishedAt: "currentVersionFinishedAt",
                     code: "code",
                     createdAt: "createdAt",
                     updatedAt: "updatedAt",
@@ -58,6 +60,8 @@ describe("Skills", () => {
                     isPublic: true,
                     isOwner: true,
                     currentVersion: 1,
+                    currentVersionStartedAt: "currentVersionStartedAt",
+                    currentVersionFinishedAt: "currentVersionFinishedAt",
                     code: "code",
                     createdAt: "createdAt",
                     updatedAt: "updatedAt",
@@ -160,13 +164,22 @@ describe("Skills", () => {
             agentPrompt: "agentPrompt",
             status: "recording",
             parameters: [
-                { name: "name", type: "string", required: true, description: "description", default: { key: "value" } },
+                {
+                    name: "name",
+                    type: "string",
+                    required: true,
+                    description: "description",
+                    default: { key: "value" },
+                    cookieDomain: "cookieDomain",
+                },
             ],
             outputSchema: { key: "value" },
             isEnabled: true,
             isPublic: true,
             isOwner: true,
             currentVersion: 1,
+            currentVersionStartedAt: "currentVersionStartedAt",
+            currentVersionFinishedAt: "currentVersionFinishedAt",
             code: "code",
             createdAt: "createdAt",
             updatedAt: "updatedAt",
@@ -192,6 +205,7 @@ describe("Skills", () => {
                     default: {
                         key: "value",
                     },
+                    cookieDomain: "cookieDomain",
                 },
             ],
             outputSchema: {
@@ -201,6 +215,8 @@ describe("Skills", () => {
             isPublic: true,
             isOwner: true,
             currentVersion: 1,
+            currentVersionStartedAt: "currentVersionStartedAt",
+            currentVersionFinishedAt: "currentVersionFinishedAt",
             code: "code",
             createdAt: "createdAt",
             updatedAt: "updatedAt",
@@ -319,13 +335,22 @@ describe("Skills", () => {
             agentPrompt: "agentPrompt",
             status: "recording",
             parameters: [
-                { name: "name", type: "string", required: true, description: "description", default: { key: "value" } },
+                {
+                    name: "name",
+                    type: "string",
+                    required: true,
+                    description: "description",
+                    default: { key: "value" },
+                    cookieDomain: "cookieDomain",
+                },
             ],
             outputSchema: { key: "value" },
             isEnabled: true,
             isPublic: true,
             isOwner: true,
             currentVersion: 1,
+            currentVersionStartedAt: "currentVersionStartedAt",
+            currentVersionFinishedAt: "currentVersionFinishedAt",
             code: "code",
             createdAt: "createdAt",
             updatedAt: "updatedAt",
@@ -358,6 +383,7 @@ describe("Skills", () => {
                     default: {
                         key: "value",
                     },
+                    cookieDomain: "cookieDomain",
                 },
             ],
             outputSchema: {
@@ -367,6 +393,8 @@ describe("Skills", () => {
             isPublic: true,
             isOwner: true,
             currentVersion: 1,
+            currentVersionStartedAt: "currentVersionStartedAt",
+            currentVersionFinishedAt: "currentVersionFinishedAt",
             code: "code",
             createdAt: "createdAt",
             updatedAt: "updatedAt",
@@ -427,20 +455,29 @@ describe("Skills", () => {
             agentPrompt: "agentPrompt",
             status: "recording",
             parameters: [
-                { name: "name", type: "string", required: true, description: "description", default: { key: "value" } },
+                {
+                    name: "name",
+                    type: "string",
+                    required: true,
+                    description: "description",
+                    default: { key: "value" },
+                    cookieDomain: "cookieDomain",
+                },
             ],
             outputSchema: { key: "value" },
             isEnabled: true,
             isPublic: true,
             isOwner: true,
             currentVersion: 1,
+            currentVersionStartedAt: "currentVersionStartedAt",
+            currentVersionFinishedAt: "currentVersionFinishedAt",
             code: "code",
             createdAt: "createdAt",
             updatedAt: "updatedAt",
         };
         server
             .mockEndpoint()
-            .post("/skills/skill_id/cancel-generation")
+            .post("/skills/skill_id/cancel")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -465,6 +502,7 @@ describe("Skills", () => {
                     default: {
                         key: "value",
                     },
+                    cookieDomain: "cookieDomain",
                 },
             ],
             outputSchema: {
@@ -474,6 +512,8 @@ describe("Skills", () => {
             isPublic: true,
             isOwner: true,
             currentVersion: 1,
+            currentVersionStartedAt: "currentVersionStartedAt",
+            currentVersionFinishedAt: "currentVersionFinishedAt",
             code: "code",
             createdAt: "createdAt",
             updatedAt: "updatedAt",
@@ -487,7 +527,7 @@ describe("Skills", () => {
         const rawResponseBody = { key: "value" };
         server
             .mockEndpoint()
-            .post("/skills/skill_id/cancel-generation")
+            .post("/skills/skill_id/cancel")
             .respondWith()
             .statusCode(400)
             .jsonBody(rawResponseBody)
@@ -507,7 +547,7 @@ describe("Skills", () => {
         const rawResponseBody = { key: "value" };
         server
             .mockEndpoint()
-            .post("/skills/skill_id/cancel-generation")
+            .post("/skills/skill_id/cancel")
             .respondWith()
             .statusCode(404)
             .jsonBody(rawResponseBody)
@@ -527,7 +567,7 @@ describe("Skills", () => {
         const rawResponseBody = { key: "value" };
         server
             .mockEndpoint()
-            .post("/skills/skill_id/cancel-generation")
+            .post("/skills/skill_id/cancel")
             .respondWith()
             .statusCode(422)
             .jsonBody(rawResponseBody)
@@ -535,6 +575,143 @@ describe("Skills", () => {
 
         await expect(async () => {
             return await client.skills.cancelGeneration({
+                skill_id: "skill_id",
+            });
+        }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
+    });
+
+    test("rollbackSkill (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            id: "id",
+            title: "title",
+            description: "description",
+            goal: "goal",
+            agentPrompt: "agentPrompt",
+            status: "recording",
+            parameters: [
+                {
+                    name: "name",
+                    type: "string",
+                    required: true,
+                    description: "description",
+                    default: { key: "value" },
+                    cookieDomain: "cookieDomain",
+                },
+            ],
+            outputSchema: { key: "value" },
+            isEnabled: true,
+            isPublic: true,
+            isOwner: true,
+            currentVersion: 1,
+            currentVersionStartedAt: "currentVersionStartedAt",
+            currentVersionFinishedAt: "currentVersionFinishedAt",
+            code: "code",
+            createdAt: "createdAt",
+            updatedAt: "updatedAt",
+        };
+        server
+            .mockEndpoint()
+            .post("/skills/skill_id/rollback")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.skills.rollbackSkill({
+            skill_id: "skill_id",
+        });
+        expect(response).toEqual({
+            id: "id",
+            title: "title",
+            description: "description",
+            goal: "goal",
+            agentPrompt: "agentPrompt",
+            status: "recording",
+            parameters: [
+                {
+                    name: "name",
+                    type: "string",
+                    required: true,
+                    description: "description",
+                    default: {
+                        key: "value",
+                    },
+                    cookieDomain: "cookieDomain",
+                },
+            ],
+            outputSchema: {
+                key: "value",
+            },
+            isEnabled: true,
+            isPublic: true,
+            isOwner: true,
+            currentVersion: 1,
+            currentVersionStartedAt: "currentVersionStartedAt",
+            currentVersionFinishedAt: "currentVersionFinishedAt",
+            code: "code",
+            createdAt: "createdAt",
+            updatedAt: "updatedAt",
+        });
+    });
+
+    test("rollbackSkill (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/skills/skill_id/rollback")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skills.rollbackSkill({
+                skill_id: "skill_id",
+            });
+        }).rejects.toThrow(BrowserUse.BadRequestError);
+    });
+
+    test("rollbackSkill (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/skills/skill_id/rollback")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skills.rollbackSkill({
+                skill_id: "skill_id",
+            });
+        }).rejects.toThrow(BrowserUse.NotFoundError);
+    });
+
+    test("rollbackSkill (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/skills/skill_id/rollback")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skills.rollbackSkill({
                 skill_id: "skill_id",
             });
         }).rejects.toThrow(BrowserUse.UnprocessableEntityError);

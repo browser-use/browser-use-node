@@ -13,7 +13,7 @@ export interface MarketplaceSkillResponse {
     /** Description of the skill (shows up in the public view) */
     description: string;
     /** Input parameters of the skill */
-    parameters: BrowserUse.AppApiV2MarketplaceSkillsViewsParameterSchema[];
+    parameters: BrowserUse.ParameterSchema[];
     /** Output schema of the skill */
     outputSchema: Record<string, unknown>;
     /** Current version of the skill */

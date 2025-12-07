@@ -6,6 +6,6 @@
  *         skill_id: "skill_id"
  *     }
  */
-export interface CancelGenerationSkillsSkillIdCancelGenerationPostRequest {
+export interface CancelGenerationSkillsSkillIdCancelPostRequest {
     skill_id: string;
 }

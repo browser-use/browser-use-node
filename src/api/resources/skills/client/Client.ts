@@ -486,7 +486,7 @@ export class Skills {
     /**
      * Cancel the current in-progress generation for a skill.
      *
-     * @param {BrowserUse.CancelGenerationSkillsSkillIdCancelGenerationPostRequest} request
+     * @param {BrowserUse.CancelGenerationSkillsSkillIdCancelPostRequest} request
      * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.BadRequestError}
@@ -499,14 +499,14 @@ export class Skills {
      *     })
      */
     public cancelGeneration(
-        request: BrowserUse.CancelGenerationSkillsSkillIdCancelGenerationPostRequest,
+        request: BrowserUse.CancelGenerationSkillsSkillIdCancelPostRequest,
         requestOptions?: Skills.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.SkillResponse> {
         return core.HttpResponsePromise.fromPromise(this.__cancelGeneration(request, requestOptions));
     }
 
     private async __cancelGeneration(
-        request: BrowserUse.CancelGenerationSkillsSkillIdCancelGenerationPostRequest,
+        request: BrowserUse.CancelGenerationSkillsSkillIdCancelPostRequest,
         requestOptions?: Skills.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.SkillResponse>> {
         const { skill_id: skillId } = request;
@@ -520,7 +520,7 @@ export class Skills {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.BrowserUseEnvironment.Production,
-                `skills/${core.url.encodePathParam(skillId)}/cancel-generation`,
+                `skills/${core.url.encodePathParam(skillId)}/cancel`,
             ),
             method: "POST",
             headers: _headers,
@@ -564,7 +564,98 @@ export class Skills {
                 });
             case "timeout":
                 throw new errors.BrowserUseTimeoutError(
-                    "Timeout exceeded when calling POST /skills/{skill_id}/cancel-generation.",
+                    "Timeout exceeded when calling POST /skills/{skill_id}/cancel.",
+                );
+            case "unknown":
+                throw new errors.BrowserUseError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Rollback to the previous version (cannot be undone).
+     *
+     * @param {BrowserUse.RollbackSkillSkillsSkillIdRollbackPostRequest} request
+     * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link BrowserUse.BadRequestError}
+     * @throws {@link BrowserUse.NotFoundError}
+     * @throws {@link BrowserUse.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.skills.rollbackSkill({
+     *         skill_id: "skill_id"
+     *     })
+     */
+    public rollbackSkill(
+        request: BrowserUse.RollbackSkillSkillsSkillIdRollbackPostRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.SkillResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__rollbackSkill(request, requestOptions));
+    }
+
+    private async __rollbackSkill(
+        request: BrowserUse.RollbackSkillSkillsSkillIdRollbackPostRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.SkillResponse>> {
+        const { skill_id: skillId } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
+                `skills/${core.url.encodePathParam(skillId)}/rollback`,
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as BrowserUse.SkillResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new BrowserUse.BadRequestError(_response.error.body as unknown, _response.rawResponse);
+                case 404:
+                    throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 422:
+                    throw new BrowserUse.UnprocessableEntityError(
+                        _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.BrowserUseError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.BrowserUseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.BrowserUseTimeoutError(
+                    "Timeout exceeded when calling POST /skills/{skill_id}/rollback.",
                 );
             case "unknown":
                 throw new errors.BrowserUseError({

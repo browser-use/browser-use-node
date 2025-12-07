@@ -2077,7 +2077,72 @@ await client.skills.cancelGeneration({
 <dl>
 <dd>
 
-**request:** `BrowserUse.CancelGenerationSkillsSkillIdCancelGenerationPostRequest` 
+**request:** `BrowserUse.CancelGenerationSkillsSkillIdCancelPostRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Skills.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.skills.<a href="/src/api/resources/skills/client/Client.ts">rollbackSkill</a>({ ...params }) -> BrowserUse.SkillResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rollback to the previous version (cannot be undone).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skills.rollbackSkill({
+    skill_id: "skill_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.RollbackSkillSkillsSkillIdRollbackPostRequest` 
     
 </dd>
 </dl>
