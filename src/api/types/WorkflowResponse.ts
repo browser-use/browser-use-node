@@ -30,6 +30,8 @@ export interface WorkflowResponse {
     generationStatus?: BrowserUse.WorkflowGenerationStatus;
     /** Error message if generation failed */
     generationError?: string | null;
+    /** Generation metadata including progress_step */
+    generationMetadata?: Record<string, unknown> | null;
     /** Input schema from workflow YAML defining required/optional variables */
     inputSchema?: Record<string, unknown>[] | null;
     /** Pre-filled input template based on input_schema for easy execution */

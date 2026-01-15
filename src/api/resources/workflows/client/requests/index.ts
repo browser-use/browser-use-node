@@ -9,6 +9,7 @@ export type { GetWorkflowWorkflowsWorkflowIdGetRequest } from "./GetWorkflowWork
 export type { ListAllExecutionsWorkflowsExecutionsGetRequest } from "./ListAllExecutionsWorkflowsExecutionsGetRequest.js";
 export type { ListWorkflowExecutionsWorkflowsWorkflowIdExecutionsGetRequest } from "./ListWorkflowExecutionsWorkflowsWorkflowIdExecutionsGetRequest.js";
 export type { ListWorkflowsWorkflowsGetRequest } from "./ListWorkflowsWorkflowsGetRequest.js";
+export type { WorkflowCreateFromTaskRequest } from "./WorkflowCreateFromTaskRequest.js";
 export type { WorkflowCreateRequest } from "./WorkflowCreateRequest.js";
 export type { WorkflowExecuteRequest } from "./WorkflowExecuteRequest.js";
 export type { WorkflowGenerateRequest } from "./WorkflowGenerateRequest.js";

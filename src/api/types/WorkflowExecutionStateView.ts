@@ -28,4 +28,8 @@ export interface WorkflowExecutionStateView {
     createdAt: string;
     /** Live browser view URL (available during and up to 60s after execution) */
     liveUrl?: string | null;
+    /** AI-generated summary of the execution result */
+    aiSummary?: string | null;
+    /** AI's determination of whether execution succeeded */
+    aiSuccess?: boolean | null;
 }

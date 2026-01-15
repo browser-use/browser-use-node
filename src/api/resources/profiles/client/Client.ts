@@ -16,7 +16,7 @@ export declare namespace Profiles {
 export class Profiles {
     protected readonly _options: Profiles.Options;
 
-    constructor(_options: Profiles.Options) {
+    constructor(_options: Profiles.Options = {}) {
         this._options = _options;
     }
 

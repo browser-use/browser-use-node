@@ -8,10 +8,16 @@ import type * as BrowserUse from "../index.js";
 export interface MarketplaceSkillResponse {
     /** Unique identifier for the skill */
     id: string;
+    /** URL-friendly slug for the skill */
+    slug: string;
     /** Title of the skill (shows up in the public view) */
     title: string;
     /** Description of the skill (shows up in the public view) */
     description: string;
+    /** Categories of the skill */
+    categories: BrowserUse.SkillCategory[];
+    /** Domains/websites this skill interacts with */
+    domains: string[];
     /** Input parameters of the skill */
     parameters: BrowserUse.ParameterSchema[];
     /** Output schema of the skill */
@@ -20,6 +26,14 @@ export interface MarketplaceSkillResponse {
     currentVersion: number | null;
     /** Whether the skill is official (verified by Browser Use) */
     isOfficial: boolean;
+    /** Number of times this skill has been cloned */
+    cloneCount: number;
+    /** URL of the custom skill icon */
+    iconUrl?: string | null;
+    /** When the skill was first published */
+    firstPublishedAt: string;
+    /** When the skill was last published */
+    lastPublishedAt: string;
     /** Creation timestamp */
     createdAt: string;
     /** Last update timestamp */

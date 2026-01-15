@@ -13,8 +13,11 @@ describe("Skills", () => {
             items: [
                 {
                     id: "id",
+                    slug: "slug",
                     title: "title",
                     description: "description",
+                    categories: ["search"],
+                    domains: ["domains"],
                     goal: "goal",
                     agentPrompt: "agentPrompt",
                     status: "recording",
@@ -22,13 +25,16 @@ describe("Skills", () => {
                     outputSchema: { key: "value" },
                     isEnabled: true,
                     isPublic: true,
-                    isOwner: true,
+                    iconUrl: "iconUrl",
+                    firstPublishedAt: "2024-01-15T09:30:00Z",
+                    lastPublishedAt: "2024-01-15T09:30:00Z",
                     currentVersion: 1,
-                    currentVersionStartedAt: "currentVersionStartedAt",
-                    currentVersionFinishedAt: "currentVersionFinishedAt",
+                    currentVersionStartedAt: "2024-01-15T09:30:00Z",
+                    currentVersionFinishedAt: "2024-01-15T09:30:00Z",
                     code: "code",
-                    createdAt: "createdAt",
-                    updatedAt: "updatedAt",
+                    clonedFromSkillId: "clonedFromSkillId",
+                    createdAt: "2024-01-15T09:30:00Z",
+                    updatedAt: "2024-01-15T09:30:00Z",
                 },
             ],
             totalItems: 1,
@@ -42,8 +48,11 @@ describe("Skills", () => {
             items: [
                 {
                     id: "id",
+                    slug: "slug",
                     title: "title",
                     description: "description",
+                    categories: ["search"],
+                    domains: ["domains"],
                     goal: "goal",
                     agentPrompt: "agentPrompt",
                     status: "recording",
@@ -58,13 +67,16 @@ describe("Skills", () => {
                     },
                     isEnabled: true,
                     isPublic: true,
-                    isOwner: true,
+                    iconUrl: "iconUrl",
+                    firstPublishedAt: "2024-01-15T09:30:00Z",
+                    lastPublishedAt: "2024-01-15T09:30:00Z",
                     currentVersion: 1,
-                    currentVersionStartedAt: "currentVersionStartedAt",
-                    currentVersionFinishedAt: "currentVersionFinishedAt",
+                    currentVersionStartedAt: "2024-01-15T09:30:00Z",
+                    currentVersionFinishedAt: "2024-01-15T09:30:00Z",
                     code: "code",
-                    createdAt: "createdAt",
-                    updatedAt: "updatedAt",
+                    clonedFromSkillId: "clonedFromSkillId",
+                    createdAt: "2024-01-15T09:30:00Z",
+                    updatedAt: "2024-01-15T09:30:00Z",
                 },
             ],
             totalItems: 1,
@@ -158,8 +170,11 @@ describe("Skills", () => {
 
         const rawResponseBody = {
             id: "id",
+            slug: "slug",
             title: "title",
             description: "description",
+            categories: ["search"],
+            domains: ["domains"],
             goal: "goal",
             agentPrompt: "agentPrompt",
             status: "recording",
@@ -176,13 +191,16 @@ describe("Skills", () => {
             outputSchema: { key: "value" },
             isEnabled: true,
             isPublic: true,
-            isOwner: true,
+            iconUrl: "iconUrl",
+            firstPublishedAt: "2024-01-15T09:30:00Z",
+            lastPublishedAt: "2024-01-15T09:30:00Z",
             currentVersion: 1,
-            currentVersionStartedAt: "currentVersionStartedAt",
-            currentVersionFinishedAt: "currentVersionFinishedAt",
+            currentVersionStartedAt: "2024-01-15T09:30:00Z",
+            currentVersionFinishedAt: "2024-01-15T09:30:00Z",
             code: "code",
-            createdAt: "createdAt",
-            updatedAt: "updatedAt",
+            clonedFromSkillId: "clonedFromSkillId",
+            createdAt: "2024-01-15T09:30:00Z",
+            updatedAt: "2024-01-15T09:30:00Z",
         };
         server.mockEndpoint().get("/skills/skill_id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
@@ -191,8 +209,11 @@ describe("Skills", () => {
         });
         expect(response).toEqual({
             id: "id",
+            slug: "slug",
             title: "title",
             description: "description",
+            categories: ["search"],
+            domains: ["domains"],
             goal: "goal",
             agentPrompt: "agentPrompt",
             status: "recording",
@@ -213,13 +234,16 @@ describe("Skills", () => {
             },
             isEnabled: true,
             isPublic: true,
-            isOwner: true,
+            iconUrl: "iconUrl",
+            firstPublishedAt: "2024-01-15T09:30:00Z",
+            lastPublishedAt: "2024-01-15T09:30:00Z",
             currentVersion: 1,
-            currentVersionStartedAt: "currentVersionStartedAt",
-            currentVersionFinishedAt: "currentVersionFinishedAt",
+            currentVersionStartedAt: "2024-01-15T09:30:00Z",
+            currentVersionFinishedAt: "2024-01-15T09:30:00Z",
             code: "code",
-            createdAt: "createdAt",
-            updatedAt: "updatedAt",
+            clonedFromSkillId: "clonedFromSkillId",
+            createdAt: "2024-01-15T09:30:00Z",
+            updatedAt: "2024-01-15T09:30:00Z",
         });
     });
 
@@ -329,8 +353,11 @@ describe("Skills", () => {
         const rawRequestBody = {};
         const rawResponseBody = {
             id: "id",
+            slug: "slug",
             title: "title",
             description: "description",
+            categories: ["search"],
+            domains: ["domains"],
             goal: "goal",
             agentPrompt: "agentPrompt",
             status: "recording",
@@ -347,13 +374,16 @@ describe("Skills", () => {
             outputSchema: { key: "value" },
             isEnabled: true,
             isPublic: true,
-            isOwner: true,
+            iconUrl: "iconUrl",
+            firstPublishedAt: "2024-01-15T09:30:00Z",
+            lastPublishedAt: "2024-01-15T09:30:00Z",
             currentVersion: 1,
-            currentVersionStartedAt: "currentVersionStartedAt",
-            currentVersionFinishedAt: "currentVersionFinishedAt",
+            currentVersionStartedAt: "2024-01-15T09:30:00Z",
+            currentVersionFinishedAt: "2024-01-15T09:30:00Z",
             code: "code",
-            createdAt: "createdAt",
-            updatedAt: "updatedAt",
+            clonedFromSkillId: "clonedFromSkillId",
+            createdAt: "2024-01-15T09:30:00Z",
+            updatedAt: "2024-01-15T09:30:00Z",
         };
         server
             .mockEndpoint()
@@ -369,8 +399,11 @@ describe("Skills", () => {
         });
         expect(response).toEqual({
             id: "id",
+            slug: "slug",
             title: "title",
             description: "description",
+            categories: ["search"],
+            domains: ["domains"],
             goal: "goal",
             agentPrompt: "agentPrompt",
             status: "recording",
@@ -391,17 +424,41 @@ describe("Skills", () => {
             },
             isEnabled: true,
             isPublic: true,
-            isOwner: true,
+            iconUrl: "iconUrl",
+            firstPublishedAt: "2024-01-15T09:30:00Z",
+            lastPublishedAt: "2024-01-15T09:30:00Z",
             currentVersion: 1,
-            currentVersionStartedAt: "currentVersionStartedAt",
-            currentVersionFinishedAt: "currentVersionFinishedAt",
+            currentVersionStartedAt: "2024-01-15T09:30:00Z",
+            currentVersionFinishedAt: "2024-01-15T09:30:00Z",
             code: "code",
-            createdAt: "createdAt",
-            updatedAt: "updatedAt",
+            clonedFromSkillId: "clonedFromSkillId",
+            createdAt: "2024-01-15T09:30:00Z",
+            updatedAt: "2024-01-15T09:30:00Z",
         });
     });
 
     test("updateSkill (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .patch("/skills/skill_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skills.updateSkill({
+                skill_id: "skill_id",
+            });
+        }).rejects.toThrow(BrowserUse.ForbiddenError);
+    });
+
+    test("updateSkill (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
         const rawRequestBody = {};
@@ -422,7 +479,7 @@ describe("Skills", () => {
         }).rejects.toThrow(BrowserUse.NotFoundError);
     });
 
-    test("updateSkill (3)", async () => {
+    test("updateSkill (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
         const rawRequestBody = {};
@@ -449,8 +506,11 @@ describe("Skills", () => {
 
         const rawResponseBody = {
             id: "id",
+            slug: "slug",
             title: "title",
             description: "description",
+            categories: ["search"],
+            domains: ["domains"],
             goal: "goal",
             agentPrompt: "agentPrompt",
             status: "recording",
@@ -467,13 +527,16 @@ describe("Skills", () => {
             outputSchema: { key: "value" },
             isEnabled: true,
             isPublic: true,
-            isOwner: true,
+            iconUrl: "iconUrl",
+            firstPublishedAt: "2024-01-15T09:30:00Z",
+            lastPublishedAt: "2024-01-15T09:30:00Z",
             currentVersion: 1,
-            currentVersionStartedAt: "currentVersionStartedAt",
-            currentVersionFinishedAt: "currentVersionFinishedAt",
+            currentVersionStartedAt: "2024-01-15T09:30:00Z",
+            currentVersionFinishedAt: "2024-01-15T09:30:00Z",
             code: "code",
-            createdAt: "createdAt",
-            updatedAt: "updatedAt",
+            clonedFromSkillId: "clonedFromSkillId",
+            createdAt: "2024-01-15T09:30:00Z",
+            updatedAt: "2024-01-15T09:30:00Z",
         };
         server
             .mockEndpoint()
@@ -488,8 +551,11 @@ describe("Skills", () => {
         });
         expect(response).toEqual({
             id: "id",
+            slug: "slug",
             title: "title",
             description: "description",
+            categories: ["search"],
+            domains: ["domains"],
             goal: "goal",
             agentPrompt: "agentPrompt",
             status: "recording",
@@ -510,13 +576,16 @@ describe("Skills", () => {
             },
             isEnabled: true,
             isPublic: true,
-            isOwner: true,
+            iconUrl: "iconUrl",
+            firstPublishedAt: "2024-01-15T09:30:00Z",
+            lastPublishedAt: "2024-01-15T09:30:00Z",
             currentVersion: 1,
-            currentVersionStartedAt: "currentVersionStartedAt",
-            currentVersionFinishedAt: "currentVersionFinishedAt",
+            currentVersionStartedAt: "2024-01-15T09:30:00Z",
+            currentVersionFinishedAt: "2024-01-15T09:30:00Z",
             code: "code",
-            createdAt: "createdAt",
-            updatedAt: "updatedAt",
+            clonedFromSkillId: "clonedFromSkillId",
+            createdAt: "2024-01-15T09:30:00Z",
+            updatedAt: "2024-01-15T09:30:00Z",
         });
     });
 
@@ -586,8 +655,11 @@ describe("Skills", () => {
 
         const rawResponseBody = {
             id: "id",
+            slug: "slug",
             title: "title",
             description: "description",
+            categories: ["search"],
+            domains: ["domains"],
             goal: "goal",
             agentPrompt: "agentPrompt",
             status: "recording",
@@ -604,13 +676,16 @@ describe("Skills", () => {
             outputSchema: { key: "value" },
             isEnabled: true,
             isPublic: true,
-            isOwner: true,
+            iconUrl: "iconUrl",
+            firstPublishedAt: "2024-01-15T09:30:00Z",
+            lastPublishedAt: "2024-01-15T09:30:00Z",
             currentVersion: 1,
-            currentVersionStartedAt: "currentVersionStartedAt",
-            currentVersionFinishedAt: "currentVersionFinishedAt",
+            currentVersionStartedAt: "2024-01-15T09:30:00Z",
+            currentVersionFinishedAt: "2024-01-15T09:30:00Z",
             code: "code",
-            createdAt: "createdAt",
-            updatedAt: "updatedAt",
+            clonedFromSkillId: "clonedFromSkillId",
+            createdAt: "2024-01-15T09:30:00Z",
+            updatedAt: "2024-01-15T09:30:00Z",
         };
         server
             .mockEndpoint()
@@ -625,8 +700,11 @@ describe("Skills", () => {
         });
         expect(response).toEqual({
             id: "id",
+            slug: "slug",
             title: "title",
             description: "description",
+            categories: ["search"],
+            domains: ["domains"],
             goal: "goal",
             agentPrompt: "agentPrompt",
             status: "recording",
@@ -647,13 +725,16 @@ describe("Skills", () => {
             },
             isEnabled: true,
             isPublic: true,
-            isOwner: true,
+            iconUrl: "iconUrl",
+            firstPublishedAt: "2024-01-15T09:30:00Z",
+            lastPublishedAt: "2024-01-15T09:30:00Z",
             currentVersion: 1,
-            currentVersionStartedAt: "currentVersionStartedAt",
-            currentVersionFinishedAt: "currentVersionFinishedAt",
+            currentVersionStartedAt: "2024-01-15T09:30:00Z",
+            currentVersionFinishedAt: "2024-01-15T09:30:00Z",
             code: "code",
-            createdAt: "createdAt",
-            updatedAt: "updatedAt",
+            clonedFromSkillId: "clonedFromSkillId",
+            createdAt: "2024-01-15T09:30:00Z",
+            updatedAt: "2024-01-15T09:30:00Z",
         });
     });
 
@@ -739,6 +820,7 @@ describe("Skills", () => {
 
         const response = await client.skills.executeSkill({
             skill_id: "skill_id",
+            body: {},
         });
         expect(response).toEqual({
             success: true,
@@ -768,6 +850,7 @@ describe("Skills", () => {
         await expect(async () => {
             return await client.skills.executeSkill({
                 skill_id: "skill_id",
+                body: {},
             });
         }).rejects.toThrow(BrowserUse.BadRequestError);
     });
@@ -789,6 +872,7 @@ describe("Skills", () => {
         await expect(async () => {
             return await client.skills.executeSkill({
                 skill_id: "skill_id",
+                body: {},
             });
         }).rejects.toThrow(BrowserUse.PaymentRequiredError);
     });
@@ -810,6 +894,7 @@ describe("Skills", () => {
         await expect(async () => {
             return await client.skills.executeSkill({
                 skill_id: "skill_id",
+                body: {},
             });
         }).rejects.toThrow(BrowserUse.NotFoundError);
     });
@@ -831,6 +916,7 @@ describe("Skills", () => {
         await expect(async () => {
             return await client.skills.executeSkill({
                 skill_id: "skill_id",
+                body: {},
             });
         }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
     });

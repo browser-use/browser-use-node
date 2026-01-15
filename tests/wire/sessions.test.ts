@@ -17,6 +17,7 @@ describe("Sessions", () => {
                     liveUrl: "liveUrl",
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
+                    persistMemory: true,
                 },
             ],
             totalItems: 1,
@@ -34,6 +35,7 @@ describe("Sessions", () => {
                     liveUrl: "liveUrl",
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
+                    persistMemory: true,
                 },
             ],
             totalItems: 1,
@@ -64,6 +66,7 @@ describe("Sessions", () => {
             liveUrl: "liveUrl",
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
+            persistMemory: true,
         };
         server
             .mockEndpoint()
@@ -81,6 +84,7 @@ describe("Sessions", () => {
             liveUrl: "liveUrl",
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
+            persistMemory: true,
         });
     });
 
@@ -170,6 +174,7 @@ describe("Sessions", () => {
                 },
             ],
             publicShareUrl: "publicShareUrl",
+            persistMemory: true,
         };
         server
             .mockEndpoint()
@@ -209,6 +214,7 @@ describe("Sessions", () => {
                 },
             ],
             publicShareUrl: "publicShareUrl",
+            persistMemory: true,
         });
     });
 
@@ -333,6 +339,7 @@ describe("Sessions", () => {
                 },
             ],
             publicShareUrl: "publicShareUrl",
+            persistMemory: true,
         };
         server
             .mockEndpoint()
@@ -374,6 +381,7 @@ describe("Sessions", () => {
                 },
             ],
             publicShareUrl: "publicShareUrl",
+            persistMemory: true,
         });
     });
 

@@ -16,7 +16,7 @@ export declare namespace SkillsMarketplace {
 export class SkillsMarketplace {
     protected readonly _options: SkillsMarketplace.Options;
 
-    constructor(_options: SkillsMarketplace.Options) {
+    constructor(_options: SkillsMarketplace.Options = {}) {
         this._options = _options;
     }
 
@@ -42,7 +42,7 @@ export class SkillsMarketplace {
         request: BrowserUse.ListSkillsMarketplaceSkillsGetRequest = {},
         requestOptions?: SkillsMarketplace.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.MarketplaceSkillListResponse>> {
-        const { pageSize, pageNumber, query, fromDate, toDate } = request;
+        const { pageSize, pageNumber, query, category, fromDate, toDate } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (pageSize != null) {
             _queryParams.pageSize = pageSize.toString();
@@ -54,6 +54,10 @@ export class SkillsMarketplace {
 
         if (query !== undefined) {
             _queryParams.query = query;
+        }
+
+        if (category !== undefined) {
+            _queryParams.category = category;
         }
 
         if (fromDate !== undefined) {
@@ -128,7 +132,7 @@ export class SkillsMarketplace {
     /**
      * Get details of a specific public skill from the marketplace.
      *
-     * @param {BrowserUse.GetSkillMarketplaceSkillsSkillIdGetRequest} request
+     * @param {BrowserUse.GetSkillMarketplaceSkillsSkillSlugGetRequest} request
      * @param {SkillsMarketplace.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.NotFoundError}
@@ -136,21 +140,21 @@ export class SkillsMarketplace {
      *
      * @example
      *     await client.skillsMarketplace.getSkill({
-     *         skill_id: "skill_id"
+     *         skill_slug: "skill_slug"
      *     })
      */
     public getSkill(
-        request: BrowserUse.GetSkillMarketplaceSkillsSkillIdGetRequest,
+        request: BrowserUse.GetSkillMarketplaceSkillsSkillSlugGetRequest,
         requestOptions?: SkillsMarketplace.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.MarketplaceSkillResponse> {
         return core.HttpResponsePromise.fromPromise(this.__getSkill(request, requestOptions));
     }
 
     private async __getSkill(
-        request: BrowserUse.GetSkillMarketplaceSkillsSkillIdGetRequest,
+        request: BrowserUse.GetSkillMarketplaceSkillsSkillSlugGetRequest,
         requestOptions?: SkillsMarketplace.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.MarketplaceSkillResponse>> {
-        const { skill_id: skillId } = request;
+        const { skill_slug: skillSlug } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
@@ -161,7 +165,7 @@ export class SkillsMarketplace {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.BrowserUseEnvironment.Production,
-                `marketplace/skills/${core.url.encodePathParam(skillId)}`,
+                `marketplace/skills/${core.url.encodePathParam(skillSlug)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -203,7 +207,7 @@ export class SkillsMarketplace {
                 });
             case "timeout":
                 throw new errors.BrowserUseTimeoutError(
-                    "Timeout exceeded when calling GET /marketplace/skills/{skill_id}.",
+                    "Timeout exceeded when calling GET /marketplace/skills/{skill_slug}.",
                 );
             case "unknown":
                 throw new errors.BrowserUseError({
@@ -231,14 +235,14 @@ export class SkillsMarketplace {
     public cloneSkill(
         request: BrowserUse.CloneSkillMarketplaceSkillsSkillIdClonePostRequest,
         requestOptions?: SkillsMarketplace.RequestOptions,
-    ): core.HttpResponsePromise<BrowserUse.MarketplaceSkillResponse> {
+    ): core.HttpResponsePromise<BrowserUse.SkillResponse> {
         return core.HttpResponsePromise.fromPromise(this.__cloneSkill(request, requestOptions));
     }
 
     private async __cloneSkill(
         request: BrowserUse.CloneSkillMarketplaceSkillsSkillIdClonePostRequest,
         requestOptions?: SkillsMarketplace.RequestOptions,
-    ): Promise<core.WithRawResponse<BrowserUse.MarketplaceSkillResponse>> {
+    ): Promise<core.WithRawResponse<BrowserUse.SkillResponse>> {
         const { skill_id: skillId } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -262,7 +266,7 @@ export class SkillsMarketplace {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as BrowserUse.MarketplaceSkillResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as BrowserUse.SkillResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -295,6 +299,104 @@ export class SkillsMarketplace {
             case "timeout":
                 throw new errors.BrowserUseTimeoutError(
                     "Timeout exceeded when calling POST /marketplace/skills/{skill_id}/clone.",
+                );
+            case "unknown":
+                throw new errors.BrowserUseError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Execute a skill with the provided parameters.
+     *
+     * @param {BrowserUse.ExecuteSkillMarketplaceSkillsSkillIdExecutePostRequest} request
+     * @param {SkillsMarketplace.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link BrowserUse.BadRequestError}
+     * @throws {@link BrowserUse.PaymentRequiredError}
+     * @throws {@link BrowserUse.NotFoundError}
+     * @throws {@link BrowserUse.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.skillsMarketplace.executeSkill({
+     *         skill_id: "skill_id",
+     *         body: {}
+     *     })
+     */
+    public executeSkill(
+        request: BrowserUse.ExecuteSkillMarketplaceSkillsSkillIdExecutePostRequest,
+        requestOptions?: SkillsMarketplace.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.ExecuteSkillResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__executeSkill(request, requestOptions));
+    }
+
+    private async __executeSkill(
+        request: BrowserUse.ExecuteSkillMarketplaceSkillsSkillIdExecutePostRequest,
+        requestOptions?: SkillsMarketplace.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.ExecuteSkillResponse>> {
+        const { skill_id: skillId, body: _body } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
+                `marketplace/skills/${core.url.encodePathParam(skillId)}/execute`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: _body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as BrowserUse.ExecuteSkillResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new BrowserUse.BadRequestError(_response.error.body as unknown, _response.rawResponse);
+                case 402:
+                    throw new BrowserUse.PaymentRequiredError(_response.error.body as unknown, _response.rawResponse);
+                case 404:
+                    throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 422:
+                    throw new BrowserUse.UnprocessableEntityError(
+                        _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.BrowserUseError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.BrowserUseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.BrowserUseTimeoutError(
+                    "Timeout exceeded when calling POST /marketplace/skills/{skill_id}/execute.",
                 );
             case "unknown":
                 throw new errors.BrowserUseError({

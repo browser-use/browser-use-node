@@ -36,6 +36,10 @@ export interface WorkflowExecutionResponse {
     executionMetadata?: Record<string, unknown> | null;
     /** Presigned URL to download execution logs */
     logsDownloadUrl?: string | null;
+    /** AI-generated summary of the execution result */
+    aiSummary?: string | null;
+    /** AI's determination of whether execution succeeded */
+    aiSuccess?: boolean | null;
     /** Naive UTC timestamp when execution was created */
     createdAt: string;
 }

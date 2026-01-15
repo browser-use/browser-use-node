@@ -31,7 +31,7 @@ export class BrowserUseClient {
     protected _skillsMarketplace: SkillsMarketplace | undefined;
     protected _workflows: Workflows | undefined;
 
-    constructor(_options: BrowserUseClient.Options) {
+    constructor(_options: BrowserUseClient.Options = {}) {
         this._options = {
             ..._options,
             logging: core.logging.createLogger(_options?.logging),
@@ -39,8 +39,8 @@ export class BrowserUseClient {
                 {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "browser-use-sdk",
-                    "X-Fern-SDK-Version": "2.0.12",
-                    "User-Agent": "browser-use-sdk/2.0.12",
+                    "X-Fern-SDK-Version": "2.0.13",
+                    "User-Agent": "browser-use-sdk/2.0.13",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },

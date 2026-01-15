@@ -3,17 +3,17 @@
 import type * as BrowserUse from "../index.js";
 
 /**
- * View model for account information
+ * View model for account information.
  */
 export interface AccountView {
     /** The name of the user */
     name?: string | null;
-    /** The monthly credits balance in USD */
-    monthlyCreditsBalanceUsd: number;
-    /** The additional credits balance in USD */
-    additionalCreditsBalanceUsd: number;
     /** The total credits balance in USD */
     totalCreditsBalanceUsd: number;
+    /** Monthly subscription credits balance in USD */
+    monthlyCreditsBalanceUsd: number;
+    /** Additional top-up credits balance in USD */
+    additionalCreditsBalanceUsd: number;
     /** The rate limit for the account */
     rateLimit: number;
     /** The plan information */

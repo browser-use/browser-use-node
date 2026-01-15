@@ -16,4 +16,6 @@ export interface SessionItemView {
     startedAt: string;
     /** Timestamp when the session was stopped (None if still active) */
     finishedAt?: string | null;
+    /** Whether tasks in this session share memory and history with each other */
+    persistMemory: boolean;
 }

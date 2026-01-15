@@ -12,10 +12,16 @@ export interface WorkflowGenerationStateView {
     name: string;
     /** Current status of workflow generation */
     generationStatus: BrowserUse.WorkflowGenerationStatus;
+    /** Error message if generation failed */
+    generationError?: string | null;
+    /** Current progress step (e.g., "downloading_history", "detecting_variables") */
+    generationProgress?: string | null;
     /** Live browser view URL (available only during generation) */
     liveUrl?: string | null;
     /** List of generated workflow steps (available after completion) */
     steps?: BrowserUse.WorkflowGenerationStepView[];
     /** When workflow was created */
     createdAt: string;
+    /** When workflow was last updated */
+    updatedAt?: string | null;
 }

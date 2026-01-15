@@ -7,5 +7,6 @@ export const SkillsGenerationStatus = {
     Failed: "failed",
     Finished: "finished",
     Cancelled: "cancelled",
+    TimedOut: "timed_out",
 } as const;
 export type SkillsGenerationStatus = (typeof SkillsGenerationStatus)[keyof typeof SkillsGenerationStatus];

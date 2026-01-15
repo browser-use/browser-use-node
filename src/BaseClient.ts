@@ -7,7 +7,7 @@ export interface BaseClientOptions {
     environment?: core.Supplier<environments.BrowserUseEnvironment | string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
-    apiKey: core.Supplier<string>;
+    apiKey?: core.Supplier<string | undefined>;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */

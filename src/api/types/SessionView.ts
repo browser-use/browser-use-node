@@ -20,4 +20,6 @@ export interface SessionView {
     tasks: BrowserUse.TaskItemView[];
     /** Optional URL to access the public share of the session */
     publicShareUrl?: string | null;
+    /** Whether tasks in this session share memory and history with each other */
+    persistMemory?: boolean;
 }

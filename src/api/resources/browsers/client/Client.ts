@@ -16,7 +16,7 @@ export declare namespace Browsers {
 export class Browsers {
     protected readonly _options: Browsers.Options;
 
-    constructor(_options: Browsers.Options) {
+    constructor(_options: Browsers.Options = {}) {
         this._options = _options;
     }
 
@@ -120,16 +120,18 @@ export class Browsers {
     /**
      * Create a new browser session.
      *
-     * **Pricing:** Browser sessions are charged at $0.05 per hour.
-     * The full hourly rate is charged upfront when the session starts.
+     * **Pricing:** Browser sessions are charged per hour with tiered pricing:
+     * - Pay As You Go users: $0.06/hour
+     * - Business/Scaleup subscribers: $0.03/hour (50% discount)
+     *
+     * The full rate is charged upfront when the session starts.
      * When you stop the session, any unused time is automatically refunded proportionally.
      *
-     * Billing is rounded to the nearest minute (minimum 1 minute).
-     * For example, if you stop a session after 30 minutes, you'll be refunded $0.025.
+     * Billing is rounded up to the minute (minimum 1 minute).
+     * For example, if you stop a session after 30 minutes, you'll be refunded half the charged amount.
      *
      * **Session Limits:**
-     * - Free users (without active subscription): Maximum 15 minutes per session
-     * - Paid subscribers: Up to 4 hours per session
+     * - All users: Up to 4 hours per session
      *
      * @param {BrowserUse.CreateBrowserSessionRequest} request
      * @param {Browsers.RequestOptions} requestOptions - Request-specific configuration.
@@ -184,10 +186,7 @@ export class Browsers {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 403:
-                    throw new BrowserUse.ForbiddenError(
-                        _response.error.body as BrowserUse.SessionTimeoutLimitExceededError,
-                        _response.rawResponse,
-                    );
+                    throw new BrowserUse.ForbiddenError(_response.error.body as unknown, _response.rawResponse);
                 case 404:
                     throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:

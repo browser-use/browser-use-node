@@ -45,6 +45,8 @@ export interface CreateTaskRequest {
     judgeGroundTruth?: string | null;
     /** The LLM model to use for judging. If not provided, uses the default judge LLM. */
     judgeLlm?: BrowserUse.SupportedLlMs | null;
+    /** List of skill IDs to enable for this task. Use ['*'] to enable all available skills for the project. */
+    skillIds?: string[] | null;
 }
 
 export namespace CreateTaskRequest {

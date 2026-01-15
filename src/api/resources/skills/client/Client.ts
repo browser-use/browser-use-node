@@ -16,7 +16,7 @@ export declare namespace Skills {
 export class Skills {
     protected readonly _options: Skills.Options;
 
-    constructor(_options: Skills.Options) {
+    constructor(_options: Skills.Options = {}) {
         this._options = _options;
     }
 
@@ -42,7 +42,7 @@ export class Skills {
         request: BrowserUse.ListSkillsSkillsGetRequest = {},
         requestOptions?: Skills.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.SkillListResponse>> {
-        const { pageSize, pageNumber, isPublic, isEnabled, query, fromDate, toDate } = request;
+        const { pageSize, pageNumber, isPublic, isEnabled, category, query, fromDate, toDate } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (pageSize != null) {
             _queryParams.pageSize = pageSize.toString();
@@ -58,6 +58,10 @@ export class Skills {
 
         if (isEnabled !== undefined) {
             _queryParams.isEnabled = isEnabled?.toString() ?? null;
+        }
+
+        if (category !== undefined) {
+            _queryParams.category = category;
         }
 
         if (query !== undefined) {
@@ -400,6 +404,7 @@ export class Skills {
      * @param {BrowserUse.UpdateSkillRequest} request
      * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link BrowserUse.ForbiddenError}
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
      *
@@ -450,6 +455,8 @@ export class Skills {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 403:
+                    throw new BrowserUse.ForbiddenError(_response.error.body as unknown, _response.rawResponse);
                 case 404:
                     throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -668,7 +675,7 @@ export class Skills {
     /**
      * Execute a skill with the provided parameters.
      *
-     * @param {BrowserUse.ExecuteSkillRequest} request
+     * @param {BrowserUse.ExecuteSkillSkillsSkillIdExecutePostRequest} request
      * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.BadRequestError}
@@ -678,21 +685,22 @@ export class Skills {
      *
      * @example
      *     await client.skills.executeSkill({
-     *         skill_id: "skill_id"
+     *         skill_id: "skill_id",
+     *         body: {}
      *     })
      */
     public executeSkill(
-        request: BrowserUse.ExecuteSkillRequest,
+        request: BrowserUse.ExecuteSkillSkillsSkillIdExecutePostRequest,
         requestOptions?: Skills.RequestOptions,
     ): core.HttpResponsePromise<BrowserUse.ExecuteSkillResponse> {
         return core.HttpResponsePromise.fromPromise(this.__executeSkill(request, requestOptions));
     }
 
     private async __executeSkill(
-        request: BrowserUse.ExecuteSkillRequest,
+        request: BrowserUse.ExecuteSkillSkillsSkillIdExecutePostRequest,
         requestOptions?: Skills.RequestOptions,
     ): Promise<core.WithRawResponse<BrowserUse.ExecuteSkillResponse>> {
-        const { skill_id: skillId, ..._body } = request;
+        const { skill_id: skillId, body: _body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),

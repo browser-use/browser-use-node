@@ -5,13 +5,13 @@
  */
 export interface WorkflowExecutionStepView {
     /** Unique identifier for the step (execution_id-step-N) */
-    id: string;
+    id?: string;
     /** Sequential step number (1-indexed) */
-    stepNumber: number;
+    stepNumber?: number;
     /** Name of the step from workflow definition */
     stepName?: string | null;
     /** Description of what this step is doing */
-    nextGoal: string;
+    nextGoal?: string;
     /** Whether the step has completed */
     isDone?: boolean;
     /** Whether the step succeeded (None if in progress) */
@@ -27,5 +27,5 @@ export interface WorkflowExecutionStepView {
     /** Error message if step failed */
     error?: string | null;
     /** ISO 8601 timestamp when step was executed */
-    createdAt: string;
+    createdAt?: string;
 }

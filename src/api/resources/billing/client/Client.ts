@@ -16,12 +16,12 @@ export declare namespace Billing {
 export class Billing {
     protected readonly _options: Billing.Options;
 
-    constructor(_options: Billing.Options) {
+    constructor(_options: Billing.Options = {}) {
         this._options = _options;
     }
 
     /**
-     * Get authenticated account information including credit balances and account details.
+     * Get authenticated account information including credit balance and account details.
      *
      * @param {Billing.RequestOptions} requestOptions - Request-specific configuration.
      *

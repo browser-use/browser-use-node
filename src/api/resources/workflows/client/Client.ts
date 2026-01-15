@@ -16,7 +16,7 @@ export declare namespace Workflows {
 export class Workflows {
     protected readonly _options: Workflows.Options;
 
-    constructor(_options: Workflows.Options) {
+    constructor(_options: Workflows.Options = {}) {
         this._options = _options;
     }
 
@@ -543,6 +543,109 @@ export class Workflows {
                 throw new errors.BrowserUseTimeoutError(
                     "Timeout exceeded when calling GET /workflows/{workflow_id}/generation-state.",
                 );
+            case "unknown":
+                throw new errors.BrowserUseError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Create a workflow from an existing agent task's recorded history.
+     *
+     * This endpoint creates a workflow by using the browser-use rerun history
+     * feature. The task must have completed with history stored in S3.
+     *
+     * The workflow creation process:
+     * 1. Creates a new workflow record in pending state
+     * 2. Triggers an Inngest event to process the task history
+     * 3. The Inngest handler downloads history, detects variables, and updates the workflow
+     *
+     * Use GET /workflows/{workflow_id} to poll for creation completion.
+     *
+     * @param {BrowserUse.WorkflowCreateFromTaskRequest} request
+     * @param {Workflows.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link BrowserUse.NotFoundError}
+     * @throws {@link BrowserUse.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.workflows.createWorkflowFromTask({
+     *         name: "name",
+     *         taskId: "taskId",
+     *         sessionId: "sessionId"
+     *     })
+     */
+    public createWorkflowFromTask(
+        request: BrowserUse.WorkflowCreateFromTaskRequest,
+        requestOptions?: Workflows.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.WorkflowCreateFromTaskResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__createWorkflowFromTask(request, requestOptions));
+    }
+
+    private async __createWorkflowFromTask(
+        request: BrowserUse.WorkflowCreateFromTaskRequest,
+        requestOptions?: Workflows.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.WorkflowCreateFromTaskResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
+                "workflows/from-task",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as BrowserUse.WorkflowCreateFromTaskResponse,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 422:
+                    throw new BrowserUse.UnprocessableEntityError(
+                        _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.BrowserUseError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.BrowserUseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling POST /workflows/from-task.");
             case "unknown":
                 throw new errors.BrowserUseError({
                     message: _response.error.errorMessage,

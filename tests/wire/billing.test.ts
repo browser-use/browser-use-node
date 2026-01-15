@@ -11,9 +11,9 @@ describe("Billing", () => {
 
         const rawResponseBody = {
             name: "name",
+            totalCreditsBalanceUsd: 1.1,
             monthlyCreditsBalanceUsd: 1.1,
             additionalCreditsBalanceUsd: 1.1,
-            totalCreditsBalanceUsd: 1.1,
             rateLimit: 1,
             planInfo: {
                 planName: "planName",
@@ -29,9 +29,9 @@ describe("Billing", () => {
         const response = await client.billing.getAccountBilling();
         expect(response).toEqual({
             name: "name",
+            totalCreditsBalanceUsd: 1.1,
             monthlyCreditsBalanceUsd: 1.1,
             additionalCreditsBalanceUsd: 1.1,
-            totalCreditsBalanceUsd: 1.1,
             rateLimit: 1,
             planInfo: {
                 planName: "planName",

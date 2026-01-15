@@ -13,14 +13,21 @@ describe("SkillsMarketplace", () => {
             items: [
                 {
                     id: "id",
+                    slug: "slug",
                     title: "title",
                     description: "description",
+                    categories: ["search"],
+                    domains: ["domains"],
                     parameters: [{ name: "name", type: "string" }],
                     outputSchema: { key: "value" },
                     currentVersion: 1,
                     isOfficial: true,
-                    createdAt: "createdAt",
-                    updatedAt: "updatedAt",
+                    cloneCount: 1,
+                    iconUrl: "iconUrl",
+                    firstPublishedAt: "2024-01-15T09:30:00Z",
+                    lastPublishedAt: "2024-01-15T09:30:00Z",
+                    createdAt: "2024-01-15T09:30:00Z",
+                    updatedAt: "2024-01-15T09:30:00Z",
                 },
             ],
             totalItems: 1,
@@ -40,8 +47,11 @@ describe("SkillsMarketplace", () => {
             items: [
                 {
                     id: "id",
+                    slug: "slug",
                     title: "title",
                     description: "description",
+                    categories: ["search"],
+                    domains: ["domains"],
                     parameters: [
                         {
                             name: "name",
@@ -53,8 +63,12 @@ describe("SkillsMarketplace", () => {
                     },
                     currentVersion: 1,
                     isOfficial: true,
-                    createdAt: "createdAt",
-                    updatedAt: "updatedAt",
+                    cloneCount: 1,
+                    iconUrl: "iconUrl",
+                    firstPublishedAt: "2024-01-15T09:30:00Z",
+                    lastPublishedAt: "2024-01-15T09:30:00Z",
+                    createdAt: "2024-01-15T09:30:00Z",
+                    updatedAt: "2024-01-15T09:30:00Z",
                 },
             ],
             totalItems: 1,
@@ -87,8 +101,11 @@ describe("SkillsMarketplace", () => {
 
         const rawResponseBody = {
             id: "id",
+            slug: "slug",
             title: "title",
             description: "description",
+            categories: ["search"],
+            domains: ["domains"],
             parameters: [
                 {
                     name: "name",
@@ -102,24 +119,31 @@ describe("SkillsMarketplace", () => {
             outputSchema: { key: "value" },
             currentVersion: 1,
             isOfficial: true,
-            createdAt: "createdAt",
-            updatedAt: "updatedAt",
+            cloneCount: 1,
+            iconUrl: "iconUrl",
+            firstPublishedAt: "2024-01-15T09:30:00Z",
+            lastPublishedAt: "2024-01-15T09:30:00Z",
+            createdAt: "2024-01-15T09:30:00Z",
+            updatedAt: "2024-01-15T09:30:00Z",
         };
         server
             .mockEndpoint()
-            .get("/marketplace/skills/skill_id")
+            .get("/marketplace/skills/skill_slug")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.skillsMarketplace.getSkill({
-            skill_id: "skill_id",
+            skill_slug: "skill_slug",
         });
         expect(response).toEqual({
             id: "id",
+            slug: "slug",
             title: "title",
             description: "description",
+            categories: ["search"],
+            domains: ["domains"],
             parameters: [
                 {
                     name: "name",
@@ -137,8 +161,12 @@ describe("SkillsMarketplace", () => {
             },
             currentVersion: 1,
             isOfficial: true,
-            createdAt: "createdAt",
-            updatedAt: "updatedAt",
+            cloneCount: 1,
+            iconUrl: "iconUrl",
+            firstPublishedAt: "2024-01-15T09:30:00Z",
+            lastPublishedAt: "2024-01-15T09:30:00Z",
+            createdAt: "2024-01-15T09:30:00Z",
+            updatedAt: "2024-01-15T09:30:00Z",
         });
     });
 
@@ -149,7 +177,7 @@ describe("SkillsMarketplace", () => {
         const rawResponseBody = { key: "value" };
         server
             .mockEndpoint()
-            .get("/marketplace/skills/skill_id")
+            .get("/marketplace/skills/skill_slug")
             .respondWith()
             .statusCode(404)
             .jsonBody(rawResponseBody)
@@ -157,7 +185,7 @@ describe("SkillsMarketplace", () => {
 
         await expect(async () => {
             return await client.skillsMarketplace.getSkill({
-                skill_id: "skill_id",
+                skill_slug: "skill_slug",
             });
         }).rejects.toThrow(BrowserUse.NotFoundError);
     });
@@ -169,7 +197,7 @@ describe("SkillsMarketplace", () => {
         const rawResponseBody = { key: "value" };
         server
             .mockEndpoint()
-            .get("/marketplace/skills/skill_id")
+            .get("/marketplace/skills/skill_slug")
             .respondWith()
             .statusCode(422)
             .jsonBody(rawResponseBody)
@@ -177,7 +205,7 @@ describe("SkillsMarketplace", () => {
 
         await expect(async () => {
             return await client.skillsMarketplace.getSkill({
-                skill_id: "skill_id",
+                skill_slug: "skill_slug",
             });
         }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
     });
@@ -188,8 +216,14 @@ describe("SkillsMarketplace", () => {
 
         const rawResponseBody = {
             id: "id",
+            slug: "slug",
             title: "title",
             description: "description",
+            categories: ["search"],
+            domains: ["domains"],
+            goal: "goal",
+            agentPrompt: "agentPrompt",
+            status: "recording",
             parameters: [
                 {
                     name: "name",
@@ -201,10 +235,18 @@ describe("SkillsMarketplace", () => {
                 },
             ],
             outputSchema: { key: "value" },
+            isEnabled: true,
+            isPublic: true,
+            iconUrl: "iconUrl",
+            firstPublishedAt: "2024-01-15T09:30:00Z",
+            lastPublishedAt: "2024-01-15T09:30:00Z",
             currentVersion: 1,
-            isOfficial: true,
-            createdAt: "createdAt",
-            updatedAt: "updatedAt",
+            currentVersionStartedAt: "2024-01-15T09:30:00Z",
+            currentVersionFinishedAt: "2024-01-15T09:30:00Z",
+            code: "code",
+            clonedFromSkillId: "clonedFromSkillId",
+            createdAt: "2024-01-15T09:30:00Z",
+            updatedAt: "2024-01-15T09:30:00Z",
         };
         server
             .mockEndpoint()
@@ -219,8 +261,14 @@ describe("SkillsMarketplace", () => {
         });
         expect(response).toEqual({
             id: "id",
+            slug: "slug",
             title: "title",
             description: "description",
+            categories: ["search"],
+            domains: ["domains"],
+            goal: "goal",
+            agentPrompt: "agentPrompt",
+            status: "recording",
             parameters: [
                 {
                     name: "name",
@@ -236,10 +284,18 @@ describe("SkillsMarketplace", () => {
             outputSchema: {
                 key: "value",
             },
+            isEnabled: true,
+            isPublic: true,
+            iconUrl: "iconUrl",
+            firstPublishedAt: "2024-01-15T09:30:00Z",
+            lastPublishedAt: "2024-01-15T09:30:00Z",
             currentVersion: 1,
-            isOfficial: true,
-            createdAt: "createdAt",
-            updatedAt: "updatedAt",
+            currentVersionStartedAt: "2024-01-15T09:30:00Z",
+            currentVersionFinishedAt: "2024-01-15T09:30:00Z",
+            code: "code",
+            clonedFromSkillId: "clonedFromSkillId",
+            createdAt: "2024-01-15T09:30:00Z",
+            updatedAt: "2024-01-15T09:30:00Z",
         });
     });
 
@@ -299,6 +355,129 @@ describe("SkillsMarketplace", () => {
         await expect(async () => {
             return await client.skillsMarketplace.cloneSkill({
                 skill_id: "skill_id",
+            });
+        }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
+    });
+
+    test("executeSkill (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = {};
+        const rawResponseBody = {
+            success: true,
+            result: { key: "value" },
+            error: "error",
+            stderr: "stderr",
+            latencyMs: 1,
+        };
+        server
+            .mockEndpoint()
+            .post("/marketplace/skills/skill_id/execute")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.skillsMarketplace.executeSkill({
+            skill_id: "skill_id",
+            body: {},
+        });
+        expect(response).toEqual({
+            success: true,
+            result: {
+                key: "value",
+            },
+            error: "error",
+            stderr: "stderr",
+            latencyMs: 1,
+        });
+    });
+
+    test("executeSkill (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/marketplace/skills/skill_id/execute")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skillsMarketplace.executeSkill({
+                skill_id: "skill_id",
+                body: {},
+            });
+        }).rejects.toThrow(BrowserUse.BadRequestError);
+    });
+
+    test("executeSkill (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/marketplace/skills/skill_id/execute")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(402)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skillsMarketplace.executeSkill({
+                skill_id: "skill_id",
+                body: {},
+            });
+        }).rejects.toThrow(BrowserUse.PaymentRequiredError);
+    });
+
+    test("executeSkill (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/marketplace/skills/skill_id/execute")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skillsMarketplace.executeSkill({
+                skill_id: "skill_id",
+                body: {},
+            });
+        }).rejects.toThrow(BrowserUse.NotFoundError);
+    });
+
+    test("executeSkill (5)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/marketplace/skills/skill_id/execute")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skillsMarketplace.executeSkill({
+                skill_id: "skill_id",
+                body: {},
             });
         }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
     });

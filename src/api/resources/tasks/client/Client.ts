@@ -16,7 +16,7 @@ export declare namespace Tasks {
 export class Tasks {
     protected readonly _options: Tasks.Options;
 
-    constructor(_options: Tasks.Options) {
+    constructor(_options: Tasks.Options = {}) {
         this._options = _options;
     }
 
@@ -127,9 +127,15 @@ export class Tasks {
     }
 
     /**
+     * Create and start a new task.
+     *
      * You can either:
-     * 1. Start a new task (auto creates a new simple session)
-     * 2. Start a new task in an existing session (you can create a custom session before starting the task and reuse it for follow-up tasks)
+     * 1. Start a new task without a sessionId (auto-creates a session with US proxy by default)
+     * 2. Start a new task in an existing session (reuse for follow-up tasks or custom configuration)
+     *
+     * Important: Proxy configuration (proxyCountryCode) is a session-level setting, not a task-level setting.
+     * To use a custom proxy location, create a session first via POST /sessions with your desired proxyCountryCode,
+     * then pass that sessionId when creating tasks.
      *
      * @param {BrowserUse.CreateTaskRequest} request
      * @param {Tasks.RequestOptions} requestOptions - Request-specific configuration.

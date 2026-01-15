@@ -8,10 +8,16 @@ import type * as BrowserUse from "../index.js";
 export interface SkillResponse {
     /** Unique identifier for the skill */
     id: string;
+    /** URL-friendly slug for the skill */
+    slug?: string | null;
     /** Title of the skill (shows up in the public view) */
     title: string;
     /** Description of the skill (shows up in the public view) */
     description: string;
+    /** Categories of the skill */
+    categories: BrowserUse.SkillCategory[];
+    /** Domains/websites this skill interacts with */
+    domains: string[];
     /** Goal of the skill (not shown in the public view) */
     goal?: string | null;
     /** Prompt for the agent to use when generating the skill automatically (not shown in the public view) */
@@ -26,8 +32,12 @@ export interface SkillResponse {
     isEnabled: boolean;
     /** Whether the skill is publicly available */
     isPublic: boolean;
-    /** Whether the user is the owner of the skill */
-    isOwner: boolean;
+    /** URL of the custom skill icon */
+    iconUrl?: string | null;
+    /** When the skill was first published */
+    firstPublishedAt?: string | null;
+    /** When the skill was last published */
+    lastPublishedAt?: string | null;
     /** Current version of the skill */
     currentVersion: number | null;
     /** When the current version started generating */
@@ -36,6 +46,8 @@ export interface SkillResponse {
     currentVersionFinishedAt?: string | null;
     /** Base64 encoded generated code (contact support@browser-use.com to get access) - ENTERPRISE ONLY */
     code?: string | null;
+    /** Unique identifier for the skill this skill was cloned from */
+    clonedFromSkillId?: string | null;
     /** Creation timestamp */
     createdAt: string;
     /** Last update timestamp */

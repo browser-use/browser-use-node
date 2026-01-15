@@ -17,4 +17,6 @@ export interface CreateSessionRequest {
     browserScreenWidth?: number | null;
     /** Custom screen height in pixels for the browser. */
     browserScreenHeight?: number | null;
+    /** If True (default), tasks in this session share memory and history with each other, allowing follow-up tasks to continue from previous context. If False, each task runs as a standalone task without any previous task context. */
+    persistMemory?: boolean;
 }

@@ -12,7 +12,7 @@
 <dl>
 <dd>
 
-Get authenticated account information including credit balances and account details.
+Get authenticated account information including credit balance and account details.
 </dd>
 </dl>
 </dd>
@@ -131,9 +131,15 @@ await client.tasks.listTasks();
 <dl>
 <dd>
 
+Create and start a new task.
+
 You can either:
-1. Start a new task (auto creates a new simple session)
-2. Start a new task in an existing session (you can create a custom session before starting the task and reuse it for follow-up tasks)
+1. Start a new task without a sessionId (auto-creates a session with US proxy by default)
+2. Start a new task in an existing session (reuse for follow-up tasks or custom configuration)
+
+Important: Proxy configuration (proxyCountryCode) is a session-level setting, not a task-level setting.
+To use a custom proxy location, create a session first via POST /sessions with your desired proxyCountryCode,
+then pass that sessionId when creating tasks.
 </dd>
 </dl>
 </dd>
@@ -1512,16 +1518,18 @@ await client.browsers.listBrowserSessions();
 
 Create a new browser session.
 
-**Pricing:** Browser sessions are charged at $0.05 per hour.
-The full hourly rate is charged upfront when the session starts.
+**Pricing:** Browser sessions are charged per hour with tiered pricing:
+- Pay As You Go users: $0.06/hour
+- Business/Scaleup subscribers: $0.03/hour (50% discount)
+
+The full rate is charged upfront when the session starts.
 When you stop the session, any unused time is automatically refunded proportionally.
 
-Billing is rounded to the nearest minute (minimum 1 minute).
-For example, if you stop a session after 30 minutes, you'll be refunded $0.025.
+Billing is rounded up to the minute (minimum 1 minute).
+For example, if you stop a session after 30 minutes, you'll be refunded half the charged amount.
 
 **Session Limits:**
-- Free users (without active subscription): Maximum 15 minutes per session
-- Paid subscribers: Up to 4 hours per session
+- All users: Up to 4 hours per session
 </dd>
 </dl>
 </dd>
@@ -2190,7 +2198,8 @@ Execute a skill with the provided parameters.
 
 ```typescript
 await client.skills.executeSkill({
-    skill_id: "skill_id"
+    skill_id: "skill_id",
+    body: {}
 });
 
 ```
@@ -2207,7 +2216,7 @@ await client.skills.executeSkill({
 <dl>
 <dd>
 
-**request:** `BrowserUse.ExecuteSkillRequest` 
+**request:** `BrowserUse.ExecuteSkillSkillsSkillIdExecutePostRequest` 
     
 </dd>
 </dl>
@@ -2385,7 +2394,7 @@ Get details of a specific public skill from the marketplace.
 
 ```typescript
 await client.skillsMarketplace.getSkill({
-    skill_id: "skill_id"
+    skill_slug: "skill_slug"
 });
 
 ```
@@ -2402,7 +2411,7 @@ await client.skillsMarketplace.getSkill({
 <dl>
 <dd>
 
-**request:** `BrowserUse.GetSkillMarketplaceSkillsSkillIdGetRequest` 
+**request:** `BrowserUse.GetSkillMarketplaceSkillsSkillSlugGetRequest` 
     
 </dd>
 </dl>
@@ -2422,7 +2431,7 @@ await client.skillsMarketplace.getSkill({
 </dl>
 </details>
 
-<details><summary><code>client.skillsMarketplace.<a href="/src/api/resources/skillsMarketplace/client/Client.ts">cloneSkill</a>({ ...params }) -> BrowserUse.MarketplaceSkillResponse</code></summary>
+<details><summary><code>client.skillsMarketplace.<a href="/src/api/resources/skillsMarketplace/client/Client.ts">cloneSkill</a>({ ...params }) -> BrowserUse.SkillResponse</code></summary>
 <dl>
 <dd>
 
@@ -2468,6 +2477,72 @@ await client.skillsMarketplace.cloneSkill({
 <dd>
 
 **request:** `BrowserUse.CloneSkillMarketplaceSkillsSkillIdClonePostRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SkillsMarketplace.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.skillsMarketplace.<a href="/src/api/resources/skillsMarketplace/client/Client.ts">executeSkill</a>({ ...params }) -> BrowserUse.ExecuteSkillResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Execute a skill with the provided parameters.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skillsMarketplace.executeSkill({
+    skill_id: "skill_id",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.ExecuteSkillMarketplaceSkillsSkillIdExecutePostRequest` 
     
 </dd>
 </dl>
@@ -2861,6 +2936,83 @@ await client.workflows.getWorkflowGenerationState({
 <dd>
 
 **request:** `BrowserUse.GetWorkflowGenerationStateWorkflowsWorkflowIdGenerationStateGetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Workflows.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">createWorkflowFromTask</a>({ ...params }) -> BrowserUse.WorkflowCreateFromTaskResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a workflow from an existing agent task's recorded history.
+
+This endpoint creates a workflow by using the browser-use rerun history
+feature. The task must have completed with history stored in S3.
+
+The workflow creation process:
+1. Creates a new workflow record in pending state
+2. Triggers an Inngest event to process the task history
+3. The Inngest handler downloads history, detects variables, and updates the workflow
+
+Use GET /workflows/{workflow_id} to poll for creation completion.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.workflows.createWorkflowFromTask({
+    name: "name",
+    taskId: "taskId",
+    sessionId: "sessionId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.WorkflowCreateFromTaskRequest` 
     
 </dd>
 </dl>

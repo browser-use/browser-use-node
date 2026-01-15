@@ -16,7 +16,7 @@ export declare namespace Sessions {
 export class Sessions {
     protected readonly _options: Sessions.Options;
 
-    constructor(_options: Sessions.Options) {
+    constructor(_options: Sessions.Options = {}) {
         this._options = _options;
     }
 

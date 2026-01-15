@@ -3,6 +3,6 @@
 /**
  * Error response when user has insufficient credits
  */
-export interface AppViewsV2ErrorViewsInsufficientCreditsError {
+export interface CommonUtilsErrorsInsufficientCreditsError {
     detail?: string;
 }

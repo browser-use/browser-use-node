@@ -3,6 +3,6 @@
 /**
  * Error response when there are insufficient credits
  */
-export interface AppApiV2SkillsViewsInsufficientCreditsError {
+export interface AppEndpointsApiV2SkillsViewsInsufficientCreditsError {
     detail?: string;
 }

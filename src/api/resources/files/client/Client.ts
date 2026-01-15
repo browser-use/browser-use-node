@@ -16,7 +16,7 @@ export declare namespace Files {
 export class Files {
     protected readonly _options: Files.Options;
 
-    constructor(_options: Files.Options) {
+    constructor(_options: Files.Options = {}) {
         this._options = _options;
     }
 
