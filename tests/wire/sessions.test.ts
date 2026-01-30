@@ -18,6 +18,9 @@ describe("Sessions", () => {
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
                     persistMemory: true,
+                    keepAlive: true,
+                    proxyUsedMb: "proxyUsedMb",
+                    proxyCost: "proxyCost",
                 },
             ],
             totalItems: 1,
@@ -36,6 +39,9 @@ describe("Sessions", () => {
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
                     persistMemory: true,
+                    keepAlive: true,
+                    proxyUsedMb: "proxyUsedMb",
+                    proxyCost: "proxyCost",
                 },
             ],
             totalItems: 1,
@@ -67,6 +73,9 @@ describe("Sessions", () => {
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
             persistMemory: true,
+            keepAlive: true,
+            proxyUsedMb: "proxyUsedMb",
+            proxyCost: "proxyCost",
         };
         server
             .mockEndpoint()
@@ -85,10 +94,32 @@ describe("Sessions", () => {
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
             persistMemory: true,
+            keepAlive: true,
+            proxyUsedMb: "proxyUsedMb",
+            proxyCost: "proxyCost",
         });
     });
 
     test("createSession (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/sessions")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(402)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sessions.createSession();
+        }).rejects.toThrow(BrowserUse.PaymentRequiredError);
+    });
+
+    test("createSession (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
         const rawRequestBody = {};
@@ -107,7 +138,7 @@ describe("Sessions", () => {
         }).rejects.toThrow(BrowserUse.NotFoundError);
     });
 
-    test("createSession (3)", async () => {
+    test("createSession (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
         const rawRequestBody = {};
@@ -126,7 +157,7 @@ describe("Sessions", () => {
         }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
     });
 
-    test("createSession (4)", async () => {
+    test("createSession (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
         const rawRequestBody = {};
@@ -171,10 +202,14 @@ describe("Sessions", () => {
                     isSuccess: true,
                     judgement: "judgement",
                     judgeVerdict: true,
+                    cost: "cost",
                 },
             ],
             publicShareUrl: "publicShareUrl",
             persistMemory: true,
+            keepAlive: true,
+            proxyUsedMb: "proxyUsedMb",
+            proxyCost: "proxyCost",
         };
         server
             .mockEndpoint()
@@ -211,10 +246,14 @@ describe("Sessions", () => {
                     isSuccess: true,
                     judgement: "judgement",
                     judgeVerdict: true,
+                    cost: "cost",
                 },
             ],
             publicShareUrl: "publicShareUrl",
             persistMemory: true,
+            keepAlive: true,
+            proxyUsedMb: "proxyUsedMb",
+            proxyCost: "proxyCost",
         });
     });
 
@@ -336,10 +375,14 @@ describe("Sessions", () => {
                     isSuccess: true,
                     judgement: "judgement",
                     judgeVerdict: true,
+                    cost: "cost",
                 },
             ],
             publicShareUrl: "publicShareUrl",
             persistMemory: true,
+            keepAlive: true,
+            proxyUsedMb: "proxyUsedMb",
+            proxyCost: "proxyCost",
         };
         server
             .mockEndpoint()
@@ -378,10 +421,14 @@ describe("Sessions", () => {
                     isSuccess: true,
                     judgement: "judgement",
                     judgeVerdict: true,
+                    cost: "cost",
                 },
             ],
             publicShareUrl: "publicShareUrl",
             persistMemory: true,
+            keepAlive: true,
+            proxyUsedMb: "proxyUsedMb",
+            proxyCost: "proxyCost",
         });
     });
 

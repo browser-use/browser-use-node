@@ -20,4 +20,10 @@ export interface BrowserSessionItemView {
     startedAt: string;
     /** Timestamp when the session was stopped (None if still active) */
     finishedAt?: string | null;
+    /** Amount of proxy data used in MB */
+    proxyUsedMb?: string;
+    /** Cost of proxy usage in USD */
+    proxyCost?: string;
+    /** Cost of browser session hosting in USD */
+    browserCost?: string;
 }

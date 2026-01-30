@@ -120,6 +120,7 @@ export class Sessions {
      * @param {BrowserUse.CreateSessionRequest} request
      * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link BrowserUse.PaymentRequiredError}
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
      * @throws {@link BrowserUse.TooManyRequestsError}
@@ -168,6 +169,8 @@ export class Sessions {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 402:
+                    throw new BrowserUse.PaymentRequiredError(_response.error.body as unknown, _response.rawResponse);
                 case 404:
                     throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:

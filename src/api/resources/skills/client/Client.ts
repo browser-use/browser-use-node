@@ -141,7 +141,9 @@ export class Skills {
      * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BrowserUse.BadRequestError}
+     * @throws {@link BrowserUse.PaymentRequiredError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
+     * @throws {@link BrowserUse.TooManyRequestsError}
      *
      * @example
      *     await client.skills.createSkill({
@@ -192,9 +194,16 @@ export class Skills {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new BrowserUse.BadRequestError(_response.error.body as unknown, _response.rawResponse);
+                case 402:
+                    throw new BrowserUse.PaymentRequiredError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
                     throw new BrowserUse.UnprocessableEntityError(
                         _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                case 429:
+                    throw new BrowserUse.TooManyRequestsError(
+                        _response.error.body as BrowserUse.TooManyConcurrentActiveSessionsError,
                         _response.rawResponse,
                     );
                 default:
@@ -682,6 +691,7 @@ export class Skills {
      * @throws {@link BrowserUse.PaymentRequiredError}
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
+     * @throws {@link BrowserUse.TooManyRequestsError}
      *
      * @example
      *     await client.skills.executeSkill({
@@ -742,6 +752,11 @@ export class Skills {
                         _response.error.body as unknown,
                         _response.rawResponse,
                     );
+                case 429:
+                    throw new BrowserUse.TooManyRequestsError(
+                        _response.error.body as BrowserUse.TooManyConcurrentActiveSessionsError,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.BrowserUseError({
                         statusCode: _response.error.statusCode,
@@ -779,6 +794,7 @@ export class Skills {
      * @throws {@link BrowserUse.BadRequestError}
      * @throws {@link BrowserUse.NotFoundError}
      * @throws {@link BrowserUse.UnprocessableEntityError}
+     * @throws {@link BrowserUse.TooManyRequestsError}
      *
      * @example
      *     await client.skills.refineSkill({
@@ -837,6 +853,11 @@ export class Skills {
                         _response.error.body as unknown,
                         _response.rawResponse,
                     );
+                case 429:
+                    throw new BrowserUse.TooManyRequestsError(
+                        _response.error.body as BrowserUse.TooManyConcurrentActiveSessionsError,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.BrowserUseError({
                         statusCode: _response.error.statusCode,
@@ -856,6 +877,198 @@ export class Skills {
             case "timeout":
                 throw new errors.BrowserUseTimeoutError(
                     "Timeout exceeded when calling POST /skills/{skill_id}/refine.",
+                );
+            case "unknown":
+                throw new errors.BrowserUseError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * List executions for a specific skill.
+     *
+     * @param {BrowserUse.ListSkillExecutionsSkillsSkillIdExecutionsGetRequest} request
+     * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link BrowserUse.NotFoundError}
+     * @throws {@link BrowserUse.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.skills.listSkillExecutions({
+     *         skill_id: "skill_id"
+     *     })
+     */
+    public listSkillExecutions(
+        request: BrowserUse.ListSkillExecutionsSkillsSkillIdExecutionsGetRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.SkillExecutionListResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listSkillExecutions(request, requestOptions));
+    }
+
+    private async __listSkillExecutions(
+        request: BrowserUse.ListSkillExecutionsSkillsSkillIdExecutionsGetRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.SkillExecutionListResponse>> {
+        const { skill_id: skillId, pageSize, pageNumber } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (pageSize != null) {
+            _queryParams.pageSize = pageSize.toString();
+        }
+
+        if (pageNumber != null) {
+            _queryParams.pageNumber = pageNumber.toString();
+        }
+
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
+                `skills/${core.url.encodePathParam(skillId)}/executions`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as BrowserUse.SkillExecutionListResponse,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 422:
+                    throw new BrowserUse.UnprocessableEntityError(
+                        _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.BrowserUseError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.BrowserUseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.BrowserUseTimeoutError(
+                    "Timeout exceeded when calling GET /skills/{skill_id}/executions.",
+                );
+            case "unknown":
+                throw new errors.BrowserUseError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Get presigned URL for downloading skill execution output.
+     *
+     * @param {BrowserUse.GetSkillExecutionOutputSkillsSkillIdExecutionsExecutionIdOutputGetRequest} request
+     * @param {Skills.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link BrowserUse.NotFoundError}
+     * @throws {@link BrowserUse.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.skills.getSkillExecutionOutput({
+     *         skill_id: "skill_id",
+     *         execution_id: "execution_id"
+     *     })
+     */
+    public getSkillExecutionOutput(
+        request: BrowserUse.GetSkillExecutionOutputSkillsSkillIdExecutionsExecutionIdOutputGetRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.SkillExecutionOutputResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getSkillExecutionOutput(request, requestOptions));
+    }
+
+    private async __getSkillExecutionOutput(
+        request: BrowserUse.GetSkillExecutionOutputSkillsSkillIdExecutionsExecutionIdOutputGetRequest,
+        requestOptions?: Skills.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.SkillExecutionOutputResponse>> {
+        const { skill_id: skillId, execution_id: executionId } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
+                `skills/${core.url.encodePathParam(skillId)}/executions/${core.url.encodePathParam(executionId)}/output`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as BrowserUse.SkillExecutionOutputResponse,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 422:
+                    throw new BrowserUse.UnprocessableEntityError(
+                        _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.BrowserUseError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.BrowserUseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.BrowserUseTimeoutError(
+                    "Timeout exceeded when calling GET /skills/{skill_id}/executions/{execution_id}/output.",
                 );
             case "unknown":
                 throw new errors.BrowserUseError({

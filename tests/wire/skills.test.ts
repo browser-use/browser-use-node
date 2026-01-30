@@ -152,6 +152,28 @@ describe("Skills", () => {
             .post("/skills")
             .jsonBody(rawRequestBody)
             .respondWith()
+            .statusCode(402)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skills.createSkill({
+                goal: "goal",
+                agentPrompt: "strawberry",
+            });
+        }).rejects.toThrow(BrowserUse.PaymentRequiredError);
+    });
+
+    test("createSkill (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = { goal: "goal", agentPrompt: "strawberry" };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/skills")
+            .jsonBody(rawRequestBody)
+            .respondWith()
             .statusCode(422)
             .jsonBody(rawResponseBody)
             .build();
@@ -162,6 +184,28 @@ describe("Skills", () => {
                 agentPrompt: "strawberry",
             });
         }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
+    });
+
+    test("createSkill (5)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = { goal: "goal", agentPrompt: "strawberry" };
+        const rawResponseBody = {};
+        server
+            .mockEndpoint()
+            .post("/skills")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(429)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skills.createSkill({
+                goal: "goal",
+                agentPrompt: "strawberry",
+            });
+        }).rejects.toThrow(BrowserUse.TooManyRequestsError);
     });
 
     test("getSkill (1)", async () => {
@@ -921,6 +965,28 @@ describe("Skills", () => {
         }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
     });
 
+    test("executeSkill (6)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = {};
+        const rawResponseBody = {};
+        server
+            .mockEndpoint()
+            .post("/skills/skill_id/execute")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(429)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skills.executeSkill({
+                skill_id: "skill_id",
+                body: {},
+            });
+        }).rejects.toThrow(BrowserUse.TooManyRequestsError);
+    });
+
     test("refineSkill (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
@@ -1006,6 +1072,183 @@ describe("Skills", () => {
             return await client.skills.refineSkill({
                 skill_id: "skill_id",
                 feedback: "strawberry",
+            });
+        }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
+    });
+
+    test("refineSkill (5)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = { feedback: "strawberry" };
+        const rawResponseBody = {};
+        server
+            .mockEndpoint()
+            .post("/skills/skill_id/refine")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(429)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skills.refineSkill({
+                skill_id: "skill_id",
+                feedback: "strawberry",
+            });
+        }).rejects.toThrow(BrowserUse.TooManyRequestsError);
+    });
+
+    test("listSkillExecutions (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            items: [
+                {
+                    id: "id",
+                    skillId: "skillId",
+                    status: "status",
+                    success: true,
+                    startedAt: "2024-01-15T09:30:00Z",
+                    finishedAt: "2024-01-15T09:30:00Z",
+                    latencyMs: 1,
+                    hasOutput: true,
+                },
+            ],
+            totalItems: 1,
+            pageNumber: 1,
+            pageSize: 1,
+        };
+        server
+            .mockEndpoint()
+            .get("/skills/skill_id/executions")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.skills.listSkillExecutions({
+            skill_id: "skill_id",
+        });
+        expect(response).toEqual({
+            items: [
+                {
+                    id: "id",
+                    skillId: "skillId",
+                    status: "status",
+                    success: true,
+                    startedAt: "2024-01-15T09:30:00Z",
+                    finishedAt: "2024-01-15T09:30:00Z",
+                    latencyMs: 1,
+                    hasOutput: true,
+                },
+            ],
+            totalItems: 1,
+            pageNumber: 1,
+            pageSize: 1,
+        });
+    });
+
+    test("listSkillExecutions (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .get("/skills/skill_id/executions")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skills.listSkillExecutions({
+                skill_id: "skill_id",
+            });
+        }).rejects.toThrow(BrowserUse.NotFoundError);
+    });
+
+    test("listSkillExecutions (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .get("/skills/skill_id/executions")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skills.listSkillExecutions({
+                skill_id: "skill_id",
+            });
+        }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
+    });
+
+    test("getSkillExecutionOutput (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { downloadUrl: "downloadUrl" };
+        server
+            .mockEndpoint()
+            .get("/skills/skill_id/executions/execution_id/output")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.skills.getSkillExecutionOutput({
+            skill_id: "skill_id",
+            execution_id: "execution_id",
+        });
+        expect(response).toEqual({
+            downloadUrl: "downloadUrl",
+        });
+    });
+
+    test("getSkillExecutionOutput (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .get("/skills/skill_id/executions/execution_id/output")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skills.getSkillExecutionOutput({
+                skill_id: "skill_id",
+                execution_id: "execution_id",
+            });
+        }).rejects.toThrow(BrowserUse.NotFoundError);
+    });
+
+    test("getSkillExecutionOutput (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .get("/skills/skill_id/executions/execution_id/output")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.skills.getSkillExecutionOutput({
+                skill_id: "skill_id",
+                execution_id: "execution_id",
             });
         }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
     });

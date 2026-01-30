@@ -35,4 +35,6 @@ export interface TaskView {
     judgement?: string | null;
     /** Judge verdict - True if the judge found the task to be successful, False otherwise (None if judge is not enabled) */
     judgeVerdict?: boolean | null;
+    /** Total cost of the task in USD. This is the sum of all step costs incurred during task execution. */
+    cost?: string | null;
 }

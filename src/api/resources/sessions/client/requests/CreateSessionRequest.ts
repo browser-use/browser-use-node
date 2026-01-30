@@ -19,4 +19,8 @@ export interface CreateSessionRequest {
     browserScreenHeight?: number | null;
     /** If True (default), tasks in this session share memory and history with each other, allowing follow-up tasks to continue from previous context. If False, each task runs as a standalone task without any previous task context. */
     persistMemory?: boolean;
+    /** If True (default), the browser session stays alive after tasks complete, allowing follow-up tasks. If False, the session is closed immediately after task completion. Set to False for simple one-off tasks to reduce session idle time. */
+    keepAlive?: boolean;
+    /** Custom proxy settings to use for the session. If not provided, our proxies will be used. Custom proxies are only available for Business and Scaleup subscribers. */
+    customProxy?: BrowserUse.CustomProxy | null;
 }

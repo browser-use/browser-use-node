@@ -19,6 +19,9 @@ describe("Browsers", () => {
                     timeoutAt: "2024-01-15T09:30:00Z",
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
+                    proxyUsedMb: "proxyUsedMb",
+                    proxyCost: "proxyCost",
+                    browserCost: "browserCost",
                 },
             ],
             totalItems: 1,
@@ -38,6 +41,9 @@ describe("Browsers", () => {
                     timeoutAt: "2024-01-15T09:30:00Z",
                     startedAt: "2024-01-15T09:30:00Z",
                     finishedAt: "2024-01-15T09:30:00Z",
+                    proxyUsedMb: "proxyUsedMb",
+                    proxyCost: "proxyCost",
+                    browserCost: "browserCost",
                 },
             ],
             totalItems: 1,
@@ -70,6 +76,9 @@ describe("Browsers", () => {
             timeoutAt: "2024-01-15T09:30:00Z",
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
+            proxyUsedMb: "proxyUsedMb",
+            proxyCost: "proxyCost",
+            browserCost: "browserCost",
         };
         server
             .mockEndpoint()
@@ -89,6 +98,9 @@ describe("Browsers", () => {
             timeoutAt: "2024-01-15T09:30:00Z",
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
+            proxyUsedMb: "proxyUsedMb",
+            proxyCost: "proxyCost",
+            browserCost: "browserCost",
         });
     });
 
@@ -180,6 +192,9 @@ describe("Browsers", () => {
             timeoutAt: "2024-01-15T09:30:00Z",
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
+            proxyUsedMb: "proxyUsedMb",
+            proxyCost: "proxyCost",
+            browserCost: "browserCost",
         };
         server
             .mockEndpoint()
@@ -200,6 +215,9 @@ describe("Browsers", () => {
             timeoutAt: "2024-01-15T09:30:00Z",
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
+            proxyUsedMb: "proxyUsedMb",
+            proxyCost: "proxyCost",
+            browserCost: "browserCost",
         });
     });
 
@@ -255,6 +273,9 @@ describe("Browsers", () => {
             timeoutAt: "2024-01-15T09:30:00Z",
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
+            proxyUsedMb: "proxyUsedMb",
+            proxyCost: "proxyCost",
+            browserCost: "browserCost",
         };
         server
             .mockEndpoint()
@@ -277,6 +298,9 @@ describe("Browsers", () => {
             timeoutAt: "2024-01-15T09:30:00Z",
             startedAt: "2024-01-15T09:30:00Z",
             finishedAt: "2024-01-15T09:30:00Z",
+            proxyUsedMb: "proxyUsedMb",
+            proxyCost: "proxyCost",
+            browserCost: "browserCost",
         });
     });
 

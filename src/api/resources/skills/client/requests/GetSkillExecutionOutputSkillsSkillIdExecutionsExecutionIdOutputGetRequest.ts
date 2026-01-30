@@ -3,9 +3,11 @@
 /**
  * @example
  *     {
+ *         skill_id: "skill_id",
  *         execution_id: "execution_id"
  *     }
  */
-export interface GetExecutionMediaWorkflowsExecutionsExecutionIdMediaGetRequest {
+export interface GetSkillExecutionOutputSkillsSkillIdExecutionsExecutionIdOutputGetRequest {
+    skill_id: string;
     execution_id: string;
 }

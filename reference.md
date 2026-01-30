@@ -134,12 +134,15 @@ await client.tasks.listTasks();
 Create and start a new task.
 
 You can either:
-1. Start a new task without a sessionId (auto-creates a session with US proxy by default)
+1. Start a new task without a sessionId (auto-creates a session with US proxy by default).
+   Note: Tasks without a sessionId are one-off tasks that automatically close the session
+   upon completion (keep_alive=false).
 2. Start a new task in an existing session (reuse for follow-up tasks or custom configuration)
 
-Important: Proxy configuration (proxyCountryCode) is a session-level setting, not a task-level setting.
-To use a custom proxy location, create a session first via POST /sessions with your desired proxyCountryCode,
-then pass that sessionId when creating tasks.
+Important: Proxy configuration (proxyCountryCode) and other session settings (like keep_alive) are
+session-level settings, not task-level settings. For full control over session configuration,
+create a session first via POST /sessions with your desired settings, then pass that sessionId
+when creating tasks.
 </dd>
 </dl>
 </dd>
@@ -2302,6 +2305,137 @@ await client.skills.refineSkill({
 </dl>
 </details>
 
+<details><summary><code>client.skills.<a href="/src/api/resources/skills/client/Client.ts">listSkillExecutions</a>({ ...params }) -> BrowserUse.SkillExecutionListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List executions for a specific skill.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skills.listSkillExecutions({
+    skill_id: "skill_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.ListSkillExecutionsSkillsSkillIdExecutionsGetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Skills.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.skills.<a href="/src/api/resources/skills/client/Client.ts">getSkillExecutionOutput</a>({ ...params }) -> BrowserUse.SkillExecutionOutputResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get presigned URL for downloading skill execution output.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.skills.getSkillExecutionOutput({
+    skill_id: "skill_id",
+    execution_id: "execution_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.GetSkillExecutionOutputSkillsSkillIdExecutionsExecutionIdOutputGetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Skills.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## SkillsMarketplace
 <details><summary><code>client.skillsMarketplace.<a href="/src/api/resources/skillsMarketplace/client/Client.ts">listSkills</a>({ ...params }) -> BrowserUse.MarketplaceSkillListResponse</code></summary>
 <dl>
@@ -2551,1148 +2685,6 @@ await client.skillsMarketplace.executeSkill({
 <dd>
 
 **requestOptions:** `SkillsMarketplace.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Workflows
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">listWorkflows</a>({ ...params }) -> BrowserUse.WorkflowListResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get paginated list of workflows with optional filtering.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.listWorkflows();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.ListWorkflowsWorkflowsGetRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">createWorkflow</a>({ ...params }) -> BrowserUse.WorkflowResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new workflow. The workflow YAML should be uploaded separately via the update endpoint.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.createWorkflow({
-    name: "name"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.WorkflowCreateRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getWorkflow</a>({ ...params }) -> BrowserUse.WorkflowResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get detailed workflow information including presigned URL to download YAML.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.getWorkflow({
-    workflow_id: "workflow_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.GetWorkflowWorkflowsWorkflowIdGetRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">deleteWorkflow</a>({ ...params }) -> BrowserUse.WorkflowResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Archive a workflow (soft delete).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.deleteWorkflow({
-    workflow_id: "workflow_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.DeleteWorkflowWorkflowsWorkflowIdDeleteRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">updateWorkflow</a>({ ...params }) -> BrowserUse.WorkflowResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update workflow metadata.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.updateWorkflow({
-    workflow_id: "workflow_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.WorkflowUpdateRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getWorkflowGenerationState</a>({ ...params }) -> BrowserUse.WorkflowGenerationStateView</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get workflow generation state with live browser URL for polling.
-
-This endpoint returns the current state of workflow generation including
-the live browser URL (if available). It's designed to be polled every 2 seconds
-during generation to show real-time browser activity in the frontend.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.getWorkflowGenerationState({
-    workflow_id: "workflow_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.GetWorkflowGenerationStateWorkflowsWorkflowIdGenerationStateGetRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">createWorkflowFromTask</a>({ ...params }) -> BrowserUse.WorkflowCreateFromTaskResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a workflow from an existing agent task's recorded history.
-
-This endpoint creates a workflow by using the browser-use rerun history
-feature. The task must have completed with history stored in S3.
-
-The workflow creation process:
-1. Creates a new workflow record in pending state
-2. Triggers an Inngest event to process the task history
-3. The Inngest handler downloads history, detects variables, and updates the workflow
-
-Use GET /workflows/{workflow_id} to poll for creation completion.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.createWorkflowFromTask({
-    name: "name",
-    taskId: "taskId",
-    sessionId: "sessionId"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.WorkflowCreateFromTaskRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getWorkflowYamlPresignedUrl</a>({ ...params }) -> BrowserUse.WorkflowYamlPresignedUploadResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a presigned URL to upload workflow YAML directly to S3 from the browser.
-
-This avoids sending the YAML content through the backend, reducing latency
-and avoiding KMS permission issues in local development.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.getWorkflowYamlPresignedUrl({
-    workflow_id: "workflow_id",
-    sizeBytes: 1
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.WorkflowYamlPresignedUploadRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">runWorkflow</a>({ ...params }) -> BrowserUse.WorkflowExecutionCreatedResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Execute a workflow asynchronously.
-
-Returns execution ID immediately and processes in background via Inngest.
-Use the GET /workflows/executions/{execution_id} endpoint to check status and retrieve results.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.runWorkflow({
-    workflow_id: "workflow_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.WorkflowExecuteRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">generateWorkflow</a>({ ...params }) -> BrowserUse.WorkflowGenerateResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Generate a workflow from a natural language task description.
-
-This endpoint uses the workflow-use library's HealingService to:
-1. Record browser interactions for the task
-2. Convert interactions to a reusable workflow
-3. Extract variables for parameterization
-4. Save the generated YAML to S3
-
-The generation happens asynchronously via the workflow_worker Lambda.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.generateWorkflow({
-    workflow_id: "workflow_id",
-    taskPrompt: "Go to github.com and search for browser-use"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.WorkflowGenerateRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getExecution</a>({ ...params }) -> BrowserUse.WorkflowExecutionResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get detailed execution information including status, results, and costs.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.getExecution({
-    execution_id: "execution_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.GetExecutionWorkflowsExecutionsExecutionIdGetRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">listWorkflowExecutions</a>({ ...params }) -> BrowserUse.WorkflowExecutionListResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get paginated list of executions for a specific workflow.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.listWorkflowExecutions({
-    workflow_id: "workflow_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.ListWorkflowExecutionsWorkflowsWorkflowIdExecutionsGetRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">listAllExecutions</a>({ ...params }) -> BrowserUse.WorkflowExecutionListResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get paginated list of all workflow executions for a project.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.listAllExecutions();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.ListAllExecutionsWorkflowsExecutionsGetRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">cancelExecution</a>({ ...params }) -> BrowserUse.WorkflowExecutionResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Cancel a pending or running workflow execution.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.cancelExecution({
-    execution_id: "execution_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.CancelExecutionWorkflowsExecutionsExecutionIdCancelPatchRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getExecutionLogs</a>({ ...params }) -> BrowserUse.WorkflowExecutionLogResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get presigned URL to download execution logs.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.getExecutionLogs({
-    execution_id: "execution_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.GetExecutionLogsWorkflowsExecutionsExecutionIdLogsGetRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getExecutionState</a>({ ...params }) -> BrowserUse.WorkflowExecutionStateView</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get workflow execution state with steps for live UI polling.
-
-This endpoint returns the current state of a workflow execution including all steps
-with their details. It's designed to be polled every 2 seconds during execution
-to show real-time progress in the frontend.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.getExecutionState({
-    execution_id: "execution_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.GetExecutionStateWorkflowsExecutionsExecutionIdStateGetRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflows.<a href="/src/api/resources/workflows/client/Client.ts">getExecutionMedia</a>({ ...params }) -> BrowserUse.WorkflowExecutionMediaView</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get workflow execution media (screenshots) with presigned URLs.
-
-This endpoint returns media URLs for completed executions. Screenshots
-are returned with presigned S3 URLs for direct access from the frontend.
-Should be called when execution status is 'completed', 'failed', or 'cancelled'.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.workflows.getExecutionMedia({
-    execution_id: "execution_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `BrowserUse.GetExecutionMediaWorkflowsExecutionsExecutionIdMediaGetRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Workflows.RequestOptions` 
     
 </dd>
 </dl>

@@ -19,4 +19,6 @@ export interface CreateBrowserSessionRequest {
     browserScreenHeight?: number | null;
     /** Whether to allow the browser to be resized during the session (not recommended since it reduces stealthiness). */
     allowResizing?: boolean;
+    /** Custom proxy settings to use for the session. If not provided, our proxies will be used. Custom proxies are only available for Business and Scaleup subscribers. */
+    customProxy?: BrowserUse.CustomProxy | null;
 }

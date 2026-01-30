@@ -13,5 +13,3 @@ export * from "./skillsMarketplace/client/requests/index.js";
 export * as skillsMarketplace from "./skillsMarketplace/index.js";
 export * from "./tasks/client/requests/index.js";
 export * as tasks from "./tasks/index.js";
-export * from "./workflows/client/requests/index.js";
-export * as workflows from "./workflows/index.js";

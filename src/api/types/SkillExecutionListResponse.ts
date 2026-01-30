@@ -3,11 +3,11 @@
 import type * as BrowserUse from "../index.js";
 
 /**
- * Response model for paginated workflow list requests.
+ * Response for listing skill executions.
  */
-export interface WorkflowListResponse {
-    /** List of workflows for the current page */
-    items: BrowserUse.WorkflowItemView[];
+export interface SkillExecutionListResponse {
+    /** List of executions */
+    items: BrowserUse.SkillExecutionView[];
     /** Total number of items in the list */
     totalItems: number;
     /** Page number */

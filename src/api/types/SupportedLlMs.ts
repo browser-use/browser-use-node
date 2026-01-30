@@ -2,6 +2,7 @@
 
 export const SupportedLlMs = {
     BrowserUseLlm: "browser-use-llm",
+    BrowserUse20: "browser-use-2.0",
     Gpt41: "gpt-4.1",
     Gpt41Mini: "gpt-4.1-mini",
     O4Mini: "o4-mini",
@@ -9,6 +10,7 @@ export const SupportedLlMs = {
     Gemini25Flash: "gemini-2.5-flash",
     Gemini25Pro: "gemini-2.5-pro",
     Gemini3ProPreview: "gemini-3-pro-preview",
+    Gemini3FlashPreview: "gemini-3-flash-preview",
     GeminiFlashLatest: "gemini-flash-latest",
     GeminiFlashLiteLatest: "gemini-flash-lite-latest",
     ClaudeSonnet420250514: "claude-sonnet-4-20250514",

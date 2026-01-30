@@ -26,6 +26,7 @@ describe("Tasks", () => {
                     isSuccess: true,
                     judgement: "judgement",
                     judgeVerdict: true,
+                    cost: "cost",
                 },
             ],
             totalItems: 1,
@@ -54,6 +55,7 @@ describe("Tasks", () => {
                     isSuccess: true,
                     judgement: "judgement",
                     judgeVerdict: true,
+                    cost: "cost",
                 },
             ],
             totalItems: 1,
@@ -212,6 +214,7 @@ describe("Tasks", () => {
             isSuccess: true,
             judgement: "judgement",
             judgeVerdict: true,
+            cost: "cost",
         };
         server.mockEndpoint().get("/tasks/task_id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
@@ -252,6 +255,7 @@ describe("Tasks", () => {
             isSuccess: true,
             judgement: "judgement",
             judgeVerdict: true,
+            cost: "cost",
         });
     });
 
@@ -314,6 +318,7 @@ describe("Tasks", () => {
             isSuccess: true,
             judgement: "judgement",
             judgeVerdict: true,
+            cost: "cost",
         };
         server
             .mockEndpoint()
@@ -362,6 +367,7 @@ describe("Tasks", () => {
             isSuccess: true,
             judgement: "judgement",
             judgeVerdict: true,
+            cost: "cost",
         });
     });
 

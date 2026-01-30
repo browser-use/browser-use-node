@@ -22,4 +22,10 @@ export interface SessionView {
     publicShareUrl?: string | null;
     /** Whether tasks in this session share memory and history with each other */
     persistMemory?: boolean;
+    /** Whether the browser session stays alive after tasks complete */
+    keepAlive?: boolean;
+    /** Amount of proxy data used in MB */
+    proxyUsedMb?: string;
+    /** Cost of proxy usage in USD */
+    proxyCost?: string;
 }

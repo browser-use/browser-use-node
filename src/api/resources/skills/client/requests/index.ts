@@ -2,7 +2,9 @@ export type { CancelGenerationSkillsSkillIdCancelPostRequest } from "./CancelGen
 export type { CreateSkillRequest } from "./CreateSkillRequest.js";
 export type { DeleteSkillSkillsSkillIdDeleteRequest } from "./DeleteSkillSkillsSkillIdDeleteRequest.js";
 export type { ExecuteSkillSkillsSkillIdExecutePostRequest } from "./ExecuteSkillSkillsSkillIdExecutePostRequest.js";
+export type { GetSkillExecutionOutputSkillsSkillIdExecutionsExecutionIdOutputGetRequest } from "./GetSkillExecutionOutputSkillsSkillIdExecutionsExecutionIdOutputGetRequest.js";
 export type { GetSkillSkillsSkillIdGetRequest } from "./GetSkillSkillsSkillIdGetRequest.js";
+export type { ListSkillExecutionsSkillsSkillIdExecutionsGetRequest } from "./ListSkillExecutionsSkillsSkillIdExecutionsGetRequest.js";
 export type { ListSkillsSkillsGetRequest } from "./ListSkillsSkillsGetRequest.js";
 export type { RefineSkillRequest } from "./RefineSkillRequest.js";
 export type { RollbackSkillSkillsSkillIdRollbackPostRequest } from "./RollbackSkillSkillsSkillIdRollbackPostRequest.js";

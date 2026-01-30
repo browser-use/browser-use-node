@@ -8,7 +8,6 @@ import { Sessions } from "./api/resources/sessions/client/Client.js";
 import { Skills } from "./api/resources/skills/client/Client.js";
 import { SkillsMarketplace } from "./api/resources/skillsMarketplace/client/Client.js";
 import { Tasks } from "./api/resources/tasks/client/Client.js";
-import { Workflows } from "./api/resources/workflows/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
@@ -29,7 +28,6 @@ export class BrowserUseClient {
     protected _browsers: Browsers | undefined;
     protected _skills: Skills | undefined;
     protected _skillsMarketplace: SkillsMarketplace | undefined;
-    protected _workflows: Workflows | undefined;
 
     constructor(_options: BrowserUseClient.Options = {}) {
         this._options = {
@@ -79,9 +77,5 @@ export class BrowserUseClient {
 
     public get skillsMarketplace(): SkillsMarketplace {
         return (this._skillsMarketplace ??= new SkillsMarketplace(this._options));
-    }
-
-    public get workflows(): Workflows {
-        return (this._workflows ??= new Workflows(this._options));
     }
 }
