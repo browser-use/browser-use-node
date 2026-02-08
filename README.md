@@ -5,7 +5,8 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fbrowser-use%2Fbrowser-use-node)
 [![npm shield](https://img.shields.io/npm/v/browser-use-sdk)](https://www.npmjs.com/package/browser-use-sdk)
 
-The BrowserUse TypeScript library provides convenient access to the BrowserUse APIs from TypeScript.
+The BrowserUse TypeScript library provides convenient access to the BrowserUse Cloud APIs from TypeScript.
+It does **not** have support for local browser automation. Use the [Python library](https://github.com/browser-use/browser-use) for that.
 
 ## Three-Step QuickStart
 
