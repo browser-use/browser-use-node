@@ -42,7 +42,7 @@ The BrowserUse TypeScript library provides convenient access to the BrowserUse A
     console.log(result.output);
     ```
 
-> The full API of this library can be found in [api.md](api.md).
+> The full API of this library can be found in [reference.md](reference.md).
 
 ---
 
