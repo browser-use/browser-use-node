@@ -411,6 +411,101 @@ export class Tasks {
     }
 
     /**
+     * Lightweight endpoint optimized for polling task status.
+     *
+     * Returns only the task status, output, and cost without loading steps,
+     * files, or session details. Use this endpoint for efficient polling
+     * instead of GET /tasks/{task_id}.
+     *
+     * Recommended polling pattern:
+     * 1. POST /tasks to create a task
+     * 2. Poll GET /tasks/{task_id}/status until status is 'finished' or 'stopped'
+     * 3. GET /tasks/{task_id} once at the end for full details including steps
+     *
+     * @param {BrowserUse.GetTaskStatusTasksTaskIdStatusGetRequest} request
+     * @param {Tasks.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link BrowserUse.NotFoundError}
+     * @throws {@link BrowserUse.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.tasks.getTaskStatus({
+     *         task_id: "task_id"
+     *     })
+     */
+    public getTaskStatus(
+        request: BrowserUse.GetTaskStatusTasksTaskIdStatusGetRequest,
+        requestOptions?: Tasks.RequestOptions,
+    ): core.HttpResponsePromise<BrowserUse.TaskStatusView> {
+        return core.HttpResponsePromise.fromPromise(this.__getTaskStatus(request, requestOptions));
+    }
+
+    private async __getTaskStatus(
+        request: BrowserUse.GetTaskStatusTasksTaskIdStatusGetRequest,
+        requestOptions?: Tasks.RequestOptions,
+    ): Promise<core.WithRawResponse<BrowserUse.TaskStatusView>> {
+        const { task_id: taskId } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.BrowserUseEnvironment.Production,
+                `tasks/${core.url.encodePathParam(taskId)}/status`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as BrowserUse.TaskStatusView, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new BrowserUse.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 422:
+                    throw new BrowserUse.UnprocessableEntityError(
+                        _response.error.body as unknown,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.BrowserUseError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.BrowserUseError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.BrowserUseTimeoutError("Timeout exceeded when calling GET /tasks/{task_id}/status.");
+            case "unknown":
+                throw new errors.BrowserUseError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
      * Get secure download URL for task execution logs with step-by-step details.
      *
      * @param {BrowserUse.GetTaskLogsTasksTaskIdLogsGetRequest} request

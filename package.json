@@ -1,6 +1,6 @@
 {
     "name": "browser-use-sdk",
-    "version": "2.0.14",
+    "version": "2.0.15",
     "private": false,
     "repository": "github:browser-use/browser-use-node",
     "type": "commonjs",

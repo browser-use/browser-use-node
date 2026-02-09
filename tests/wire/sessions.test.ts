@@ -203,6 +203,7 @@ describe("Sessions", () => {
                     judgement: "judgement",
                     judgeVerdict: true,
                     cost: "cost",
+                    suggestions: [{ key: "value" }],
                 },
             ],
             publicShareUrl: "publicShareUrl",
@@ -247,6 +248,11 @@ describe("Sessions", () => {
                     judgement: "judgement",
                     judgeVerdict: true,
                     cost: "cost",
+                    suggestions: [
+                        {
+                            key: "value",
+                        },
+                    ],
                 },
             ],
             publicShareUrl: "publicShareUrl",
@@ -376,6 +382,7 @@ describe("Sessions", () => {
                     judgement: "judgement",
                     judgeVerdict: true,
                     cost: "cost",
+                    suggestions: [{ key: "value" }],
                 },
             ],
             publicShareUrl: "publicShareUrl",
@@ -422,6 +429,11 @@ describe("Sessions", () => {
                     judgement: "judgement",
                     judgeVerdict: true,
                     cost: "cost",
+                    suggestions: [
+                        {
+                            key: "value",
+                        },
+                    ],
                 },
             ],
             publicShareUrl: "publicShareUrl",

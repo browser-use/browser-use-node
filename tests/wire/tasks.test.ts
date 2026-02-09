@@ -27,6 +27,7 @@ describe("Tasks", () => {
                     judgement: "judgement",
                     judgeVerdict: true,
                     cost: "cost",
+                    suggestions: [{ key: "value" }],
                 },
             ],
             totalItems: 1,
@@ -56,6 +57,11 @@ describe("Tasks", () => {
                     judgement: "judgement",
                     judgeVerdict: true,
                     cost: "cost",
+                    suggestions: [
+                        {
+                            key: "value",
+                        },
+                    ],
                 },
             ],
             totalItems: 1,
@@ -215,6 +221,7 @@ describe("Tasks", () => {
             judgement: "judgement",
             judgeVerdict: true,
             cost: "cost",
+            suggestions: [{ key: "value" }],
         };
         server.mockEndpoint().get("/tasks/task_id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
@@ -256,6 +263,11 @@ describe("Tasks", () => {
             judgement: "judgement",
             judgeVerdict: true,
             cost: "cost",
+            suggestions: [
+                {
+                    key: "value",
+                },
+            ],
         });
     });
 
@@ -319,6 +331,7 @@ describe("Tasks", () => {
             judgement: "judgement",
             judgeVerdict: true,
             cost: "cost",
+            suggestions: [{ key: "value" }],
         };
         server
             .mockEndpoint()
@@ -368,6 +381,11 @@ describe("Tasks", () => {
             judgement: "judgement",
             judgeVerdict: true,
             cost: "cost",
+            suggestions: [
+                {
+                    key: "value",
+                },
+            ],
         });
     });
 
@@ -411,6 +429,79 @@ describe("Tasks", () => {
             return await client.tasks.updateTask({
                 task_id: "task_id",
                 action: "stop",
+            });
+        }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
+    });
+
+    test("getTaskStatus (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            id: "id",
+            status: "created",
+            output: "output",
+            finishedAt: "2024-01-15T09:30:00Z",
+            isSuccess: true,
+            cost: "cost",
+        };
+        server
+            .mockEndpoint()
+            .get("/tasks/task_id/status")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.tasks.getTaskStatus({
+            task_id: "task_id",
+        });
+        expect(response).toEqual({
+            id: "id",
+            status: "created",
+            output: "output",
+            finishedAt: "2024-01-15T09:30:00Z",
+            isSuccess: true,
+            cost: "cost",
+        });
+    });
+
+    test("getTaskStatus (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .get("/tasks/task_id/status")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.tasks.getTaskStatus({
+                task_id: "task_id",
+            });
+        }).rejects.toThrow(BrowserUse.NotFoundError);
+    });
+
+    test("getTaskStatus (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new BrowserUseClient({ apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .get("/tasks/task_id/status")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.tasks.getTaskStatus({
+                task_id: "task_id",
             });
         }).rejects.toThrow(BrowserUse.UnprocessableEntityError);
     });

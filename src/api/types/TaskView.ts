@@ -37,4 +37,6 @@ export interface TaskView {
     judgeVerdict?: boolean | null;
     /** Total cost of the task in USD. This is the sum of all step costs incurred during task execution. */
     cost?: string | null;
+    /** List of actionable suggestions for improving task configuration based on detected issues during execution. */
+    suggestions?: Record<string, unknown>[] | null;
 }

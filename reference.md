@@ -326,6 +326,80 @@ await client.tasks.updateTask({
 </dl>
 </details>
 
+<details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client/Client.ts">getTaskStatus</a>({ ...params }) -> BrowserUse.TaskStatusView</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lightweight endpoint optimized for polling task status.
+
+Returns only the task status, output, and cost without loading steps,
+files, or session details. Use this endpoint for efficient polling
+instead of GET /tasks/{task_id}.
+
+Recommended polling pattern:
+1. POST /tasks to create a task
+2. Poll GET /tasks/{task_id}/status until status is 'finished' or 'stopped'
+3. GET /tasks/{task_id} once at the end for full details including steps
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tasks.getTaskStatus({
+    task_id: "task_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BrowserUse.GetTaskStatusTasksTaskIdStatusGetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Tasks.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client/Client.ts">getTaskLogs</a>({ ...params }) -> BrowserUse.TaskLogFileResponse</code></summary>
 <dl>
 <dd>

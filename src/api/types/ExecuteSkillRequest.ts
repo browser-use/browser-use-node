@@ -6,4 +6,6 @@
 export interface ExecuteSkillRequest {
     /** Parameters to pass to the skill handler */
     parameters?: Record<string, unknown>;
+    /** Optional session ID (UUID) for IP persistence. */
+    sessionId?: string | null;
 }
