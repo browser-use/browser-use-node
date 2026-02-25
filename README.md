@@ -2,4 +2,4 @@
 
 # BrowserUse SDK has moved
 
-The new repository can be found at (browser-use/sdk)[https://github.com/browser-use/sdk]
+The new repository can be found at [browser-use/sdk](https://github.com/browser-use/sdk)
