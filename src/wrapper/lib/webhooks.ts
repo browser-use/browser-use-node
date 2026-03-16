@@ -81,7 +81,7 @@ export async function verifyWebhookEventSignature(
         }
 
         const signature = createWebhookSignature({
-            body: event.data, // NOTE: We need to encrypt the entire body, not just the payload
+            body: json, // Sign the original parsed body, not the Zod-transformed output
             timestamp: evt.timestamp,
             secret: cfg.secret,
         });
